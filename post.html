@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudentHub — Article</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="post.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body>
+
+  <!-- READING PROGRESS BAR -->
+  <div class="progress-bar" id="progress-bar"></div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="logo-dot"></div>
+        StudentHub
+      </div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#">Articles</a>
+        <a href="#">Tips</a>
+        <a href="#">Career</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="nav-right">
+        <button class="btn-ghost"><i class="ti ti-search"></i></button>
+        <button class="btn-ghost">Sign in</button>
+        <button class="btn-primary"><i class="ti ti-edit"></i> Write</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ARTICLE HEADER -->
+  <div class="article-header">
+    <div class="article-header-inner">
+
+      <!-- Back button -->
+      <a href="index.html" class="back-btn">
+        <i class="ti ti-arrow-left"></i> Back to articles
+      </a>
+
+      <!-- Category + date -->
+      <div class="art-meta-top">
+        <span class="art-cat">Student Life</span>
+        <span class="art-sep">·</span>
+        <span class="art-date">20 May 2026</span>
+        <span class="art-sep">·</span>
+        <span class="art-read"><i class="ti ti-clock"></i> 8 min read</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="art-title">
+        1st year CS student survival guide — jo koi nahi batata
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="art-subtitle">
+        University ka pehla saal bohot overwhelming lagta hai. Yahan woh sab jo mujhe pehle se pata hota toh meri life kitni aasan hoti.
+      </p>
+
+      <!-- Author row -->
+      <div class="art-author-row">
+        <div class="art-avatar">AK</div>
+        <div class="art-author-info">
+          <div class="art-author-name">Ali Khan</div>
+          <div class="art-author-role">CS Student · 3rd Semester · Lahore</div>
+        </div>
+        <div class="art-actions">
+          <button class="icon-btn" id="like-btn" onclick="toggleLike()">
+            <i class="ti ti-heart"></i>
+            <span id="like-count">124</span>
+          </button>
+          <button class="icon-btn" onclick="copyLink()">
+            <i class="ti ti-share"></i>
+          </button>
+          <button class="icon-btn">
+            <i class="ti ti-bookmark"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="art-body-wrap">
+    <div class="art-body-inner">
+
+      <!-- ARTICLE CONTENT -->
+      <article class="art-content">
+
+        <p class="art-lead">
+          Pehle din jab main university gaya, toh mujhe laga sab kuch samajh aa jayega. Lekin 2 hafte baad main completely lost tha. Assignments, labs, quizzes — sab ek saath. Yeh guide un sab students ke liye hai jo abhi abhi start kar rahe hain.
+        </p>
+
+        <h2>1. Pehle semester mein CGPA se zyada important cheez</h2>
+        <p>
+          Sab log CGPA ki baat karte hain lekin koi nahi batata ke pehle semester mein sabse important cheez hai <strong>routine banana</strong>. University school jaisi nahi hoti — yahan koi tumhara haath nahi pakdega. Khud se discipline maintain karni padti hai.
+        </p>
+        <p>
+          Mera suggestion hai ke pehle 4 hafton mein sirf ek kaam karo — har roz same time par class attend karo aur notes likho. Bas itna kaafi hai shuru mein.
+        </p>
+
+        <div class="art-callout">
+          <i class="ti ti-bulb"></i>
+          <div>
+            <strong>Pro tip:</strong> Pehle semester mein 3.0+ CGPA maintain karna hi goal rakho. Baad mein improve karna relatively aasaan hota hai.
+          </div>
+        </div>
+
+        <h2>2. Dosto ka selection — sabse bada decision</h2>
+        <p>
+          University mein jo log tumhare around hote hain woh tumhe directly affect karte hain. Aise logon ke saath time spend karo jo:
+        </p>
+        <ul>
+          <li>Classes seriously lete hain</li>
+          <li>Naye cheezein seekhne mein interest rakhte hain</li>
+          <li>Tumhari progress mein genuinely khush hote hain</li>
+          <li>Problems share karte hain solutions ke saath</li>
+        </ul>
+        <p>
+          Yeh sunne mein boring lagta hai lekin trust me — 2 saal baad tum apne dosto ki average jaisi life jiyo ge.
+        </p>
+
+        <h2>3. Programming — sahi tareeqa kya hai?</h2>
+        <p>
+          CS students ka sabse common mistake yeh hai ke woh sirf lectures sun te hain aur notes likhte hain. Programming ek <strong>practical skill</strong> hai — isko sirf padh ke nahi seekha ja sakta.
+        </p>
+        <p>
+          Har din kam se kam 30 minute code likho. Chahe simple calculator ho, chahe basic calculator — kuch bhi. Hands-on practice theory se 10 guna zyada valuable hai.
+        </p>
+
+        <div class="art-callout art-callout-warning">
+          <i class="ti ti-alert-triangle"></i>
+          <div>
+            <strong>Common mistake:</strong> YouTube tutorials dekh ke sochna ke programming aa gayi. Jab tak khud se problem solve nahi karo, kuch nahi seekha.
+          </div>
+        </div>
+
+        <h2>4. Resources jo actually kaam karte hain</h2>
+        <p>Yeh free resources hain jo mujhe pehle semester se hi pata honi chahiye thi:</p>
+        <ul>
+          <li><strong>GeeksforGeeks</strong> — DSA aur programming concepts ke liye</li>
+          <li><strong>CS50 Harvard</strong> — Best free CS course online</li>
+          <li><strong>GitHub Student Pack</strong> — Hundreds of free tools</li>
+          <li><strong>Notion</strong> — Notes organize karne ke liye</li>
+          <li><strong>VS Code</strong> — Best code editor, completely free</li>
+        </ul>
+
+        <h2>5. Exams ki tayari — honest advice</h2>
+        <p>
+          Raat bhar jaagna aur last minute padhai — yeh kaam nahi karta. Main 3 semesters baad yeh bol raha hoon experience se. Jo strategy actually kaam karti hai:
+        </p>
+        <ul>
+          <li>Har week ke end mein us week ka revision karo (20-30 min)</li>
+          <li>Past papers zaroor solve karo — pattern samajh aata hai</li>
+          <li>Group study sirf un ke saath karo jo serious hain</li>
+          <li>Exam se 2 din pehle naya topic start mat karo</li>
+        </ul>
+
+        <div class="art-callout art-callout-success">
+          <i class="ti ti-check"></i>
+          <div>
+            <strong>Yaad rakho:</strong> University sirf degree nahi deta — yeh seekhne ka time hai. Agar sahi use karo toh yeh 4 saal tumhari poori zindagi badal sakte hain.
+          </div>
+        </div>
+
+        <h2>Conclusion</h2>
+        <p>
+          1st year mushkil hoga — yeh normal hai. Har successful CS student is phase se guzra hai. Fark sirf itna hai ke unhon ne give up nahi kiya. Consistent raho, sahi logon ke saath time spend karo, aur har roz kuch seekho — baaki sab khud ho jayega.
+        </p>
+        <p>
+          Agar koi specific question hai toh comments mein zaroor poochho. Main personally reply karta hoon!
+        </p>
+
+        <!-- TAGS -->
+        <div class="art-tags">
+          <span class="tag-pill">Student Life</span>
+          <span class="tag-pill">Study Tips</span>
+          <span class="tag-pill">CS Student</span>
+          <span class="tag-pill">University</span>
+          <span class="tag-pill">Beginner</span>
+        </div>
+
+        <!-- LIKE BAR -->
+        <div class="art-like-bar">
+          <button class="like-big-btn" id="like-big-btn" onclick="toggleLike()">
+            <i class="ti ti-heart"></i>
+            <span id="like-count-2">124</span> likes
+          </button>
+          <div class="art-share">
+            <span>Share:</span>
+            <button class="icon-btn" onclick="copyLink()"><i class="ti ti-link"></i></button>
+            <button class="icon-btn"><i class="ti ti-brand-twitter"></i></button>
+            <button class="icon-btn"><i class="ti ti-brand-facebook"></i></button>
+          </div>
+        </div>
+
+      </article>
+
+      <!-- SIDEBAR -->
+      <aside class="art-sidebar">
+
+        <!-- Author card -->
+        <div class="sw art-author-card">
+          <div class="sw-title">About the author</div>
+          <div class="author-block">
+            <div class="ab-avatar">AK</div>
+            <div class="ab-name">Ali Khan</div>
+            <div class="ab-role">CS Student · 3rd Semester · Lahore<br>University experiences aur tips share karta hoon</div>
+            <div class="ab-stats">
+              <div class="abs"><div class="abs-n">8</div><div class="abs-l">Posts</div></div>
+              <div class="abs"><div class="abs-n">1.2k</div><div class="abs-l">Readers</div></div>
+              <div class="abs"><div class="abs-n">4.8</div><div class="abs-l">Rating</div></div>
+            </div>
+            <button class="ab-btn"><i class="ti ti-user-plus"></i> Follow</button>
+          </div>
+        </div>
+
+        <!-- Table of contents -->
+        <div class="sw toc-widget">
+          <div class="sw-title"><i class="ti ti-list"></i> Table of contents</div>
+          <div class="toc-list">
+            <a href="#" class="toc-item active">1. CGPA se zyada important cheez</a>
+            <a href="#" class="toc-item">2. Dosto ka selection</a>
+            <a href="#" class="toc-item">3. Programming — sahi tareeqa</a>
+            <a href="#" class="toc-item">4. Resources jo kaam karte hain</a>
+            <a href="#" class="toc-item">5. Exams ki tayari</a>
+            <a href="#" class="toc-item">Conclusion</a>
+          </div>
+        </div>
+
+        <!-- Related posts -->
+        <div class="sw">
+          <div class="sw-title"><i class="ti ti-layout-grid"></i> Related articles</div>
+          <div class="related-list">
+            <a href="#" class="related-item">
+              <div class="related-cat">Study Tips</div>
+              <div class="related-title">Exams ki tayari — last minute strategy</div>
+            </a>
+            <a href="#" class="related-item">
+              <div class="related-cat">Tech & Tools</div>
+              <div class="related-title">Free tools jo har CS student ko chahiye</div>
+            </a>
+            <a href="#" class="related-item">
+              <div class="related-cat">Career</div>
+              <div class="related-title">2nd year mein internship kaise milti hai</div>
+            </a>
+          </div>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+
+  <!-- COMMENTS SECTION -->
+  <div class="comments-wrap">
+    <div class="comments-inner">
+      <h3 class="comments-title">
+        <i class="ti ti-message-circle"></i>
+        Comments <span class="comments-count">3</span>
+      </h3>
+
+      <!-- Add comment -->
+      <div class="add-comment">
+        <div class="comment-avatar-me">S</div>
+        <div class="comment-input-wrap">
+          <textarea
+            class="comment-textarea"
+            id="comment-input"
+            placeholder="Apna thought share karo..."
+            rows="3"
+          ></textarea>
+          <div class="comment-actions">
+            <span class="comment-hint">Be respectful aur helpful rahein</span>
+            <button class="btn-primary comment-submit" onclick="addComment()">
+              <i class="ti ti-send"></i> Post comment
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments list -->
+      <div class="comments-list" id="comments-list">
+
+        <div class="comment-item">
+          <div class="comment-avatar">SR</div>
+          <div class="comment-body">
+            <div class="comment-header">
+              <span class="comment-name">Sara Rashid</span>
+              <span class="comment-time">2 days ago</span>
+            </div>
+            <div class="comment-text">Bohot helpful article hai! Main bhi 1st year mein hun aur yahi mistakes kar rahi thi. Group study wala point bohot sahi hai.</div>
+            <div class="comment-footer">
+              <button class="comment-like"><i class="ti ti-thumb-up"></i> 12</button>
+              <button class="comment-reply-btn">Reply</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="comment-item">
+          <div class="comment-avatar" style="background:#0e3a2e; border-color:#1a6a4e; color:#4ade80">UB</div>
+          <div class="comment-body">
+            <div class="comment-header">
+              <span class="comment-name">Usman Baig</span>
+              <span class="comment-time">3 days ago</span>
+            </div>
+            <div class="comment-text">CS50 Harvard course recommend karna sahi hai. Maine 2nd semester mein kiya tha — life changing tha. Bilkul free hai aur certificate bhi milta hai.</div>
+            <div class="comment-footer">
+              <button class="comment-like"><i class="ti ti-thumb-up"></i> 8</button>
+              <button class="comment-reply-btn">Reply</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="comment-item">
+          <div class="comment-avatar" style="background:#2e1a0e; border-color:#6a3a1a; color:#fb923c">HM</div>
+          <div class="comment-body">
+            <div class="comment-header">
+              <span class="comment-name">Hina Malik</span>
+              <span class="comment-time">5 days ago</span>
+            </div>
+            <div class="comment-text">Dosto wala point! Yeh itna important hai lekin koi nahi batata. Mera pehla semester waste ho gaya galat logon ke saath time spend karne se.</div>
+            <div class="comment-footer">
+              <button class="comment-like"><i class="ti ti-thumb-up"></i> 21</button>
+              <button class="comment-reply-btn">Reply</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATED ARTICLES BOTTOM -->
+  <div class="more-articles-wrap">
+    <div class="more-articles-inner">
+      <div class="section-label"><span>More articles</span></div>
+      <div class="more-grid">
+        <div class="more-card">
+          <div class="more-cat">Study Tips</div>
+          <div class="more-title">Exams ki tayari — last minute strategy jo actually kaam kare</div>
+          <div class="more-meta">Sara Ahmed · 5 min read</div>
+        </div>
+        <div class="more-card">
+          <div class="more-cat">Tech & Tools</div>
+          <div class="more-title">Free tools jo har CS student ko pata hone chahiye</div>
+          <div class="more-meta">Umar Sheikh · 6 min read</div>
+        </div>
+        <div class="more-card">
+          <div class="more-cat">Career</div>
+          <div class="more-title">2nd year mein internship kaise milti hai — honest guide</div>
+          <div class="more-meta">Zara Malik · 7 min read</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="f-logo"><div class="logo-dot"></div> StudentHub</div>
+      <div class="f-links">
+        <a href="about.html">About</a>
+        <a href="#">Write for us</a>
+        <a href="#">Privacy</a>
+       <a href="contact.html">Contact</a>
+      </div>
+      <div class="f-copy">© 2026 StudentHub. Made with <i class="ti ti-heart"></i> by a CS student.</div>
+    </div>
+  </footer>
+
+  <script src="post.js"></script>
+</body>
+</html>

@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudentHub — Write for Us</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+
+    /* ===== HERO ===== */
+    .wfu-hero {
+      background: var(--bg2);
+      border-bottom: 0.5px solid var(--border);
+      padding: 64px 32px 52px;
+    }
+
+    .wfu-hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 240px;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .wfu-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--purple-light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      border: 0.5px solid var(--purple-border);
+      padding: 5px 14px;
+      border-radius: 20px;
+      background: var(--purple-dim);
+    }
+
+    .wfu-title {
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.8px;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+
+    .wfu-title em {
+      font-style: normal;
+      color: var(--purple-light);
+    }
+
+    .wfu-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .wfu-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .wfu-perk {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .wfu-perk i {
+      color: #4ade80;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Right: mini card */
+    .wfu-card {
+      background: var(--card);
+      border: 0.5px solid var(--purple-border);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .wfu-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+    }
+
+    .wfu-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 14px 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .wfu-stat:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .wfu-stat-n {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--purple-light);
+      letter-spacing: -0.5px;
+    }
+
+    .wfu-stat-l {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ===== BODY ===== */
+    .wfu-body {
+      padding: 56px 32px;
+    }
+
+    .wfu-body-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* Section label */
+    .wfu-section { margin-bottom: 48px; }
+
+    .wfu-section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .wfu-section-label::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    .wfu-section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.3px;
+      margin-bottom: 16px;
+    }
+
+    /* Guidelines grid */
+    .guidelines-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .gl-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border2);
+      border-radius: 10px;
+      padding: 18px;
+      transition: border-color 0.15s;
+    }
+
+    .gl-card:hover { border-color: var(--purple-border); }
+
+    .gl-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--purple-dim);
+      border: 0.5px solid var(--purple-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 17px;
+      color: var(--purple-light);
+      margin-bottom: 12px;
+    }
+
+    .gl-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .gl-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Do / Don't list */
+    .do-dont {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .dd-col-title {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dd-col-title.do { color: #4ade80; }
+    .dd-col-title.dont { color: #f87171; }
+
+    .dd-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .dd-item i { font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+    .dd-item.do i { color: #4ade80; }
+    .dd-item.dont i { color: #f87171; }
+
+    /* ===== FORM ===== */
+    .wfu-form-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border2);
+      border-radius: 14px;
+      padding: 28px;
+    }
+
+    .wfu-form-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wf-group { margin-bottom: 16px; }
+
+    .wf-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 7px;
+    }
+
+    .wf-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .wf-icon {
+      position: absolute;
+      left: 13px;
+      font-size: 15px;
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .wf-input {
+      width: 100%;
+      background: var(--bg3);
+      border: 0.5px solid var(--border2);
+      color: var(--text-primary);
+      padding: 10px 13px 10px 40px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      font-family: var(--font);
+      transition: border-color 0.15s;
+    }
+
+    .wf-input:focus { border-color: var(--purple-border); }
+    .wf-input::placeholder { color: var(--text-muted); }
+
+    .wf-select {
+      width: 100%;
+      background: var(--bg3);
+      border: 0.5px solid var(--border2);
+      color: var(--text-primary);
+      padding: 10px 13px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      font-family: var(--font);
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+
+    .wf-select:focus { border-color: var(--purple-border); }
+
+    .wf-textarea {
+      width: 100%;
+      background: var(--bg3);
+      border: 0.5px solid var(--border2);
+      color: var(--text-primary);
+      padding: 11px 13px;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      resize: none;
+      font-family: var(--font);
+      line-height: 1.7;
+      transition: border-color 0.15s;
+    }
+
+    .wf-textarea:focus { border-color: var(--purple-border); }
+    .wf-textarea::placeholder { color: var(--text-muted); }
+
+    .wf-char { font-size: 11px; color: var(--text-muted); text-align: right; margin-top: 5px; }
+
+    .wf-hint {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .wf-submit {
+      width: 100%;
+      background: var(--purple);
+      border: none;
+      color: #fff;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: opacity 0.15s;
+      margin-top: 6px;
+    }
+
+    .wf-submit:hover { opacity: 0.85; }
+
+    .wf-error {
+      font-size: 13px;
+      color: #ef4444;
+      margin-bottom: 10px;
+      min-height: 18px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Success */
+    .wf-success {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 32px 16px;
+      gap: 14px;
+    }
+
+    .wf-success-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #0a1a0a;
+      border: 0.5px solid #1a4a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      color: #4ade80;
+    }
+
+    .wf-success-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .wf-success-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    .wf-reset {
+      background: none;
+      border: 0.5px solid var(--border2);
+      color: var(--text-muted);
+      padding: 7px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      font-family: var(--font);
+      transition: all 0.15s;
+    }
+
+    .wf-reset:hover { border-color: var(--purple-border); color: var(--purple-light); }
+
+    /* ===== SIDEBAR ===== */
+    .wfu-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 80px;
+    }
+
+    .wfu-sb-card {
+      background: var(--bg2);
+      border: 0.5px solid var(--border2);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .wfu-sb-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .wfu-topic-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 20px;
+      background: var(--purple-dim);
+      border: 0.5px solid var(--purple-border);
+      color: var(--purple-light);
+      margin: 4px 4px 4px 0;
+    }
+
+    .wfu-step {
+      display: flex;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 0.5px solid var(--border);
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .wfu-step:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .wfu-step-n {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--purple-light);
+      background: var(--purple-dim);
+      border: 0.5px solid var(--purple-border);
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .wfu-hero { padding: 36px 16px 28px; }
+      .wfu-hero-inner { grid-template-columns: 1fr; gap: 28px; }
+      .wfu-card { order: -1; }
+      .wfu-title { font-size: 26px; }
+      .wfu-body { padding: 28px 16px; }
+      .wfu-body-inner { grid-template-columns: 1fr; gap: 24px; }
+      .wfu-sidebar { position: static; }
+      .guidelines-grid { grid-template-columns: 1fr; }
+      .do-dont { grid-template-columns: 1fr; }
+      .wfu-form-card { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-dot"></div>
+        StudentHub
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#">Articles</a>
+        <a href="#">Tips</a>
+        <a href="#">Career</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="nav-right">
+        <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
+        <button class="btn-primary" onclick="window.location.href='admin.html'">
+          <i class="ti ti-edit"></i> Write
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="wfu-hero">
+    <div class="wfu-hero-inner">
+
+      <div>
+        <div class="wfu-eyebrow">
+          <i class="ti ti-pencil"></i> Write for Us
+        </div>
+        <h1 class="wfu-title">Apna <em>experience</em><br>doosron ke saath share karo</h1>
+        <p class="wfu-desc">
+          Tum bhi StudentHub pe likh sakte ho. Agar tumhare paas koi tip, lesson, ya experience hai jo doosre CS students ki help kar sake — submit karo!
+        </p>
+        <div class="wfu-perks">
+          <div class="wfu-perk"><i class="ti ti-check"></i> 2,400+ students tak pahunche ga tera article</div>
+          <div class="wfu-perk"><i class="ti ti-check"></i> Tumhara naam aur bio article pe show hoga</div>
+          <div class="wfu-perk"><i class="ti ti-check"></i> Portfolio ke liye ek published writing piece</div>
+          <div class="wfu-perk"><i class="ti ti-check"></i> Community ka hissa bano</div>
+        </div>
+      </div>
+
+      <div class="wfu-card">
+        <div class="wfu-card-title">Blog Stats</div>
+        <div class="wfu-stat">
+          <div class="wfu-stat-n">2.4k+</div>
+          <div class="wfu-stat-l">Monthly readers</div>
+        </div>
+        <div class="wfu-stat">
+          <div class="wfu-stat-n">86+</div>
+          <div class="wfu-stat-l">Published articles</div>
+        </div>
+        <div class="wfu-stat">
+          <div class="wfu-stat-n">48 hrs</div>
+          <div class="wfu-stat-l">Average review time</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BODY -->
+  <div class="wfu-body">
+    <div class="wfu-body-inner">
+
+      <!-- LEFT: Guidelines + Form -->
+      <div>
+
+        <!-- Guidelines -->
+        <div class="wfu-section">
+          <div class="wfu-section-label"><span>Guidelines</span></div>
+          <h2>Kaise likhna hai?</h2>
+
+          <div class="guidelines-grid">
+            <div class="gl-card">
+              <div class="gl-icon"><i class="ti ti-writing"></i></div>
+              <div class="gl-title">Original content</div>
+              <div class="gl-desc">Article tumhara khud ka likha hona chahiye. Copy paste ya AI-generated content accept nahi hoga.</div>
+            </div>
+            <div class="gl-card">
+              <div class="gl-icon"><i class="ti ti-ruler"></i></div>
+              <div class="gl-title">Length</div>
+              <div class="gl-desc">Minimum 400 words. Itna ho ke reader kuch seekhe — unnecessary padding mat karo.</div>
+            </div>
+            <div class="gl-card">
+              <div class="gl-icon"><i class="ti ti-language"></i></div>
+              <div class="gl-title">Language</div>
+              <div class="gl-desc">Roman Urdu ya English — dono theek hain. Jo bhi easy lage tumhe aur readers ko samajh aaye.</div>
+            </div>
+            <div class="gl-card">
+              <div class="gl-icon"><i class="ti ti-target"></i></div>
+              <div class="gl-title">Practical hona chahiye</div>
+              <div class="gl-desc">Sirf theory nahi — readers kuch actionable le ke jayein. Real examples aur tips zaroor hon.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Do / Don't -->
+        <div class="wfu-section">
+          <div class="wfu-section-label"><span>Kya likhein</span></div>
+          <h2>Kya accept hoga, kya nahi</h2>
+
+          <div class="do-dont">
+            <div>
+              <div class="dd-col-title do"><i class="ti ti-circle-check"></i> Likho yeh</div>
+              <div class="dd-item do"><i class="ti ti-check"></i> Study tips jo actually kaam karti hain</div>
+              <div class="dd-item do"><i class="ti ti-check"></i> University life ke real experiences</div>
+              <div class="dd-item do"><i class="ti ti-check"></i> Internship/job ki preparation guide</div>
+              <div class="dd-item do"><i class="ti ti-check"></i> Free tools aur resources ka review</div>
+              <div class="dd-item do"><i class="ti ti-check"></i> Exam strategy aur past paper tips</div>
+              <div class="dd-item do"><i class="ti ti-check"></i> Mental health aur burnout se deal karna</div>
+            </div>
+            <div>
+              <div class="dd-col-title dont"><i class="ti ti-circle-x"></i> Mat likho yeh</div>
+              <div class="dd-item dont"><i class="ti ti-x"></i> Copy paste ya plagiarized content</div>
+              <div class="dd-item dont"><i class="ti ti-x"></i> Sirf motivational quotes — koi value nahi</div>
+              <div class="dd-item dont"><i class="ti ti-x"></i> Promotional ya advertisement wala content</div>
+              <div class="dd-item dont"><i class="ti ti-x"></i> Political ya controversial topics</div>
+              <div class="dd-item dont"><i class="ti ti-x"></i> Kisi ko personally target karna</div>
+              <div class="dd-item dont"><i class="ti ti-x"></i> 400 words se kam articles</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submission Form -->
+        <div class="wfu-section">
+          <div class="wfu-section-label"><span>Submit</span></div>
+          <h2>Article submit karo</h2>
+
+          <div class="wfu-form-card">
+            <div class="wfu-form-title">
+              <i class="ti ti-send" style="color:var(--purple-light)"></i>
+              Submission form
+            </div>
+
+            <div id="wfu-form">
+              <div class="wf-group">
+                <label class="wf-label">Tumhara naam</label>
+                <div class="wf-input-wrap">
+                  <i class="ti ti-user wf-icon"></i>
+                  <input type="text" class="wf-input" id="wf-name" placeholder="Ali Khan">
+                </div>
+              </div>
+
+              <div class="wf-group">
+                <label class="wf-label">Email address</label>
+                <div class="wf-input-wrap">
+                  <i class="ti ti-mail wf-icon"></i>
+                  <input type="email" class="wf-input" id="wf-email" placeholder="tumhara@email.com">
+                </div>
+              </div>
+
+              <div class="wf-group">
+                <label class="wf-label">Article ka topic / title</label>
+                <div class="wf-input-wrap">
+                  <i class="ti ti-tag wf-icon"></i>
+                  <input type="text" class="wf-input" id="wf-title" placeholder="Jaise: 5 free tools jo har CS student ko chahiye">
+                </div>
+              </div>
+
+              <div class="wf-group">
+                <label class="wf-label">Category</label>
+                <select class="wf-select" id="wf-category">
+                  <option value="">-- Category chunno --</option>
+                  <option>Study Tips</option>
+                  <option>Tech & Tools</option>
+                  <option>Career</option>
+                  <option>Exams</option>
+                  <option>Lifestyle</option>
+                  <option>Mental Health</option>
+                </select>
+              </div>
+
+              <div class="wf-group">
+                <label class="wf-label">Article content</label>
+                <textarea
+                  class="wf-textarea"
+                  id="wf-content"
+                  rows="10"
+                  placeholder="Yahan apna poora article paste karo (minimum 400 words)..."
+                  oninput="updateWfChar()"
+                ></textarea>
+                <div class="wf-char"><span id="wf-char-count">0</span> words</div>
+                <div class="wf-hint"><i class="ti ti-info-circle"></i> Minimum 400 words</div>
+              </div>
+
+              <div class="wf-group">
+                <label class="wf-label">Apne baare mein (short bio — optional)</label>
+                <textarea
+                  class="wf-textarea"
+                  id="wf-bio"
+                  rows="3"
+                  placeholder="Jaise: 2nd year CS student at Air University. Interested in web dev aur open source."
+                ></textarea>
+              </div>
+
+              <div class="wf-error" id="wf-error"></div>
+
+              <button class="wf-submit" onclick="submitWfu()">
+                <i class="ti ti-send"></i> Article submit karo
+              </button>
+            </div>
+
+            <!-- Success -->
+            <div class="wf-success" id="wf-success">
+              <div class="wf-success-icon"><i class="ti ti-check"></i></div>
+              <div class="wf-success-title">Submission mil gayi! 🎉</div>
+              <p class="wf-success-desc">
+                Shukriya likhne ka! Main 48 ghanton ke andar review karke tumhe email karunga. Agar accept hua toh live ho jayega.
+              </p>
+              <button class="wf-reset" onclick="resetWfu()">
+                <i class="ti ti-refresh"></i> Dobara submit karo
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="wfu-sidebar">
+
+        <!-- Topics -->
+        <div class="wfu-sb-card">
+          <div class="wfu-sb-title">Accepted topics</div>
+          <div>
+            <span class="wfu-topic-tag"><i class="ti ti-books"></i> Study Tips</span>
+            <span class="wfu-topic-tag"><i class="ti ti-code"></i> Tech & Tools</span>
+            <span class="wfu-topic-tag"><i class="ti ti-briefcase"></i> Career</span>
+            <span class="wfu-topic-tag"><i class="ti ti-writing"></i> Exams</span>
+            <span class="wfu-topic-tag"><i class="ti ti-mood-smile"></i> Lifestyle</span>
+            <span class="wfu-topic-tag"><i class="ti ti-heart"></i> Mental Health</span>
+          </div>
+        </div>
+
+        <!-- Process -->
+        <div class="wfu-sb-card">
+          <div class="wfu-sb-title">Review process</div>
+          <div class="wfu-step">
+            <div class="wfu-step-n">1</div>
+            <div>Form submit karo apne article ke saath</div>
+          </div>
+          <div class="wfu-step">
+            <div class="wfu-step-n">2</div>
+            <div>48 ghanton mein review hoga</div>
+          </div>
+          <div class="wfu-step">
+            <div class="wfu-step-n">3</div>
+            <div>Email pe feedback ya approval aayega</div>
+          </div>
+          <div class="wfu-step">
+            <div class="wfu-step-n">4</div>
+            <div>Accept hone pe StudentHub pe live!</div>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="wfu-sb-card">
+          <div class="wfu-sb-title">Sawaal hai?</div>
+          <p style="font-size:13px;color:var(--text-muted);line-height:1.7;margin-bottom:12px;">
+            Koi confusion ho toh seedha email karo:
+          </p>
+          <a href="mailto:ahmadsalar0707@gmail.com"
+             style="font-size:13px;color:var(--purple-light);word-break:break-all;text-decoration:none;">
+            ahmadsalar0707@gmail.com
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="f-logo"><div class="logo-dot"></div> StudentHub</div>
+      <div class="f-links">
+        <a href="about.html">About</a>
+        <a href="write-for-us.html">Write for us</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="f-copy">© 2026 StudentHub. Made with <i class="ti ti-heart"></i> by Salar.</div>
+    </div>
+  </footer>
+
+  <script>
+    // Word count
+    function updateWfChar() {
+      const text = document.getElementById("wf-content").value.trim();
+      const words = text ? text.split(/\s+/).length : 0;
+      const el = document.getElementById("wf-char-count");
+      el.textContent = words;
+      el.style.color = words >= 400 ? "#4ade80" : words > 200 ? "#facc15" : "var(--text-muted)";
+    }
+
+    function showWfError(msg) {
+      document.getElementById("wf-error").innerHTML = `<i class="ti ti-alert-circle"></i> ${msg}`;
+    }
+
+    function submitWfu() {
+      document.getElementById("wf-error").innerHTML = "";
+
+      const name     = document.getElementById("wf-name").value.trim();
+      const email    = document.getElementById("wf-email").value.trim();
+      const title    = document.getElementById("wf-title").value.trim();
+      const category = document.getElementById("wf-category").value;
+      const content  = document.getElementById("wf-content").value.trim();
+      const words    = content ? content.split(/\s+/).length : 0;
+
+      if (!name)                    { showWfError("Apna naam daalo"); return; }
+      if (!email || !email.includes("@")) { showWfError("Valid email daalo"); return; }
+      if (!title)                   { showWfError("Article ka title likho"); return; }
+      if (!category)                { showWfError("Category chunno"); return; }
+      if (!content)                 { showWfError("Article content daalo"); return; }
+      if (words < 400)              { showWfError(`Article minimum 400 words ka hona chahiye (abhi ${words} words hain)`); return; }
+
+      const btn = document.querySelector(".wf-submit");
+      btn.innerHTML = '<i class="ti ti-loader"></i> Submit ho raha hai...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        document.getElementById("wfu-form").style.display = "none";
+        document.getElementById("wf-success").style.display = "flex";
+        btn.innerHTML = '<i class="ti ti-send"></i> Article submit karo';
+        btn.disabled = false;
+      }, 1500);
+    }
+
+    function resetWfu() {
+      ["wf-name","wf-email","wf-title","wf-content","wf-bio"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+      document.getElementById("wf-category").value = "";
+      document.getElementById("wf-char-count").textContent = "0";
+      document.getElementById("wf-success").style.display = "none";
+      document.getElementById("wfu-form").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

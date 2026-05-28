@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudentHub — About</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    /* ===== ABOUT PAGE STYLES ===== */
+
+    /* Hero */
+    .about-hero {
+      background: var(--bg2);
+      border-bottom: 0.5px solid var(--border);
+      padding: 72px 32px 60px;
+    }
+
+    .about-hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 260px;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .ah-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--purple-light);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      border: 0.5px solid var(--purple-border);
+      padding: 5px 14px;
+      border-radius: 20px;
+      background: var(--purple-dim);
+    }
+
+    .ah-title {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.15;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .ah-title em {
+      font-style: normal;
+      color: var(--purple-light);
+    }
+
+    .ah-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+
+    .ah-stats {
+      display: flex;
+      gap: 32px;
+      padding-top: 28px;
+      border-top: 0.5px solid var(--border);
+    }
+
+    .ahs {
+      text-align: left;
+    }
+
+    .ahs-n {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--purple-light);
+      letter-spacing: -0.5px;
+    }
+
+    .ahs-l {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* Author card (right side) */
+    .ah-author-card {
+      background: var(--card);
+      border: 0.5px solid var(--purple-border);
+      border-radius: 16px;
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+    }
+
+    .ah-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: var(--purple-dim);
+      border: 2px solid var(--purple-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--purple-light);
+    }
+
+    .ah-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .ah-role {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .ah-badges {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .ah-badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: var(--purple-dim);
+      color: var(--purple-light);
+      border: 0.5px solid var(--purple-border);
+    }
+
+    .ah-social {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .ah-social-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: none;
+      border: 0.5px solid var(--border2);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+
+    .ah-social-btn:hover {
+      border-color: var(--purple-border);
+      color: var(--purple-light);
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .about-body {
+      padding: 56px 32px;
+    }
+
+    .about-body-inner {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* Section */
+    .about-section {
+      margin-bottom: 64px;
+    }
+
+    .about-section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .about-section-label::after {
+      content: '';
+      flex: 1;
+      height: 0.5px;
+      background: var(--border);
+    }
+
+    .about-section h2 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.4px;
+      margin-bottom: 16px;
+    }
+
+    .about-section p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 16px;
+    }
+
+    /* Mission cards */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .mission-card {
+      background: var(--card);
+      border: 0.5px solid var(--border2);
+      border-radius: 12px;
+      padding: 22px;
+      transition: border-color 0.15s;
+    }
+
+    .mission-card:hover { border-color: var(--purple-border); }
+
+    .mc-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background: var(--purple-dim);
+      border: 0.5px solid var(--purple-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--purple-light);
+      margin-bottom: 14px;
+    }
+
+    .mc-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .mc-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Story timeline */
+    .story-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 24px;
+      position: relative;
+      padding-left: 32px;
+    }
+
+    .story-timeline::before {
+      content: '';
+      position: absolute;
+      left: 7px;
+      top: 8px;
+      bottom: 8px;
+      width: 0.5px;
+      background: var(--border2);
+    }
+
+    .st-item {
+      position: relative;
+      padding-bottom: 32px;
+    }
+
+    .st-item:last-child { padding-bottom: 0; }
+
+    .st-dot {
+      position: absolute;
+      left: -28px;
+      top: 5px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--purple-dim);
+      border: 2px solid var(--purple);
+    }
+
+    .st-date {
+      font-size: 11px;
+      color: var(--purple-light);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .st-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .st-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* Topics covered */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .topic-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--card);
+      border: 0.5px solid var(--border2);
+      border-radius: 10px;
+      padding: 16px;
+      transition: border-color 0.15s;
+    }
+
+    .topic-item:hover { border-color: var(--purple-border); }
+
+    .topic-icon {
+      font-size: 20px;
+      color: var(--purple-light);
+      flex-shrink: 0;
+    }
+
+    .topic-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .topic-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Values */
+    .values-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 16px;
+    }
+
+    .value-item {
+      display: flex;
+      gap: 16px;
+      padding: 20px 0;
+      border-bottom: 0.5px solid var(--border);
+      align-items: flex-start;
+    }
+
+    .value-item:last-child { border-bottom: none; }
+
+    .value-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--border2);
+      min-width: 40px;
+      letter-spacing: -2px;
+    }
+
+    .value-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .value-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* CTA */
+    .about-cta {
+      background: var(--card);
+      border: 0.5px solid var(--purple-border);
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .cta-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.4px;
+      margin-bottom: 12px;
+    }
+
+    .cta-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto 28px;
+    }
+
+    .cta-btns {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    /* ===== MOBILE ===== */
+    @media (max-width: 768px) {
+      .about-hero { padding: 36px 16px 32px; }
+
+      .about-hero-inner {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .ah-author-card { order: -1; }
+
+      .ah-title { font-size: 28px; }
+
+      .ah-stats { gap: 20px; flex-wrap: wrap; }
+
+      .about-body { padding: 32px 16px; }
+
+      .mission-grid { grid-template-columns: 1fr; }
+
+      .topics-grid { grid-template-columns: 1fr; }
+
+      .about-cta { padding: 28px 20px; }
+
+      .cta-title { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="logo-dot"></div>
+        StudentHub
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#">Articles</a>
+        <a href="#">Tips</a>
+        <a href="#">Career</a>
+        <a href="about.html" class="active">About</a>
+      </div>
+      <div class="nav-right">
+        <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
+        <button class="btn-primary" onclick="window.location.href='admin.html'">
+          <i class="ti ti-edit"></i> Write
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="about-hero">
+    <div class="about-hero-inner">
+
+      <!-- Left: Text -->
+      <div>
+        <div class="ah-eyebrow">
+          <i class="ti ti-info-circle"></i> About StudentHub
+        </div>
+        <h1 class="ah-title">
+          Students ke liye,<br>
+          <em>students ke haath</em><br>
+          se bana platform
+        </h1>
+        <p class="ah-desc">
+          StudentHub ek honest, practical blog hai jo Pakistan ke CS students ke liye banaya gaya hai. Yahan real experiences share hoti hain — without sugar coating, without fake motivation.
+        </p>
+        <div class="ah-stats">
+          <div class="ahs">
+            <div class="ahs-n">2.4k+</div>
+            <div class="ahs-l">Monthly readers</div>
+          </div>
+          <div class="ahs">
+            <div class="ahs-n">86+</div>
+            <div class="ahs-l">Articles</div>
+          </div>
+          <div class="ahs">
+            <div class="ahs-n">2026</div>
+            <div class="ahs-l">Founded</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Author card -->
+      <div class="ah-author-card">
+        <div class="ah-avatar">S</div>
+        <div class="ah-name">Salar</div>
+        <div class="ah-role">
+          CS Student · 2nd Year<br>
+          Air University, Islamabad
+        </div>
+        <div class="ah-badges">
+          <span class="ah-badge">Blogger</span>
+          <span class="ah-badge">CS Student</span>
+          <span class="ah-badge">Tech Enthusiast</span>
+        </div>
+        <div class="ah-social">
+          <a href="#" class="ah-social-btn"><i class="ti ti-brand-github"></i></a>
+          <a href="#" class="ah-social-btn"><i class="ti ti-brand-linkedin"></i></a>
+          <a href="#" class="ah-social-btn"><i class="ti ti-brand-twitter"></i></a>
+          <a href="#" class="ah-social-btn"><i class="ti ti-mail"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MAIN BODY -->
+  <div class="about-body">
+    <div class="about-body-inner">
+
+      <!-- Mission -->
+      <div class="about-section">
+        <div class="about-section-label"><span>Mission</span></div>
+        <h2>Kyun banaya StudentHub?</h2>
+        <p>
+          2nd year mein jab main university mein struggle kar raha tha, toh mujhe aise resources nahi mile jo actually kaam karte. Jo bhi tha woh ya toh English mein tha ya phir Pakistani universities se related nahi tha.
+        </p>
+        <p>
+          StudentHub isliye banaya taake jo cheezein mujhe kisi ne nahi batai, woh main doosron ko bata sakoon. Real problems, real solutions — Urdu/Roman Urdu mein.
+        </p>
+
+        <div class="mission-grid">
+          <div class="mission-card">
+            <div class="mc-icon"><i class="ti ti-bulb"></i></div>
+            <div class="mc-title">Practical advice</div>
+            <div class="mc-desc">Sirf woh tips jo real zindagi mein actually kaam karte hain. Koi motivational fluff nahi.</div>
+          </div>
+          <div class="mission-card">
+            <div class="mc-icon"><i class="ti ti-heart"></i></div>
+            <div class="mc-title">Honest experience</div>
+            <div class="mc-desc">Apni real struggles aur failures bhi share karta hoon — sirf success stories nahi.</div>
+          </div>
+          <div class="mission-card">
+            <div class="mc-icon"><i class="ti ti-users"></i></div>
+            <div class="mc-title">Community</div>
+            <div class="mc-desc">Ek jagah jahan Pakistani CS students apni problems discuss kar sakein aur ek doosre ki help karein.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Story -->
+      <div class="about-section">
+        <div class="about-section-label"><span>Story</span></div>
+        <h2>Yeh sab kaise shuru hua</h2>
+
+        <div class="story-timeline">
+          <div class="st-item">
+            <div class="st-dot"></div>
+            <div class="st-date">1st Year — 2025</div>
+            <div class="st-title">University mein pehla din</div>
+            <div class="st-desc">Air University mein CS mein admission hua. Pehle semester mein bohot confused tha — koi roadmap nahi tha, koi guide nahi tha.</div>
+          </div>
+          <div class="st-item">
+            <div class="st-dot"></div>
+            <div class="st-date">Mid 1st Year</div>
+            <div class="st-title">Struggles shuru hue</div>
+            <div class="st-desc">Programming, assignments, deadlines — sab ek saath overwhelming laga. Bohot cheezein trial and error se seekhi jo pehle se pata hoti toh time bachta.</div>
+          </div>
+          <div class="st-item">
+            <div class="st-dot"></div>
+            <div class="st-date">2nd Year — 2026</div>
+            <div class="st-title">StudentHub launch</div>
+            <div class="st-desc">Decide kiya ke jo maine seekha woh doosron ke saath share karunga. StudentHub launch kiya — ek blog jahan real student experiences share hoti hain.</div>
+          </div>
+          <div class="st-item">
+            <div class="st-dot"></div>
+            <div class="st-date">Abhi</div>
+            <div class="st-title">Growing community</div>
+            <div class="st-desc">2,400+ monthly readers aur growing. Har hafte naye articles aur tips. Maqsad hai Pakistan ka best student resource ban'na.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topics -->
+      <div class="about-section">
+        <div class="about-section-label"><span>Content</span></div>
+        <h2>Yahan kya milega?</h2>
+        <p>StudentHub pe in topics par articles milenge:</p>
+
+        <div class="topics-grid">
+          <div class="topic-item">
+            <i class="ti ti-books topic-icon"></i>
+            <div>
+              <div class="topic-name">Study Tips</div>
+              <div class="topic-desc">Effective study methods, notes, revision strategies</div>
+            </div>
+          </div>
+          <div class="topic-item">
+            <i class="ti ti-code topic-icon"></i>
+            <div>
+              <div class="topic-name">Tech & Tools</div>
+              <div class="topic-desc">Free tools, software, resources CS students ke liye</div>
+            </div>
+          </div>
+          <div class="topic-item">
+            <i class="ti ti-briefcase topic-icon"></i>
+            <div>
+              <div class="topic-name">Career</div>
+              <div class="topic-desc">Internships, jobs, LinkedIn, portfolio building</div>
+            </div>
+          </div>
+          <div class="topic-item">
+            <i class="ti ti-writing topic-icon"></i>
+            <div>
+              <div class="topic-name">Exams</div>
+              <div class="topic-desc">Exam strategies, past papers, preparation tips</div>
+            </div>
+          </div>
+          <div class="topic-item">
+            <i class="ti ti-mood-smile topic-icon"></i>
+            <div>
+              <div class="topic-name">Lifestyle</div>
+              <div class="topic-desc">Time management, balance, student life hacks</div>
+            </div>
+          </div>
+          <div class="topic-item">
+            <i class="ti ti-heart topic-icon"></i>
+            <div>
+              <div class="topic-name">Mental Health</div>
+              <div class="topic-desc">CGPA anxiety, burnout, pressure handle karna</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Values -->
+      <div class="about-section">
+        <div class="about-section-label"><span>Values</span></div>
+        <h2>Jo cheezein important hain</h2>
+
+        <div class="values-list">
+          <div class="value-item">
+            <div class="value-num">01</div>
+            <div>
+              <div class="value-title">Honesty pehle</div>
+              <div class="value-desc">Sirf woh likhunga jo actually sahi hai — koi fake positivity, koi exaggeration nahi. Agar kuch kaam nahi karta, woh bhi bataunga.</div>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-num">02</div>
+            <div>
+              <div class="value-title">Pakistan ke context mein</div>
+              <div class="value-desc">Yahan jo advice milegi woh Pakistani universities, culture aur resources ko dhyan mein rakh ke hogi — foreign blogs ki copy nahi.</div>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-num">03</div>
+            <div>
+              <div class="value-title">Student-friendly language</div>
+              <div class="value-desc">Roman Urdu mein likha jaata hai taake sab easily samajh sakein. Koi fancy English, koi jargon nahi.</div>
+            </div>
+          </div>
+          <div class="value-item">
+            <div class="value-num">04</div>
+            <div>
+              <div class="value-title">Community first</div>
+              <div class="value-desc">Yeh sirf mera blog nahi — yeh tumhara bhi hai. Comments mein apne thoughts share karo, suggestions do, articles submit karo.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="about-cta">
+        <div class="cta-title">Saath mil ke seekhte hain 🚀</div>
+        <p class="cta-desc">
+          Agar tumhare paas koi tip, experience, ya idea hai jo doosre students ki help kar sake — toh likhna shuru karo. Submissions welcome hain!
+        </p>
+        <div class="cta-btns">
+          <button class="btn-lg" onclick="window.location.href='index.html'">
+            <i class="ti ti-home"></i> Articles padhna shuru karo
+          </button>
+          <button class="btn-lg-ghost" onclick="window.location.href='admin.html'">
+            <i class="ti ti-edit"></i> Apna article likho
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="f-logo">
+        <div class="logo-dot"></div> StudentHub
+      </div>
+      <div class="f-links">
+        <a href="about.html">About</a>
+       <a href="write-for-us.html">Write for us</a>
+        <a href="privacy.html">Privacy</a>
+         <a href="contact.html">Contact</a>
+      </div>
+      <div class="f-copy">© 2026 StudentHub. Made with <i class="ti ti-heart"></i> by Salar.</div>
+    </div>
+  </footer>
+
+</body>
+</html>

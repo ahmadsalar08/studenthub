@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StudentHub — Privacy Policy</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Privacy-specific styles only */
+    .page-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 32px 80px;
+    }
+
+    /* Hero */
+    .priv-hero {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+    .priv-hero .hero-eyebrow {
+      margin-bottom: 18px;
+    }
+    .priv-hero h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.8px;
+      margin-bottom: 12px;
+    }
+    .priv-hero p {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 460px;
+      margin: 0 auto 6px;
+      line-height: 1.75;
+    }
+    .priv-updated {
+      font-size: 12px;
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+
+    /* Layout */
+    .priv-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    /* TOC Sidebar */
+    .priv-toc {
+      position: sticky;
+      top: 80px;
+      background: var(--card);
+      border: 0.5px solid var(--border2);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .priv-toc .sw-title {
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .priv-toc ul { list-style: none; }
+    .priv-toc ul li { margin-bottom: 2px; }
+    .priv-toc ul li a {
+      display: block;
+      padding: 6px 10px;
+      color: var(--text-muted);
+      font-size: 13px;
+      border-radius: 6px;
+      transition: all 0.15s;
+    }
+    .priv-toc ul li a:hover {
+      background: var(--purple-dim);
+      color: var(--purple-light);
+    }
+    .priv-toc ul li a.active {
+      background: var(--purple-dim);
+      color: var(--purple-light);
+      border: 0.5px solid var(--purple-border);
+    }
+
+    /* Cards */
+    .priv-cards { display: flex; flex-direction: column; gap: 16px; }
+
+    .priv-card {
+      background: var(--card);
+      border: 0.5px solid var(--border2);
+      border-radius: 14px;
+      padding: 26px 28px;
+      transition: border-color 0.15s;
+    }
+    .priv-card:hover { border-color: var(--purple-border); }
+
+    .priv-card-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .priv-icon {
+      width: 38px; height: 38px;
+      background: var(--purple-dim);
+      border: 0.5px solid var(--purple-border);
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .priv-card-head h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+      letter-spacing: -0.2px;
+    }
+
+    .priv-card p {
+      color: var(--text-muted);
+      font-size: 14px;
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+    .priv-card p:last-child { margin-bottom: 0; }
+
+    .priv-card ul {
+      color: var(--text-muted);
+      font-size: 13.5px;
+      line-height: 1.8;
+      padding-left: 18px;
+      margin-top: 8px;
+    }
+    .priv-card ul li { margin-bottom: 5px; }
+    .priv-card ul li span {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* Highlight box */
+    .info-box {
+      background: var(--purple-dim);
+      border: 0.5px solid var(--purple-border);
+      border-radius: 8px;
+      padding: 12px 15px;
+      margin-top: 14px;
+    }
+    .info-box p {
+      color: var(--purple-light) !important;
+      font-size: 13px !important;
+      margin: 0 !important;
+    }
+
+    /* Contact card */
+    .contact-cta {
+      background: var(--card);
+      border: 0.5px solid var(--purple-border);
+      border-radius: 14px;
+      padding: 32px;
+      text-align: center;
+    }
+    .contact-cta h2 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+    .contact-cta p {
+      color: var(--text-muted);
+      font-size: 13.5px;
+      margin-bottom: 18px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .priv-layout { grid-template-columns: 1fr; }
+      .priv-toc { position: static; }
+      .page-wrap { padding: 36px 16px 60px; }
+      .priv-hero h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR — exact same as your site -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-dot"></span>StudentHub
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="#">Articles</a>
+        <a href="#">Tips</a>
+        <a href="#">Career</a>
+        <a href="about.html">About</a>
+      </div>
+      <div class="nav-right">
+        <a href="login.html" class="btn-ghost">Sign in</a>
+        <a href="admin.html" class="btn-primary">✏️ Write</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-wrap">
+
+    <!-- Hero -->
+    <div class="priv-hero">
+      <div class="hero-eyebrow">🔒 Legal</div>
+      <h1>Privacy Policy</h1>
+      <p>Yahan explain kiya gaya hai ke hum tumhara data kaise collect aur use karte hain.</p>
+      <p class="priv-updated">Last updated: May 27, 2026</p>
+    </div>
+
+    <!-- Layout: TOC + Cards -->
+    <div class="priv-layout">
+
+      <!-- Sidebar TOC -->
+      <aside class="priv-toc">
+        <div class="sw-title">Contents</div>
+        <ul>
+          <li><a href="#collected">Data Collection</a></li>
+          <li><a href="#usage">Data Usage</a></li>
+          <li><a href="#cookies">Cookies</a></li>
+          <li><a href="#sharing">Sharing</a></li>
+          <li><a href="#rights">Your Rights</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </aside>
+
+      <!-- Cards -->
+      <div class="priv-cards">
+
+        <div class="priv-card" id="collected">
+          <div class="priv-card-head">
+            <div class="priv-icon">📋</div>
+            <h2>Kya data collect hota hai?</h2>
+          </div>
+          <p>Jab tum StudentHub use karte ho, hum kuch basic information collect karte hain:</p>
+          <ul>
+            <li><span>Name & Email</span> — account banane ya contact form pe</li>
+            <li><span>Reading history</span> — kaunse articles padhe (improve karne ke liye)</li>
+            <li><span>Device & Browser info</span> — technical issues solve karne ke liye</li>
+            <li><span>Location (approximate)</span> — sirf country level, exact nahi</li>
+          </ul>
+          <div class="info-box">
+            <p>💡 Hum kabhi sensitive data nahi maangenge — passwords hints, financial info, ya government IDs.</p>
+          </div>
+        </div>
+
+        <div class="priv-card" id="usage">
+          <div class="priv-card-head">
+            <div class="priv-icon">⚙️</div>
+            <h2>Yeh data kaise use hota hai?</h2>
+          </div>
+          <p>Tumhara data sirf website ko better banane ke liye use hota hai:</p>
+          <ul>
+            <li>Tumhari preferences ke hisaab se <span>articles suggest karna</span></li>
+            <li>Website ki <span>performance improve</span> karna</li>
+            <li>Important <span>updates ya replies ka email</span> dena</li>
+            <li>Spam se <span>community protect</span> karna</li>
+          </ul>
+          <p style="margin-top:12px">Hum tumhara data advertisers ya kisi bhi baahri party ko <span style="color:var(--purple-light);font-weight:500">sell nahi karte</span>.</p>
+        </div>
+
+        <div class="priv-card" id="cookies">
+          <div class="priv-card-head">
+            <div class="priv-icon">🍪</div>
+            <h2>Cookies kya hoti hain?</h2>
+          </div>
+          <p>Cookies chhoti files hoti hain jo browser mein save hoti hain. Hum sirf zaroori cookies use karte hain:</p>
+          <ul>
+            <li><span>Session cookies</span> — logged in rakhne ke liye page reload pe</li>
+            <li><span>Preference cookies</span> — dark mode ya settings yaad rakhne ke liye</li>
+          </ul>
+          <p style="margin-top:10px">Marketing ya tracking cookies bilkul use nahi karte. Browser settings se kabhi bhi clear kar sakte ho.</p>
+        </div>
+
+        <div class="priv-card" id="sharing">
+          <div class="priv-card-head">
+            <div class="priv-icon">🤝</div>
+            <h2>Data kisko share hota hai?</h2>
+          </div>
+          <p>Tumhara personal data kisi ko share nahi hota. Sirf yeh exceptions hain:</p>
+          <ul>
+            <li><span>Supabase</span> — sirf encrypted database storage ke liye</li>
+            <li><span>Vercel</span> — website hosting ke liye zaroori</li>
+            <li><span>Legal requirement</span> — agar court officially request kare</li>
+          </ul>
+          <div class="info-box">
+            <p>🔒 In services ko sirf minimum zaroori data diya jata hai, woh bhi encrypted form mein.</p>
+          </div>
+        </div>
+
+        <div class="priv-card" id="rights">
+          <div class="priv-card-head">
+            <div class="priv-icon">✅</div>
+            <h2>Tumhare rights kya hain?</h2>
+          </div>
+          <p>Tum apne data ke baare mein yeh actions le sakte ho:</p>
+          <ul>
+            <li><span>Dekho</span> — hum ne kya data save kiya hai</li>
+            <li><span>Edit karo</span> — galat info correct karwao</li>
+            <li><span>Delete karo</span> — account aur sab data permanently hatao</li>
+            <li><span>Object karo</span> — kisi specific data use se mana karo</li>
+          </ul>
+          <p style="margin-top:10px">Koi bhi request ke liye contact form use karo. 7 din mein jawab milega.</p>
+        </div>
+
+        <div class="priv-card" id="security">
+          <div class="priv-card-head">
+            <div class="priv-icon">🛡️</div>
+            <h2>Data kitna secure hai?</h2>
+          </div>
+          <ul>
+            <li>Saara data <span>HTTPS (SSL)</span> se encrypt transfer hota hai</li>
+            <li>Database <span>Supabase Row Level Security</span> se protected</li>
+            <li>Passwords <span>hashed</span> hote hain — plain text mein kabhi nahi</li>
+            <li>Regular <span>security checks</span> kiye jate hain</li>
+          </ul>
+          <p style="margin-top:12px">Security breach hone pe hum turant affected users ko email karenge.</p>
+        </div>
+
+        <div class="contact-cta" id="contact">
+          <h2>Koi sawal hai? 💬</h2>
+          <p>Privacy ke baare mein koi bhi concern ho toh seedha contact karo.</p>
+          <a href="contact.html" class="btn-primary" style="display:inline-flex;text-decoration:none">📩 Contact karo</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER — exact same as your site -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="f-logo">
+        <span class="logo-dot"></span>StudentHub
+      </div>
+      <div class="f-links">
+        <a href="about.html">About</a>
+        <a href="write-for-us.html">Write for us</a>
+        <a href="privacy.html" style="color:var(--purple-light)">Privacy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="f-copy">© 2026 StudentHub. Made with ♡ by Salar.</div>
+    </div>
+  </footer>
+
+  <script>
+    const sections = document.querySelectorAll('[id]');
+    const links = document.querySelectorAll('.priv-toc a');
+    window.addEventListener('scroll', () => {
+      let cur = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) cur = s.id; });
+      links.forEach(l => {
+        l.classList.remove('active');
+        if (l.getAttribute('href') === '#' + cur) l.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

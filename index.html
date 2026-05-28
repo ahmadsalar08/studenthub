@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudentHub — Learn Smarter</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="logo-dot"></div>
+        StudentHub
+      </div>
+      <div class="nav-links">
+        <a href="#" class="active">Home</a>
+        <a href="#">Articles</a>
+        <a href="#">Tips</a>
+        <a href="#">Career</a>
+        
+        <!-- <a href="contact.html">Contact</a> -->
+      </div>
+      <div class="nav-right">
+        <button class="btn-ghost"><i class="ti ti-search"></i></button>
+         <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
+        <!-- <button class="btn-primary"><i class="ti ti-edit"></i> Write</button> -->
+         <button class="btn-primary" onclick="window.location.href='admin.html'">
+  <i class="ti ti-edit"></i> Write
+</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+
+      <!-- LEFT: Text -->
+      <div class="hero-left">
+        <div class="hero-eyebrow">
+          <i class="ti ti-sparkles"></i> For students, by students
+        </div>
+        <h1>Learn smarter.<br><em>Live better.</em><br>Succeed faster.</h1>
+        <p class="hero-sub">Real tips, honest experiences aur practical advice — har CS student ke liye jo actually kaam karta hai.</p>
+        <div class="hero-actions">
+          <button class="btn-lg"><i class="ti ti-rocket"></i> Start reading</button>
+          <button class="btn-lg-ghost"><i class="ti ti-edit"></i> Write an article</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="stat-num" data-target="2400">0</div>
+            <div class="stat-label">Monthly readers</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-num" data-target="86">0</div>
+            <div class="stat-label">Articles published</div>
+          </div>
+          <div class="hero-stat">
+            <div class="stat-num" data-target="340">0</div>
+            <div class="stat-label">Community members</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Stats Dashboard -->
+      <div class="hero-right">
+        <div class="dashboard-card">
+
+          <!-- Header -->
+          <div class="db-header">
+            <div class="db-title">
+              <span class="db-dot"></span> StudentHub Stats
+            </div>
+            <span class="db-live"><i class="ti ti-circle-filled"></i> Live</span>
+          </div>
+
+          <!-- Top metric row -->
+          <div class="db-metrics">
+            <div class="db-metric">
+              <div class="db-metric-val">2.4k</div>
+              <div class="db-metric-label">Readers today</div>
+              <div class="db-metric-up"><i class="ti ti-trending-up"></i> +12%</div>
+            </div>
+            <div class="db-metric">
+              <div class="db-metric-val">86</div>
+              <div class="db-metric-label">Articles</div>
+              <div class="db-metric-up"><i class="ti ti-trending-up"></i> +3</div>
+            </div>
+            <div class="db-metric">
+              <div class="db-metric-val">4.9</div>
+              <div class="db-metric-label">Avg rating</div>
+              <div class="db-metric-up"><i class="ti ti-star"></i> Top</div>
+            </div>
+          </div>
+
+          <!-- Mini bar chart -->
+          <div class="db-chart-label">Weekly readers</div>
+          <div class="db-chart">
+            <div class="db-bar-wrap">
+              <div class="db-bar" style="height:45%"><span>M</span></div>
+              <div class="db-bar" style="height:60%"><span>T</span></div>
+              <div class="db-bar" style="height:50%"><span>W</span></div>
+              <div class="db-bar" style="height:80%"><span>T</span></div>
+              <div class="db-bar" style="height:65%"><span>F</span></div>
+              <div class="db-bar active" style="height:95%"><span>S</span></div>
+              <div class="db-bar" style="height:40%"><span>S</span></div>
+            </div>
+          </div>
+
+          <!-- Recent articles -->
+          <div class="db-recent-label">Trending now</div>
+          <div class="db-recent-list">
+            <div class="db-recent-item">
+              <div class="db-recent-icon"><i class="ti ti-book"></i></div>
+              <div class="db-recent-text">1st year CS survival guide</div>
+              <div class="db-recent-views">1.2k</div>
+            </div>
+            <div class="db-recent-item">
+              <div class="db-recent-icon"><i class="ti ti-bulb"></i></div>
+              <div class="db-recent-text">CGPA improve karne ke 7 tips</div>
+              <div class="db-recent-views">980</div>
+            </div>
+            <div class="db-recent-item">
+              <div class="db-recent-icon"><i class="ti ti-briefcase"></i></div>
+              <div class="db-recent-text">Internship kaise milti hai?</div>
+              <div class="db-recent-views">754</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CATEGORY TABS -->
+  <div class="cats-bar">
+    <div class="cats-inner">
+      <button class="cat active" data-cat="all">All posts</button>
+      <button class="cat" data-cat="study">Study tips</button>
+      <button class="cat" data-cat="tech">Tech & tools</button>
+      <button class="cat" data-cat="career">Career</button>
+      <button class="cat" data-cat="exams">Exams</button>
+      <button class="cat" data-cat="lifestyle">Lifestyle</button>
+      <button class="cat" data-cat="mental">Mental health</button>
+    </div>
+  </div>
+
+  <!-- MAIN BODY -->
+  <div class="body-wrap">
+    <div class="body-inner">
+
+      <!-- LEFT COLUMN -->
+      <div class="left-col">
+
+        <!-- FEATURED POST -->
+        <div class="section-label">
+          <span>Featured</span>
+        </div>
+        <div class="featured-card">
+          <div class="fc-top">
+            <div class="fc-badge"><i class="ti ti-star"></i> Editor's pick</div>
+            <span class="fc-meta">20 May 2026</span>
+            <span class="fc-meta"><i class="ti ti-clock"></i> 8 min read</span>
+          </div>
+          <h2 class="fc-title">1st year CS student survival guide — jo koi nahi batata</h2>
+          <p class="fc-excerpt">University ka pehla saal bohot overwhelming lagta hai. Subjects mushkil, deadlines tight, aur sab kuch naya. Yahan main share karta hoon woh sab jo mujhe pehle se pata hota toh meri life kitni aasan hoti...</p>
+          <div class="fc-footer">
+            <div class="fc-avatar">AK</div>
+            <span class="fc-author">Ali Khan <span class="dot">·</span> Student Life</span>
+            <button class="fc-cta">Read article <i class="ti ti-arrow-right"></i></button>
+          </div>
+        </div>
+
+        <!-- POST LIST -->
+        <div class="section-label"><span>Latest articles</span></div>
+        <div class="post-list" id="post-list"></div>
+
+        <!-- LOAD MORE -->
+        <div class="load-more-wrap">
+          <button class="load-more-btn" id="load-more">
+            Load more articles <i class="ti ti-refresh"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+
+        <!-- AUTHOR CARD -->
+        <div class="sw">
+          <div class="sw-title">About the author</div>
+          <div class="author-block">
+            <div class="ab-avatar">S</div>
+            <div class="ab-name">Tumhara Naam</div>
+            <div class="ab-role">CS Student · 2nd Semester · Rawalpindi<br>Tips share karta hoon jo actually kaam karte hain</div>
+            <div class="ab-stats">
+              <div class="abs">
+                <div class="abs-n">14</div>
+                <div class="abs-l">Posts</div>
+              </div>
+              <div class="abs">
+                <div class="abs-n">2.4k</div>
+                <div class="abs-l">Readers</div>
+              </div>
+              <div class="abs">
+                <div class="abs-n">4.9</div>
+                <div class="abs-l">Rating</div>
+              </div>
+            </div>
+            <button class="ab-btn"><i class="ti ti-user-plus"></i> Follow</button>
+          </div>
+        </div>
+
+        <!-- TRENDING -->
+        <div class="sw">
+          <div class="sw-title"><i class="ti ti-trending-up"></i> Trending this week</div>
+          <div class="trending-list" id="trending-list"></div>
+        </div>
+
+        <!-- TAGS -->
+        <div class="sw">
+          <div class="sw-title"><i class="ti ti-tag"></i> Popular tags</div>
+          <div class="tags-cloud">
+            <span class="tag-pill">Study Tips</span>
+            <span class="tag-pill">Tech</span>
+            <span class="tag-pill">Career</span>
+            <span class="tag-pill">Exams</span>
+            <span class="tag-pill">Lifestyle</span>
+            <span class="tag-pill">Mental Health</span>
+            <span class="tag-pill">Programming</span>
+            <span class="tag-pill">CGPA</span>
+            <span class="tag-pill">Internship</span>
+          </div>
+        </div>
+
+        <!-- NEWSLETTER -->
+        <div class="newsletter-box">
+          <div class="nl-icon"><i class="ti ti-mail"></i></div>
+          <div class="nl-title">Weekly digest</div>
+          <div class="nl-sub">Har hafta best articles seedha inbox mein. Koi spam nahi.</div>
+          <input type="email" placeholder="tumhara@email.com" class="nl-input" id="nl-email">
+          <button class="nl-btn" onclick="subscribe()">
+            Subscribe <i class="ti ti-arrow-right"></i>
+          </button>
+          <div class="nl-success" id="nl-success">
+            <i class="ti ti-check"></i> Subscribed! Shukriya.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="f-logo">
+        <div class="logo-dot"></div> StudentHub
+      </div>
+      <div class="f-links">
+        <a href="about.html">About</a>
+        <a href="#">Write for us</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="f-copy">© 2026 StudentHub. Made with <i class="ti ti-heart"></i> by a CS student.</div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

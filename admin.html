@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudentHub — Admin Panel</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body class="admin-body">
+
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="as-logo">
+      <div class="logo-dot"></div>
+      StudentHub
+      <span class="as-badge">Admin</span>
+    </div>
+
+    <nav class="as-nav">
+      <button class="as-link active" onclick="showPanel('dashboard')">
+        <i class="ti ti-layout-dashboard"></i> Dashboard
+      </button>
+      <button class="as-link" onclick="showPanel('write')">
+        <i class="ti ti-edit"></i> Write Article
+      </button>
+      <button class="as-link" onclick="showPanel('posts')">
+        <i class="ti ti-files"></i> All Posts
+      </button>
+      <button class="as-link" onclick="showPanel('comments')">
+        <i class="ti ti-message-circle"></i> Comments
+        <span class="as-notif">3</span>
+      </button>
+    </nav>
+
+    <div class="as-bottom">
+      <div class="as-user">
+        <div class="as-avatar">S</div>
+        <div class="as-user-info">
+          <div class="as-user-name">Tumhara Naam</div>
+          <div class="as-user-role">Admin · CS Student</div>
+        </div>
+      </div>
+      <a href="index.html" class="as-link">
+        <i class="ti ti-home"></i> View site
+      </a>
+      <a href="login.html" class="as-link as-logout">
+        <i class="ti ti-logout"></i> Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="admin-main">
+
+    <!-- TOP BAR -->
+    <div class="admin-topbar">
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()" style="display:none">
+        <i class="ti ti-menu-2"></i>
+      </button>
+      <div class="topbar-title" id="topbar-title">Dashboard</div>
+      <div class="topbar-right">
+        <button class="btn-ghost" onclick="showPanel('write')">
+          <i class="ti ti-plus"></i> New article
+        </button>
+        <a href="index.html" class="btn-primary" style="text-decoration:none">
+          <i class="ti ti-external-link"></i> View site
+        </a>
+      </div>
+    </div>
+
+    <!-- ===== DASHBOARD PANEL ===== -->
+    <div class="panel" id="panel-dashboard">
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card-icon purple">
+            <i class="ti ti-file-text"></i>
+          </div>
+          <div class="stat-card-body">
+            <div class="stat-card-num">12</div>
+            <div class="stat-card-label">Total articles</div>
+          </div>
+          <div class="stat-card-trend up">
+            <i class="ti ti-trending-up"></i> +2 this week
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon blue">
+            <i class="ti ti-eye"></i>
+          </div>
+          <div class="stat-card-body">
+            <div class="stat-card-num">2.4k</div>
+            <div class="stat-card-label">Total views</div>
+          </div>
+          <div class="stat-card-trend up">
+            <i class="ti ti-trending-up"></i> +340 this week
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon green">
+            <i class="ti ti-users"></i>
+          </div>
+          <div class="stat-card-body">
+            <div class="stat-card-num">340</div>
+            <div class="stat-card-label">Total readers</div>
+          </div>
+          <div class="stat-card-trend up">
+            <i class="ti ti-trending-up"></i> +28 this week
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon orange">
+            <i class="ti ti-message-circle"></i>
+          </div>
+          <div class="stat-card-body">
+            <div class="stat-card-num">48</div>
+            <div class="stat-card-label">Total comments</div>
+          </div>
+          <div class="stat-card-trend up">
+            <i class="ti ti-trending-up"></i> +6 this week
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent posts table -->
+      <div class="admin-card">=
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;">
+  <span style="font-size:14px;font-weight:600;color:var(--text-primary);white-space:nowrap;">Recent articles</span>
+  <button class="btn-ghost btn-sm" onclick="showPanel('posts')" style="white-space:nowrap;flex-shrink:0;">View all →</button>
+</div>
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Views</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="dashboard-posts"></tbody>
+        </table>
+      </div>
+
+      <!-- Quick actions -->
+      <div class="quick-actions">
+        <div class="admin-card-title" style="margin-bottom:16px">Quick actions</div>
+        <div class="qa-grid">
+          <button class="qa-btn" onclick="showPanel('write')">
+            <i class="ti ti-edit"></i>
+            <span>Write new article</span>
+          </button>
+          <button class="qa-btn" onclick="showPanel('posts')">
+            <i class="ti ti-files"></i>
+            <span>Manage posts</span>
+          </button>
+          <button class="qa-btn" onclick="showPanel('comments')">
+            <i class="ti ti-message-circle"></i>
+            <span>Review comments</span>
+          </button>
+          <a href="index.html" class="qa-btn" style="text-decoration:none">
+            <i class="ti ti-external-link"></i>
+            <span>View live site</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===== WRITE PANEL ===== -->
+    <div class="panel hidden" id="panel-write">
+      <div class="write-layout">
+
+        <!-- Editor -->
+        <div class="editor-col">
+          <div class="admin-card">
+            <div class="editor-header">
+              <input
+                type="text"
+                class="title-input"
+                id="art-title"
+                placeholder="Article ka title likho..."
+                oninput="updatePreview()"
+              >
+            </div>
+
+            <div class="editor-meta">
+              <select class="meta-select" id="art-category" onchange="updatePreview()">
+                <option value="">Category select karo</option>
+                <option value="Study Tips">Study Tips</option>
+                <option value="Tech & Tools">Tech & Tools</option>
+                <option value="Career">Career</option>
+                <option value="Exams">Exams</option>
+                <option value="Lifestyle">Lifestyle</option>
+                <option value="Mental Health">Mental Health</option>
+              </select>
+              <input
+                type="text"
+                class="meta-input"
+                id="art-tags"
+                placeholder="Tags (comma se separate karo)"
+              >
+              <select class="meta-select" id="art-read">
+                <option value="3 min">3 min read</option>
+                <option value="5 min" selected>5 min read</option>
+                <option value="8 min">8 min read</option>
+                <option value="10 min">10 min read</option>
+              </select>
+            </div>
+
+            <!-- Toolbar -->
+            <div class="editor-toolbar">
+              <button class="tb-btn" onclick="format('bold')" title="Bold">
+                <i class="ti ti-bold"></i>
+              </button>
+              <button class="tb-btn" onclick="format('italic')" title="Italic">
+                <i class="ti ti-italic"></i>
+              </button>
+              <button class="tb-btn" onclick="format('underline')" title="Underline">
+                <i class="ti ti-underline"></i>
+              </button>
+              <div class="tb-divider"></div>
+              <button class="tb-btn" onclick="insertHeading()" title="Heading">
+                <i class="ti ti-h-2"></i>
+              </button>
+              <button class="tb-btn" onclick="insertList()" title="List">
+                <i class="ti ti-list"></i>
+              </button>
+              <button class="tb-btn" onclick="insertCallout()" title="Callout">
+                <i class="ti ti-info-circle"></i>
+              </button>
+              <div class="tb-divider"></div>
+              <button class="tb-btn" onclick="insertLink()" title="Link">
+                <i class="ti ti-link"></i>
+              </button>
+            </div>
+
+            <!-- Content area -->
+            <div
+              class="editor-area"
+              id="art-content"
+              contenteditable="true"
+              data-placeholder="Article ka content yahan likho..."
+              oninput="updatePreview()"
+            ></div>
+
+            <!-- Word count -->
+            <div class="editor-footer">
+              <span class="word-count" id="word-count">0 words</span>
+              <span class="char-count" id="char-count">0 characters</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="write-sidebar">
+
+          <!-- Publish card -->
+          <div class="admin-card publish-card">
+            <div class="admin-card-title">Publish</div>
+            <div class="publish-options">
+              <div class="pub-option">
+                <i class="ti ti-calendar"></i>
+                <span>Date: <strong>Today</strong></span>
+              </div>
+              <div class="pub-option">
+                <i class="ti ti-user"></i>
+                <span>Author: <strong>Tumhara Naam</strong></span>
+              </div>
+              <div class="pub-option">
+                <i class="ti ti-eye"></i>
+                <span>Visibility: <strong>Public</strong></span>
+              </div>
+            </div>
+            <button class="submit-btn pub-btn" onclick="publishPost()">
+              <i class="ti ti-send"></i> Publish article
+            </button>
+            <button class="draft-btn" onclick="saveDraft()">
+              <i class="ti ti-device-floppy"></i> Save as draft
+            </button>
+          </div>
+
+          <!-- Preview toggle -->
+          <div class="admin-card">
+            <div class="admin-card-title">Preview</div>
+            <div class="preview-box" id="preview-box">
+              <div class="preview-empty">
+                <i class="ti ti-eye-off"></i>
+                <span>Title likhna shuru karo...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- SEO -->
+          <div class="admin-card">
+            <div class="admin-card-title"><i class="ti ti-search"></i> SEO</div>
+            <div class="seo-score" id="seo-score">
+              <div class="seo-bar">
+                <div class="seo-fill" id="seo-fill" style="width:0%"></div>
+              </div>
+              <span class="seo-label" id="seo-label">Title daalo</span>
+            </div>
+            <div class="seo-tips" id="seo-tips"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== POSTS PANEL ===== -->
+    <div class="panel hidden" id="panel-posts">
+      <div class="posts-toolbar">
+        <div class="posts-search">
+          <i class="ti ti-search"></i>
+          <input type="text" placeholder="Posts dhundho..." id="posts-search" oninput="filterAdminPosts()">
+        </div>
+        <select class="meta-select" id="posts-filter" onchange="filterAdminPosts()">
+          <option value="all">All categories</option>
+          <option value="Study Tips">Study Tips</option>
+          <option value="Tech & Tools">Tech & Tools</option>
+          <option value="Career">Career</option>
+          <option value="Exams">Exams</option>
+          <option value="Lifestyle">Lifestyle</option>
+          <option value="Mental Health">Mental Health</option>
+        </select>
+        <button class="btn-primary btn-sm" onclick="showPanel('write')">
+          <i class="ti ti-plus"></i> New article
+        </button>
+      </div>
+      <div class="admin-card">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Views</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="all-posts-table"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ===== COMMENTS PANEL ===== -->
+    <div class="panel hidden" id="panel-comments">
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <div class="admin-card-title">All comments</div>
+          <span class="badge-count">48 total</span>
+        </div>
+        <div class="comments-admin-list" id="admin-comments"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- PUBLISH SUCCESS TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
