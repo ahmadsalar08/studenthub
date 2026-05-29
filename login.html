@@ -111,7 +111,7 @@
           <div class="form-group">
             <div class="label-row">
               <label class="form-label">Password</label>
-              <a href="#" class="forgot-link">Bhool gaye?</a>
+              <a href="#" class="forgot-link" onclick="showTab('forgot'); return false;">Bhool gaye?</a>
             </div>
             <div class="input-wrap">
               <i class="ti ti-lock input-icon"></i>
@@ -251,6 +251,40 @@
           <p class="switch-text">
             Pehle se account hai?
             <button class="switch-link" onclick="showTab('login')">Sign in karo</button>
+          </p>
+        </div>
+
+
+        <!-- FORGOT PASSWORD PANEL -->
+        <div class="form-panel hidden" id="panel-forgot">
+          <div class="form-header">
+            <h1 class="form-title">Password reset karo 🔑</h1>
+            <p class="form-subtitle">Apni email daalo — reset link bhej denge</p>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Email address</label>
+            <div class="input-wrap">
+              <i class="ti ti-mail input-icon"></i>
+              <input
+                type="email"
+                class="form-input"
+                id="forgot-email"
+                placeholder="tumhara@email.com"
+              >
+            </div>
+          </div>
+
+          <div class="form-error" id="forgot-error"></div>
+
+          <button class="submit-btn" onclick="handleForgotPassword()">
+            <span>Reset link bhejo</span>
+            <i class="ti ti-arrow-right"></i>
+          </button>
+
+          <p class="switch-text" style="margin-top:16px">
+            Yaad aa gaya?
+            <button class="switch-link" onclick="showTab('login')">Wapas Sign in pe jao</button>
           </p>
         </div>
 

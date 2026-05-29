@@ -9,14 +9,17 @@ function showTab(tab) {
   document.getElementById("panel-login").classList.add("hidden");
   document.getElementById("panel-signup").classList.add("hidden");
   document.getElementById("panel-success").classList.add("hidden");
+  document.getElementById("panel-forgot").classList.add("hidden");
   document.getElementById("tab-login").classList.remove("active");
   document.getElementById("tab-signup").classList.remove("active");
   if (tab === "login") {
     document.getElementById("panel-login").classList.remove("hidden");
     document.getElementById("tab-login").classList.add("active");
-  } else {
+  } else if (tab === "signup") {
     document.getElementById("panel-signup").classList.remove("hidden");
     document.getElementById("tab-signup").classList.add("active");
+  } else if (tab === "forgot") {
+    document.getElementById("panel-forgot").classList.remove("hidden");
   }
 }
 window.showTab = showTab;
@@ -104,6 +107,46 @@ async function handleLogin() {
   setTimeout(() => { window.location.href = "index.html"; }, 800);
 }
 window.handleLogin = handleLogin;
+
+// ===== FORGOT PASSWORD HANDLER =====
+async function handleForgotPassword() {
+  clearError("forgot-error");
+  const email = document.getElementById("forgot-email").value.trim();
+
+  if (!email || !email.includes("@")) {
+    shake("forgot-email");
+    showError("forgot-error", "Valid email daalo");
+    return;
+  }
+
+  const btn = document.querySelector("#panel-forgot .submit-btn");
+  btn.innerHTML = '<i class="ti ti-loader ti-spin"></i> Bhej raha hoon...';
+  btn.disabled = true;
+
+  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://studenthub-plum.vercel.app/reset-password.html',
+  });
+
+  if (error) {
+    btn.innerHTML = '<span>Reset link bhejo</span> <i class="ti ti-arrow-right"></i>';
+    btn.disabled = false;
+    showError("forgot-error", "Kuch masla hua: " + error.message);
+    return;
+  }
+
+  // Success
+  document.getElementById("panel-forgot").innerHTML = `
+    <div class="success-state">
+      <div class="success-icon"><i class="ti ti-mail-check"></i></div>
+      <h2 class="success-title">Email bhej di! 📧</h2>
+      <p class="success-sub">${email} pe password reset link bheja gaya hai. Inbox check karo!</p>
+      <button class="submit-btn" onclick="showTab('login')" style="margin-top:8px">
+        <span>Wapas Sign in pe jao</span> <i class="ti ti-arrow-right"></i>
+      </button>
+    </div>
+  `;
+}
+window.handleForgotPassword = handleForgotPassword;
 
 // ===== SIGNUP HANDLER =====
 async function handleSignup() {
