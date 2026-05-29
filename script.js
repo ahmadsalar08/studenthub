@@ -5,6 +5,66 @@ const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
 const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
+// ===== NAVBAR AUTH STATE =====
+async function updateNavbar() {
+  const { data: { session } } = await supabase.auth.getSession();
+  const navRight = document.querySelector(".nav-right");
+  if (!navRight) return;
+
+  if (session && session.user) {
+    const user = session.user;
+    const name = user.user_metadata?.full_name || user.email.split("@")[0];
+    const initial = name.charAt(0).toUpperCase();
+
+    navRight.innerHTML = `
+      <div class="nav-user" id="nav-user-btn">
+        <div class="nav-avatar">${initial}</div>
+        <span class="nav-username">${name}</span>
+        <i class="ti ti-chevron-down" style="font-size:13px;color:var(--text-muted)"></i>
+      </div>
+      <div class="nav-dropdown hidden" id="nav-dropdown">
+        <a href="admin.html" class="nav-dd-item">
+          <i class="ti ti-edit"></i> Write article
+        </a>
+        <div class="nav-dd-divider"></div>
+        <button class="nav-dd-item nav-dd-logout" id="logout-btn">
+          <i class="ti ti-logout"></i> Sign out
+        </button>
+      </div>
+    `;
+
+    // Toggle dropdown
+    document.getElementById("nav-user-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
+      document.getElementById("nav-dropdown").classList.toggle("hidden");
+    });
+
+    // Close dropdown on outside click
+    document.addEventListener("click", () => {
+      const dd = document.getElementById("nav-dropdown");
+      if (dd) dd.classList.add("hidden");
+    });
+
+    // Logout
+    document.getElementById("logout-btn").addEventListener("click", async () => {
+      await supabase.auth.signOut();
+      window.location.reload();
+    });
+
+  } else {
+    // Not logged in — show Sign in + Write
+    navRight.innerHTML = `
+      <button class="btn-ghost" id="search-btn"><i class="ti ti-search"></i></button>
+      <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
+      <button class="btn-primary" onclick="window.location.href='admin.html'">
+        <i class="ti ti-edit"></i> Write
+      </button>
+    `;
+  }
+}
+
+updateNavbar();
+
 // ===== DATA =====
 let posts = [];
 
@@ -81,7 +141,6 @@ function renderPosts() {
     list.appendChild(item);
   });
 
-  // Load more button hide/show
   const btn = document.getElementById("load-more");
   btn.style.display = filtered.length > visibleCount ? "flex" : "none";
 }
@@ -145,13 +204,14 @@ function subscribe() {
   document.getElementById("nl-email").style.display = "none";
   document.querySelector(".nl-btn").style.display = "none";
 }
+window.subscribe = subscribe;
 
 // ===== INIT =====
 renderPosts();
 renderTrending();
 animateCounters();
 
-// Post click hone par post.html kholo
+// Post click
 document.getElementById("post-list").addEventListener("click", (e) => {
   const item = e.target.closest(".post-item");
   if (item) window.location.href = "post.html";

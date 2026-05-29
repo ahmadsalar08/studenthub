@@ -141,6 +141,7 @@ input { font-family: var(--font); }
 }
 
 .hero-eyebrow {
+  /* display: inline-flex; */
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -1078,14 +1079,66 @@ input { font-family: var(--font); }
   .dashboard-card { max-width: 100%; }
 }
 
-
-/* ===== HERO EYEBROW FIX ===== */
-.hero-left {
+/* ===== NAVBAR USER (logged in) ===== */
+.nav-user {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 5px 6px;
+  border-radius: 20px;
+  border: 0.5px solid var(--border2);
+  cursor: pointer;
+  transition: border-color 0.15s;
+  position: relative;
 }
-.hero-eyebrow {
-  align-self: flex-start !important;
-  width: auto !important;
+.nav-user:hover { border-color: var(--purple-border); }
+.nav-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--purple);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
 }
+.nav-username {
+  font-size: 13px;
+  color: var(--text-secondary);
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nav-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  background: var(--card);
+  border: 0.5px solid var(--border2);
+  border-radius: 10px;
+  padding: 6px;
+  min-width: 170px;
+  z-index: 999;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.nav-dropdown.hidden { display: none; }
+.nav-dd-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 7px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background 0.15s;
+}
+.nav-dd-item:hover { background: var(--bg3); color: var(--text-primary); }
+.nav-dd-divider { height: 0.5px; background: var(--border); margin: 4px 0; }
+.nav-dd-logout { color: #f87171 !important; }
+.nav-dd-logout:hover { background: rgba(239,68,68,0.08) !important; }
