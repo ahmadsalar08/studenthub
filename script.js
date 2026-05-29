@@ -6,64 +6,36 @@ const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
 // ===== DATA =====
-const posts = [
-  {
-    id: 1, cat: "study",
-    category: "Study Tips",
-    title: "Exams ki tayari — last minute strategy jo actually kaam kare",
-    excerpt: "Raat ko 2 baje exam hai aur abhi padhai shuru nahi ki? Ghabrao mat — yeh scientific approach follow karo aur pass ho jao.",
-    author: "Sara Ahmed", date: "18 May 2026", read: "5 min"
-  },
-  {
-    id: 2, cat: "tech",
-    category: "Tech & Tools",
-    title: "Free tools jo har CS student ko pata hone chahiye — 2026 edition",
-    excerpt: "GitHub, VS Code, Notion, Figma — sab free hain aur tumhari productivity double kar denge. Poori list yahan hai.",
-    author: "Umar Sheikh", date: "15 May 2026", read: "6 min"
-  },
-  {
-    id: 3, cat: "career",
-    category: "Career",
-    title: "2nd year mein internship kaise milti hai — honest guide",
-    excerpt: "Portfolio, resume, aur cold emails — yeh sab cheezein hain jo internship dilwa sakti hain even without experience.",
-    author: "Zara Malik", date: "12 May 2026", read: "7 min"
-  },
-  {
-    id: 4, cat: "lifestyle",
-    category: "Lifestyle",
-    title: "Student life mein time management — balance kaise rakhen?",
-    excerpt: "Studies, assignments, social life aur sleep — teeno ko ek saath manage karna possible hai agar sahi system ho.",
-    author: "Hassan Raza", date: "10 May 2026", read: "4 min"
-  },
-  {
-    id: 5, cat: "mental",
-    category: "Mental Health",
-    title: "CGPA anxiety — kab serious lein aur kab relax karein?",
-    excerpt: "Grades important hain lekin yeh poori zindagi nahi. Ek honest aur helpful conversation about student mental health.",
-    author: "Ayesha Khan", date: "8 May 2026", read: "5 min"
-  },
-  {
-    id: 6, cat: "exams",
-    category: "Exams",
-    title: "MCQs mein guess work — sahi technique kya hai?",
-    excerpt: "Elimination method se lekar probability tak — MCQ exams mein smart guessing bhi ek skill hai.",
-    author: "Ali Raza", date: "5 May 2026", read: "3 min"
-  },
-  {
-    id: 7, cat: "tech",
-    category: "Tech & Tools",
-    title: "Git aur GitHub — beginner se intermediate tak",
-    excerpt: "Version control sirf bade developers ke liye nahi — 2nd semester se hi start karo aur portfolio banao.",
-    author: "Bilal Ahmed", date: "2 May 2026", read: "8 min"
-  },
-  {
-    id: 8, cat: "career",
-    category: "Career",
-    title: "LinkedIn profile kaise banayein — CS students ke liye",
-    excerpt: "Profile picture se lekar about section tak — yeh guide follow karo aur recruiter ka dhyan attract karo.",
-    author: "Sara Ahmed", date: "28 Apr 2026", read: "5 min"
+let posts = [];
+
+async function loadPosts() {
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('published', true)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error loading posts:', error);
+    return;
   }
-];
+
+  posts = data.map(p => ({
+    id: p.id,
+    cat: p.category ? p.category.toLowerCase() : 'general',
+    category: p.category || 'General',
+    title: p.title,
+    excerpt: p.excerpt || '',
+    author: p.author_name || 'Anonymous',
+    date: new Date(p.created_at).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'}),
+    read: '5 min'
+  }));
+
+  renderPosts();
+  renderFeatured();
+}
+
+loadPosts();
 
 const trending = [
   "CGPA kaise improve karein — honest aur practical guide",
