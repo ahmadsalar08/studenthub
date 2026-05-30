@@ -35,7 +35,7 @@ async function updateNavbar() {
 
     document.getElementById("nav-user-btn").addEventListener("click", (e) => {
       e.stopPropagation();
-      document.getElementById("nav-dropdown").classList.toggle("hidden");
+      document.getElementById("nav-dropdown").classList.toggle("show");
     });
     document.addEventListener("click", () => {
       const dd = document.getElementById("nav-dropdown");
