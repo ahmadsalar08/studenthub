@@ -114,10 +114,23 @@ window.copyLink = copyLink;
 // ===== ADD COMMENT =====
 let commentCount = 3;
 
-function addComment() {
+async function addComment() {
   const input = document.getElementById("comment-input");
   const text = input.value.trim();
   if (!text) return;
+
+  const { data: { session } } = await supabase.auth.getSession();
+  const authorName = session?.user?.user_metadata?.full_name 
+    || session?.user?.email?.split('@')[0] 
+    || 'Anonymous';
+
+  const { error } = await supabase.from('comments').insert({
+    post_id: null,
+    author_name: authorName,
+    content: text
+  });
+
+  if (error) { console.error(error); return; }
 
   commentCount++;
   document.querySelector(".comments-count").textContent = commentCount;
@@ -125,11 +138,12 @@ function addComment() {
   const list = document.getElementById("comments-list");
   const item = document.createElement("div");
   item.className = "comment-item";
+  const initial = authorName.charAt(0).toUpperCase();
   item.innerHTML = `
-    <div class="comment-avatar">S</div>
+    <div class="comment-avatar">${initial}</div>
     <div class="comment-body">
       <div class="comment-header">
-        <span class="comment-name">Tum</span>
+        <span class="comment-name">${authorName}</span>
         <span class="comment-time">Just now</span>
       </div>
       <div class="comment-text">${text}</div>
