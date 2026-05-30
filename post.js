@@ -1,3 +1,76 @@
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+
+const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
+const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
+const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+// ===== URL SE SLUG NIKALO =====
+const params = new URLSearchParams(window.location.search);
+const slug = params.get('slug');
+
+// ===== POST LOAD KARO =====
+async function loadPost() {
+  if (!slug) {
+    showError("Koi article nahi mila!");
+    return;
+  }
+
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('slug', slug)
+    .eq('published', true)
+    .single();
+
+  if (error || !data) {
+    showError("Yeh article nahi mila ya delete ho gaya!");
+    return;
+  }
+
+  // Title
+  document.title = `${data.title} — StudentHub`;
+
+  // Har element update karo
+  setEl("art-title", data.title);
+  setEl("art-author", data.author_name || "Anonymous");
+  setEl("art-author-2", data.author_name || "Anonymous");
+  setEl("art-category", data.category || "General");
+  setEl("art-date", new Date(data.created_at).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'}));
+
+  // Content — paragraph wise render karo
+  const contentEl = document.getElementById("art-content");
+  if (contentEl && data.content) {
+    contentEl.innerHTML = data.content
+      .split('\n\n')
+      .filter(p => p.trim())
+      .map(p => `<p>${p.trim()}</p>`)
+      .join('');
+  }
+
+  // Author initials
+  const avatarEls = document.querySelectorAll(".art-avatar");
+  avatarEls.forEach(el => {
+    el.textContent = (data.author_name || "A").charAt(0).toUpperCase();
+  });
+}
+
+function setEl(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+function showError(msg) {
+  document.body.innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:80vh;gap:16px">
+      <div style="font-size:48px">😕</div>
+      <div style="color:#fff;font-size:20px;font-weight:600">${msg}</div>
+      <a href="index.html" style="color:#a78bfa">Home pe wapas jao</a>
+    </div>
+  `;
+}
+
+loadPost();
+
 // ===== READING PROGRESS =====
 window.addEventListener("scroll", () => {
   const article = document.querySelector(".art-content");
@@ -25,6 +98,7 @@ function toggleLike() {
   likeBigBtn.style.background = liked ? "var(--purple)" : "var(--purple-dim)";
   likeBigBtn.style.color = liked ? "#fff" : "var(--purple-light)";
 }
+window.toggleLike = toggleLike;
 
 // ===== COPY LINK =====
 function copyLink() {
@@ -33,11 +107,9 @@ function copyLink() {
   const original = btn.innerHTML;
   btn.innerHTML = '<i class="ti ti-check"></i>';
   btn.style.color = "#4ade80";
-  setTimeout(() => {
-    btn.innerHTML = original;
-    btn.style.color = "";
-  }, 2000);
+  setTimeout(() => { btn.innerHTML = original; btn.style.color = ""; }, 2000);
 }
+window.copyLink = copyLink;
 
 // ===== ADD COMMENT =====
 let commentCount = 3;
@@ -70,6 +142,4 @@ function addComment() {
   list.insertBefore(item, list.firstChild);
   input.value = "";
 }
-
-// ===== INDEX.HTML — POST CLICK KARNE PAR POST.HTML OPEN KARO =====
-// Yeh code index.html ke liye hai — script.js mein add karo
+window.addComment = addComment;

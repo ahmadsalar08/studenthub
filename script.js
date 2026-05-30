@@ -33,26 +33,20 @@ async function updateNavbar() {
       </div>
     `;
 
-    // Toggle dropdown
     document.getElementById("nav-user-btn").addEventListener("click", (e) => {
       e.stopPropagation();
       document.getElementById("nav-dropdown").classList.toggle("hidden");
     });
-
-    // Close dropdown on outside click
     document.addEventListener("click", () => {
       const dd = document.getElementById("nav-dropdown");
       if (dd) dd.classList.add("hidden");
     });
-
-    // Logout
     document.getElementById("logout-btn").addEventListener("click", async () => {
       await supabase.auth.signOut();
       window.location.reload();
     });
 
   } else {
-    // Not logged in — show Sign in + Write
     navRight.innerHTML = `
       <button class="btn-ghost" id="search-btn"><i class="ti ti-search"></i></button>
       <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
@@ -75,13 +69,11 @@ async function loadPosts() {
     .eq('published', true)
     .order('created_at', { ascending: false });
 
-  if (error) {
-    console.error('Error loading posts:', error);
-    return;
-  }
+  if (error) { console.error('Error loading posts:', error); return; }
 
   posts = data.map(p => ({
     id: p.id,
+    slug: p.slug,
     cat: p.category ? p.category.toLowerCase() : 'general',
     category: p.category || 'General',
     title: p.title,
@@ -92,7 +84,6 @@ async function loadPosts() {
   }));
 
   renderPosts();
-  renderFeatured();
 }
 
 loadPosts();
@@ -121,6 +112,7 @@ function renderPosts() {
   visible.forEach((post, i) => {
     const item = document.createElement("div");
     item.className = "post-item";
+    item.dataset.slug = post.slug;
     item.style.animationDelay = `${i * 0.06}s`;
     item.innerHTML = `
       <div>
@@ -182,10 +174,7 @@ function animateCounters() {
     let current = 0;
     const timer = setInterval(() => {
       current += step;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer);
-      }
+      if (current >= target) { current = target; clearInterval(timer); }
       el.textContent = target >= 1000
         ? (current / 1000).toFixed(1) + "k"
         : Math.floor(current);
@@ -211,12 +200,17 @@ renderPosts();
 renderTrending();
 animateCounters();
 
-// Post click
+// ===== POST CLICK — SLUG PASS KARO =====
 document.getElementById("post-list").addEventListener("click", (e) => {
   const item = e.target.closest(".post-item");
-  if (item) window.location.href = "post.html";
+  if (item && item.dataset.slug) {
+    window.location.href = `post.html?slug=${item.dataset.slug}`;
+  }
 });
 
 document.querySelector(".featured-card").addEventListener("click", () => {
-  window.location.href = "post.html";
+  // Featured card ke liye pehla post ka slug use karo
+  if (posts.length > 0) {
+    window.location.href = `post.html?slug=${posts[0].slug}`;
+  }
 });
