@@ -1,4 +1,3 @@
-// Supabase Setup
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
@@ -17,6 +16,7 @@ async function updateNavbar() {
     const initial = name.charAt(0).toUpperCase();
 
     navRight.innerHTML = `
+      <button class="btn-ghost" id="search-btn" onclick="toggleSearch()"><i class="ti ti-search"></i></button>
       <div class="nav-user" id="nav-user-btn">
         <div class="nav-avatar">${initial}</div>
         <span class="nav-username">${name}</span>
@@ -48,7 +48,7 @@ async function updateNavbar() {
 
   } else {
     navRight.innerHTML = `
-      <button class="btn-ghost" id="search-btn"><i class="ti ti-search"></i></button>
+      <button class="btn-ghost" id="search-btn" onclick="toggleSearch()"><i class="ti ti-search"></i></button>
       <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
       <button class="btn-primary" onclick="window.location.href='admin.html'">
         <i class="ti ti-edit"></i> Write
@@ -58,6 +58,78 @@ async function updateNavbar() {
 }
 
 updateNavbar();
+
+// ===== SEARCH =====
+function toggleSearch() {
+  const overlay = document.getElementById("search-overlay");
+  overlay.classList.toggle("hidden");
+  if (!overlay.classList.contains("hidden")) {
+    setTimeout(() => document.getElementById("search-input").focus(), 100);
+  }
+}
+window.toggleSearch = toggleSearch;
+
+function closeSearch(e) {
+  if (e.target.id === "search-overlay") toggleSearch();
+}
+window.closeSearch = closeSearch;
+
+// ESC key se search band karo
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    const overlay = document.getElementById("search-overlay");
+    if (overlay && !overlay.classList.contains("hidden")) toggleSearch();
+  }
+});
+
+function handleSearch(query) {
+  const results = document.getElementById("search-results");
+  query = query.trim().toLowerCase();
+
+  if (!query) {
+    results.innerHTML = `
+      <div class="search-empty">
+        <i class="ti ti-search"></i>
+        <span>Kuch likho — articles dhundhne ke liye</span>
+      </div>
+    `;
+    return;
+  }
+
+  const filtered = posts.filter(p =>
+    p.title.toLowerCase().includes(query) ||
+    p.excerpt.toLowerCase().includes(query) ||
+    p.category.toLowerCase().includes(query) ||
+    p.author.toLowerCase().includes(query)
+  );
+
+  if (filtered.length === 0) {
+    results.innerHTML = `
+      <div class="search-empty">
+        <i class="ti ti-mood-sad"></i>
+        <span>"${query}" se koi article nahi mila</span>
+      </div>
+    `;
+    return;
+  }
+
+  results.innerHTML = `
+    <div class="search-count">${filtered.length} article${filtered.length > 1 ? 's' : ''} mile</div>
+    ${filtered.map(p => `
+      <div class="search-result-item" onclick="window.location.href='post.html?slug=${p.slug}'">
+        <div class="sri-cat">${p.category}</div>
+        <div class="sri-title">${highlightText(p.title, query)}</div>
+        <div class="sri-meta">${p.author} · ${p.date}</div>
+      </div>
+    `).join('')}
+  `;
+}
+window.handleSearch = handleSearch;
+
+function highlightText(text, query) {
+  const regex = new RegExp(`(${query})`, 'gi');
+  return text.replace(regex, '<mark>$1</mark>');
+}
 
 // ===== DATA =====
 let posts = [];
@@ -74,7 +146,7 @@ async function loadPosts() {
   posts = data.map(p => ({
     id: p.id,
     slug: p.slug,
-    cat: p.category ? p.category.toLowerCase() : 'general',
+    cat: p.category ? p.category.toLowerCase().replace(/ /g, '-') : 'general',
     category: p.category || 'General',
     title: p.title,
     excerpt: p.excerpt || '',
@@ -200,7 +272,7 @@ renderPosts();
 renderTrending();
 animateCounters();
 
-// ===== POST CLICK — SLUG PASS KARO =====
+// ===== POST CLICK =====
 document.getElementById("post-list").addEventListener("click", (e) => {
   const item = e.target.closest(".post-item");
   if (item && item.dataset.slug) {
@@ -209,7 +281,6 @@ document.getElementById("post-list").addEventListener("click", (e) => {
 });
 
 document.querySelector(".featured-card").addEventListener("click", () => {
-  // Featured card ke liye pehla post ka slug use karo
   if (posts.length > 0) {
     window.location.href = `post.html?slug=${posts[0].slug}`;
   }

@@ -35,6 +35,33 @@
     </div>
   </nav>
 
+
+  <!-- SEARCH BAR -->
+  <div class="search-overlay hidden" id="search-overlay" onclick="closeSearch(event)">
+    <div class="search-box">
+      <div class="search-input-wrap">
+        <i class="ti ti-search search-icon"></i>
+        <input 
+          type="text" 
+          class="search-input" 
+          id="search-input"
+          placeholder="Articles dhundho..."
+          oninput="handleSearch(this.value)"
+          autocomplete="off"
+        >
+        <button class="search-close" onclick="toggleSearch()">
+          <i class="ti ti-x"></i>
+        </button>
+      </div>
+      <div class="search-results" id="search-results">
+        <div class="search-empty">
+          <i class="ti ti-search"></i>
+          <span>Kuch likho — articles dhundhne ke liye</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- HERO -->
   <section class="hero">
     <div class="hero-inner">
