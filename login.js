@@ -4,6 +4,10 @@ const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
 const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
+
+
+
+
 // ===== TAB SWITCHING =====
 function showTab(tab) {
   document.getElementById("panel-login").classList.add("hidden");
@@ -214,3 +218,17 @@ supabase.auth.getSession().then(({ data: { session } }) => {
     window.location.href = "index.html";
   }
 });
+
+// ===== GOOGLE LOGIN =====
+async function handleGoogleLogin() {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'https://studenthub-plum.vercel.app/'
+    }
+  })
+  if (error) {
+    console.error('Google login error:', error.message)
+  }
+}
+window.handleGoogleLogin = handleGoogleLogin
