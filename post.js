@@ -84,21 +84,33 @@ window.addEventListener("scroll", () => {
 });
 
 // ===== LIKE TOGGLE =====
-let liked = false;
-let likeCount = 124;
+let liked = false
 
-function toggleLike() {
-  liked = !liked;
-  likeCount = liked ? likeCount + 1 : likeCount - 1;
-  document.getElementById("like-count").textContent = likeCount;
-  document.getElementById("like-count-2").textContent = likeCount;
-  const likeBtn = document.getElementById("like-btn");
-  const likeBigBtn = document.getElementById("like-big-btn");
-  likeBtn.classList.toggle("liked", liked);
-  likeBigBtn.style.background = liked ? "var(--purple)" : "var(--purple-dim)";
-  likeBigBtn.style.color = liked ? "#fff" : "var(--purple-light)";
+async function toggleLike() {
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) { alert('Like karne ke liye login karo!'); return }
+  
+  const userId = session.user.id
+
+  if (!liked) {
+    await supabase.from('likes').insert({ post_id: currentPostId, user_id: userId })
+    liked = true
+  } else {
+    await supabase.from('likes').delete().eq('post_id', currentPostId).eq('user_id', userId)
+    liked = false
+  }
+
+  const { count } = await supabase.from('likes').select('*', { count: 'exact', head: true }).eq('post_id', currentPostId)
+  const likeCount = count || 0
+  document.getElementById("like-count").textContent = likeCount
+  document.getElementById("like-count-2").textContent = likeCount
+  const likeBtn = document.getElementById("like-btn")
+  const likeBigBtn = document.getElementById("like-big-btn")
+  likeBtn.classList.toggle("liked", liked)
+  likeBigBtn.style.background = liked ? "var(--purple)" : "var(--purple-dim)"
+  likeBigBtn.style.color = liked ? "#fff" : "var(--purple-light)"
 }
-window.toggleLike = toggleLike;
+
 
 // ===== COPY LINK =====
 function copyLink() {
