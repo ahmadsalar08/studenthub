@@ -7,7 +7,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 // ===== URL SE SLUG NIKALO =====
 const params = new URLSearchParams(window.location.search);
 const slug = params.get('slug');
-
+let currentPostId = null
 // ===== POST LOAD KARO =====
 async function loadPost() {
   if (!slug) {
@@ -26,7 +26,7 @@ async function loadPost() {
     showError("Yeh article nahi mila ya delete ho gaya!");
     return;
   }
-
+currentPostId = data.id
   // Title
   document.title = `${data.title} — StudentHub`;
 
@@ -125,7 +125,7 @@ async function addComment() {
     || 'Anonymous';
 
   const { error } = await supabase.from('comments').insert({
-    post_id: null,
+   post_id: currentPostId,
     author_name: authorName,
     content: text
   });
