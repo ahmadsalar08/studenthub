@@ -40,7 +40,7 @@ async function loadPost() {
   // Content — paragraph wise render karo
   const contentEl = document.getElementById("art-content");
   if (contentEl && data.content) {
-    contentEl.innerHTML = data.content
+    contentEl.innerHTML = DOMPurify.sanitize(data.content)
       .split('\n\n')
       .filter(p => p.trim())
       .map(p => `<p>${p.trim()}</p>`)
@@ -146,7 +146,7 @@ async function addComment() {
         <span class="comment-name">${authorName}</span>
         <span class="comment-time">Just now</span>
       </div>
-      <div class="comment-text">${text}</div>
+      <div class="comment-text">${DOMPurify.sanitize(text)}</div>
       <div class="comment-footer">
         <button class="comment-like"><i class="ti ti-thumb-up"></i> 0</button>
         <button class="comment-reply-btn">Reply</button>
