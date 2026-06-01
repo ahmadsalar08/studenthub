@@ -71,8 +71,8 @@ function showError(msg) {
   `;
 }
 
-loadPost();
 
+loadPost().then(() => loadComments());
 // ===== READING PROGRESS =====
 window.addEventListener("scroll", () => {
   const article = document.querySelector(".art-content");
@@ -171,3 +171,41 @@ async function addComment() {
   input.value = "";
 }
 window.addComment = addComment;
+
+// ===== LOAD COMMENTS =====
+async function loadComments() {
+  if (!currentPostId) return
+  
+  const { data, error } = await supabase
+    .from('comments')
+    .select('*')
+    .eq('post_id', currentPostId)
+    .order('created_at', { ascending: false })
+  
+  if (error) { console.error(error); return }
+  
+  const list = document.getElementById('comments-list')
+  if (!list) return
+  
+  list.innerHTML = ''
+  commentCount = data.length
+  document.querySelector('.comments-count') && (document.querySelector('.comments-count').textContent = commentCount)
+  
+  data.forEach(comment => {
+    const item = document.createElement('div')
+    item.className = 'comment-item'
+    const initial = (comment.author_name || 'A').charAt(0).toUpperCase()
+    item.innerHTML = `
+      <div class="comment-avatar">${initial}</div>
+      <div class="comment-body">
+        <div class="comment-header">
+          <span class="comment-name">${DOMPurify.sanitize(comment.author_name || 'Anonymous')}</span>
+          <span class="comment-time">${new Date(comment.created_at).toLocaleDateString()}</span>
+        </div>
+        <div class="comment-text">${DOMPurify.sanitize(comment.content)}</div>
+      </div>
+    `
+    list.appendChild(item)
+  })
+}
+window.loadComments = loadComments
