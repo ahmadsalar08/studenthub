@@ -12,6 +12,13 @@ async function checkAuth() {
     return
   }
   const user = session.user
+  
+  // Admin check
+  const ADMIN_EMAIL = 'ahmadsalar4321@gmail.com'
+  if (user.email !== ADMIN_EMAIL) {
+    window.location.href = 'index.html'
+    return
+  }
   const name = user.user_metadata?.full_name || user.email.split('@')[0]
   const initial = name.charAt(0).toUpperCase()
   const el = document.querySelector('.as-user-name')
