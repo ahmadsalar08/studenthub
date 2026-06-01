@@ -27,6 +27,8 @@ async function loadPost() {
     return;
   }
 currentPostId = data.id
+// Views increment
+  await supabase.from('posts').update({ views: (data.views || 0) + 1 }).eq('id', data.id)
   // Title
   document.title = `${data.title} — StudentHub`;
 
