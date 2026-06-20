@@ -13,6 +13,7 @@
   <title>StudentHub — Learn Smarter</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -35,9 +36,10 @@
         <button class="btn-ghost"><i class="ti ti-search"></i></button>
          <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
         <!-- <button class="btn-primary"><i class="ti ti-edit"></i> Write</button> -->
-         <button class="btn-primary" onclick="window.location.href='admin.html'">
-  <i class="ti ti-edit"></i> Write
+         <button id="writeBtn" class="btn-primary" style="display:none;" onclick="window.location.href='admin.html'">
+<i class="ti ti-edit"></i> Write
 </button>
+        
       </div>
     </div>
   </nav>
@@ -308,5 +310,18 @@
   </footer>
 
   <script type="module" src="script.js"></script>
+  <script>
+const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
+const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY)
+
+;(async function() {
+  const { data: { session } } = await supabaseClient.auth.getSession()
+  if (session && session.user.email === 'ahmadsalar4321@gmail.com') {
+    const btn = document.getElementById('writeBtn')
+    if (btn) btn.style.display = 'inline-flex'
+  }
+})()
+</script>
 </body>
 </html>
