@@ -313,7 +313,7 @@
   <script>
 const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
 const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
-const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY)
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
 ;(async function() {
   const { data: { session } } = await supabaseClient.auth.getSession()
