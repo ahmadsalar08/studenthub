@@ -14,6 +14,21 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- OG / Social Meta Tags -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="StudentHub">
+  <meta property="og:title"       content="StudentHub — Learn Smarter">
+  <meta property="og:description" content="Real tips, honest experiences and practical advice for CS students. Study tips, career guides, exam strategies and more.">
+  <meta property="og:url"         content="https://studenthub-plum.vercel.app/">
+  <meta property="og:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <meta property="og:image:width"  content="512">
+  <meta property="og:image:height" content="512">
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="StudentHub — Learn Smarter">
+  <meta name="twitter:description" content="Real tips, honest experiences and practical advice for CS students. Study tips, career guides, exam strategies and more.">
+  <meta name="twitter:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <!-- Description for search engines -->
+  <meta name="description"         content="Real tips, honest experiences and practical advice for CS students. Study tips, career guides, exam strategies and more.">
 </head>
 <body>
 
@@ -29,32 +44,28 @@
         <a href="#">Articles</a>
         <a href="#">Tips</a>
         <a href="#">Career</a>
-        
-        <!-- <a href="contact.html">Contact</a> -->
       </div>
       <div class="nav-right">
         <button class="btn-ghost"><i class="ti ti-search"></i></button>
-         <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
+        <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
         <!-- <button class="btn-primary"><i class="ti ti-edit"></i> Write</button> -->
-         <button id="writeBtn" class="btn-primary" style="display:none;" onclick="window.location.href='admin.html'">
-<i class="ti ti-edit"></i> Write
-</button>
-        
+        <button id="writeBtn" class="btn-primary" style="display:none;" onclick="window.location.href='admin.html'">
+          <i class="ti ti-edit"></i> Write
+        </button>
       </div>
     </div>
   </nav>
-
 
   <!-- SEARCH BAR -->
   <div class="search-overlay hidden" id="search-overlay" onclick="closeSearch(event)">
     <div class="search-box">
       <div class="search-input-wrap">
         <i class="ti ti-search search-icon"></i>
-        <input 
-          type="text" 
-          class="search-input" 
+        <input
+          type="text"
+          class="search-input"
           id="search-input"
-          placeholder="Articles dhundho..."
+          placeholder="Search articles..."
           oninput="handleSearch(this.value)"
           autocomplete="off"
         >
@@ -65,7 +76,7 @@
       <div class="search-results" id="search-results">
         <div class="search-empty">
           <i class="ti ti-search"></i>
-          <span>Kuch likho — articles dhundhne ke liye</span>
+          <span>Type something to search articles</span>
         </div>
       </div>
     </div>
@@ -81,7 +92,7 @@
           <i class="ti ti-sparkles"></i> For students, by students
         </div>
         <h1>Learn smarter.<br><em>Live better.</em><br>Succeed faster.</h1>
-        <p class="hero-sub">Real tips, honest experiences aur practical advice — har CS student ke liye jo actually kaam karta hai.</p>
+        <p class="hero-sub">Real tips, honest experiences and practical advice — for every CS student who wants to actually make it.</p>
         <div class="hero-actions">
           <button class="btn-lg"><i class="ti ti-rocket"></i> Start reading</button>
           <button class="btn-lg-ghost"><i class="ti ti-edit"></i> Write an article</button>
@@ -157,12 +168,12 @@
             </div>
             <div class="db-recent-item">
               <div class="db-recent-icon"><i class="ti ti-bulb"></i></div>
-              <div class="db-recent-text">CGPA improve karne ke 7 tips</div>
+              <div class="db-recent-text">7 tips to improve your GPA</div>
               <div class="db-recent-views">980</div>
             </div>
             <div class="db-recent-item">
               <div class="db-recent-icon"><i class="ti ti-briefcase"></i></div>
-              <div class="db-recent-text">Internship kaise milti hai?</div>
+              <div class="db-recent-text">How to land an internship</div>
               <div class="db-recent-views">754</div>
             </div>
           </div>
@@ -203,8 +214,8 @@
             <span class="fc-meta">20 May 2026</span>
             <span class="fc-meta"><i class="ti ti-clock"></i> 8 min read</span>
           </div>
-          <h2 class="fc-title">1st year CS student survival guide — jo koi nahi batata</h2>
-          <p class="fc-excerpt">University ka pehla saal bohot overwhelming lagta hai. Subjects mushkil, deadlines tight, aur sab kuch naya. Yahan main share karta hoon woh sab jo mujhe pehle se pata hota toh meri life kitni aasan hoti...</p>
+          <h2 class="fc-title">1st year CS student survival guide — what nobody tells you</h2>
+          <p class="fc-excerpt">The first year of university feels incredibly overwhelming. Tough subjects, tight deadlines, everything new. Here I share everything I wish I had known from the start — how much easier things would have been...</p>
           <div class="fc-footer">
             <div class="fc-avatar">AK</div>
             <span class="fc-author">Ali Khan <span class="dot">·</span> Student Life</span>
@@ -234,7 +245,7 @@
           <div class="author-block">
             <div class="ab-avatar">S</div>
             <div class="ab-name">Salar</div>
-            <div class="ab-role">CS Student · 2nd Semester · Rawalpindi<br>Tips share karta hoon jo actually kaam karte hain</div>
+            <div class="ab-role">CS Student · 2nd Semester · Rawalpindi<br>Sharing tips that actually work</div>
             <div class="ab-stats">
               <div class="abs">
                 <div class="abs-n">14</div>
@@ -270,7 +281,7 @@
             <span class="tag-pill">Lifestyle</span>
             <span class="tag-pill">Mental Health</span>
             <span class="tag-pill">Programming</span>
-            <span class="tag-pill">CGPA</span>
+            <span class="tag-pill">GPA</span>
             <span class="tag-pill">Internship</span>
           </div>
         </div>
@@ -279,13 +290,13 @@
         <div class="newsletter-box">
           <div class="nl-icon"><i class="ti ti-mail"></i></div>
           <div class="nl-title">Weekly digest</div>
-          <div class="nl-sub">Har hafta best articles seedha inbox mein. Koi spam nahi.</div>
-          <input type="email" placeholder="tumhara@email.com" class="nl-input" id="nl-email">
+          <div class="nl-sub">Best articles delivered to your inbox every week. No spam.</div>
+          <input type="email" placeholder="your@email.com" class="nl-input" id="nl-email">
           <button class="nl-btn" onclick="subscribe()">
             Subscribe <i class="ti ti-arrow-right"></i>
           </button>
           <div class="nl-success" id="nl-success">
-            <i class="ti ti-check"></i> Subscribed! Shukriya.
+            <i class="ti ti-check"></i> Subscribed! Thank you.
           </div>
         </div>
 
@@ -301,7 +312,7 @@
       </div>
       <div class="f-links">
         <a href="about.html">About</a>
-        <a href="#">Write for us</a>
+        <a href="write-for-us.html">Write for us</a>
         <a href="privacy.html">Privacy</a>
         <a href="contact.html">Contact</a>
       </div>

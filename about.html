@@ -14,454 +14,90 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <style>
-    /* ===== ABOUT PAGE STYLES ===== */
-
-    /* Hero */
-    .about-hero {
-      background: var(--bg2);
-      border-bottom: 0.5px solid var(--border);
-      padding: 72px 32px 60px;
-    }
-
-    .about-hero-inner {
-      max-width: 860px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 260px;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .ah-eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11px;
-      color: var(--purple-light);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      border: 0.5px solid var(--purple-border);
-      padding: 5px 14px;
-      border-radius: 20px;
-      background: var(--purple-dim);
-    }
-
-    .ah-title {
-      font-size: 40px;
-      font-weight: 700;
-      color: var(--text-primary);
-      line-height: 1.15;
-      letter-spacing: -1px;
-      margin-bottom: 16px;
-    }
-
-    .ah-title em {
-      font-style: normal;
-      color: var(--purple-light);
-    }
-
-    .ah-desc {
-      font-size: 16px;
-      color: var(--text-muted);
-      line-height: 1.8;
-      margin-bottom: 32px;
-    }
-
-    .ah-stats {
-      display: flex;
-      gap: 32px;
-      padding-top: 28px;
-      border-top: 0.5px solid var(--border);
-    }
-
-    .ahs {
-      text-align: left;
-    }
-
-    .ahs-n {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--purple-light);
-      letter-spacing: -0.5px;
-    }
-
-    .ahs-l {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 3px;
-    }
-
-    /* Author card (right side) */
-    .ah-author-card {
-      background: var(--card);
-      border: 0.5px solid var(--purple-border);
-      border-radius: 16px;
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 12px;
-    }
-
-    .ah-avatar {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background: var(--purple-dim);
-      border: 2px solid var(--purple-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--purple-light);
-    }
-
-    .ah-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-
-    .ah-role {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .ah-badges {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 4px;
-    }
-
-    .ah-badge {
-      font-size: 11px;
-      padding: 4px 10px;
-      border-radius: 12px;
-      background: var(--purple-dim);
-      color: var(--purple-light);
-      border: 0.5px solid var(--purple-border);
-    }
-
-    .ah-social {
-      display: flex;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .ah-social-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: none;
-      border: 0.5px solid var(--border2);
-      color: var(--text-muted);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      transition: all 0.15s;
-      text-decoration: none;
-    }
-
-    .ah-social-btn:hover {
-      border-color: var(--purple-border);
-      color: var(--purple-light);
-    }
-
-    /* ===== MAIN CONTENT ===== */
-    .about-body {
-      padding: 56px 32px;
-    }
-
-    .about-body-inner {
-      max-width: 860px;
-      margin: 0 auto;
-    }
-
-    /* Section */
-    .about-section {
-      margin-bottom: 64px;
-    }
-
-    .about-section-label {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-
-    .about-section-label::after {
-      content: '';
-      flex: 1;
-      height: 0.5px;
-      background: var(--border);
-    }
-
-    .about-section h2 {
-      font-size: 26px;
-      font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: -0.4px;
-      margin-bottom: 16px;
-    }
-
-    .about-section p {
-      font-size: 15px;
-      color: var(--text-muted);
-      line-height: 1.85;
-      margin-bottom: 16px;
-    }
-
-    /* Mission cards */
-    .mission-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .mission-card {
-      background: var(--card);
-      border: 0.5px solid var(--border2);
-      border-radius: 12px;
-      padding: 22px;
-      transition: border-color 0.15s;
-    }
-
+    .about-hero { background: var(--bg2); border-bottom: 0.5px solid var(--border); padding: 72px 32px 60px; }
+    .about-hero-inner { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 260px; gap: 60px; align-items: center; }
+    .ah-eyebrow { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; color: var(--purple-light); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; border: 0.5px solid var(--purple-border); padding: 5px 14px; border-radius: 20px; background: var(--purple-dim); }
+    .ah-title { font-size: 40px; font-weight: 700; color: var(--text-primary); line-height: 1.15; letter-spacing: -1px; margin-bottom: 16px; }
+    .ah-title em { font-style: normal; color: var(--purple-light); }
+    .ah-desc { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 32px; }
+    .ah-stats { display: flex; gap: 32px; padding-top: 28px; border-top: 0.5px solid var(--border); }
+    .ahs { text-align: left; }
+    .ahs-n { font-size: 22px; font-weight: 700; color: var(--purple-light); letter-spacing: -0.5px; }
+    .ahs-l { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+    .ah-author-card { background: var(--card); border: 0.5px solid var(--purple-border); border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+    .ah-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--purple-dim); border: 2px solid var(--purple-border); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 700; color: var(--purple-light); }
+    .ah-name { font-size: 18px; font-weight: 700; color: var(--text-primary); }
+    .ah-role { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .ah-badges { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-top: 4px; }
+    .ah-badge { font-size: 11px; padding: 4px 10px; border-radius: 12px; background: var(--purple-dim); color: var(--purple-light); border: 0.5px solid var(--purple-border); }
+    .ah-social { display: flex; gap: 8px; margin-top: 4px; }
+    .ah-social-btn { width: 36px; height: 36px; border-radius: 8px; background: none; border: 0.5px solid var(--border2); color: var(--text-muted); display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.15s; text-decoration: none; }
+    .ah-social-btn:hover { border-color: var(--purple-border); color: var(--purple-light); }
+    .about-body { padding: 56px 32px; }
+    .about-body-inner { max-width: 860px; margin: 0 auto; }
+    .about-section { margin-bottom: 64px; }
+    .about-section-label { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px; }
+    .about-section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+    .about-section h2 { font-size: 26px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.4px; margin-bottom: 16px; }
+    .about-section p { font-size: 15px; color: var(--text-muted); line-height: 1.85; margin-bottom: 16px; }
+    .mission-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .mission-card { background: var(--card); border: 0.5px solid var(--border2); border-radius: 12px; padding: 22px; transition: border-color 0.15s; }
     .mission-card:hover { border-color: var(--purple-border); }
-
-    .mc-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 10px;
-      background: var(--purple-dim);
-      border: 0.5px solid var(--purple-border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      color: var(--purple-light);
-      margin-bottom: 14px;
-    }
-
-    .mc-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-    }
-
-    .mc-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    /* Story timeline */
-    .story-timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-top: 24px;
-      position: relative;
-      padding-left: 32px;
-    }
-
-    .story-timeline::before {
-      content: '';
-      position: absolute;
-      left: 7px;
-      top: 8px;
-      bottom: 8px;
-      width: 0.5px;
-      background: var(--border2);
-    }
-
-    .st-item {
-      position: relative;
-      padding-bottom: 32px;
-    }
-
+    .mc-icon { width: 42px; height: 42px; border-radius: 10px; background: var(--purple-dim); border: 0.5px solid var(--purple-border); display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--purple-light); margin-bottom: 14px; }
+    .mc-title { font-size: 14px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+    .mc-desc { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+    .story-timeline { display: flex; flex-direction: column; gap: 0; margin-top: 24px; position: relative; padding-left: 32px; }
+    .story-timeline::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 0.5px; background: var(--border2); }
+    .st-item { position: relative; padding-bottom: 32px; }
     .st-item:last-child { padding-bottom: 0; }
-
-    .st-dot {
-      position: absolute;
-      left: -28px;
-      top: 5px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: var(--purple-dim);
-      border: 2px solid var(--purple);
-    }
-
-    .st-date {
-      font-size: 11px;
-      color: var(--purple-light);
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .st-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-    }
-
-    .st-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    /* Topics covered */
-    .topics-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .topic-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--card);
-      border: 0.5px solid var(--border2);
-      border-radius: 10px;
-      padding: 16px;
-      transition: border-color 0.15s;
-    }
-
+    .st-dot { position: absolute; left: -28px; top: 5px; width: 14px; height: 14px; border-radius: 50%; background: var(--purple-dim); border: 2px solid var(--purple); }
+    .st-date { font-size: 11px; color: var(--purple-light); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 6px; }
+    .st-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .st-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+    .topics-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+    .topic-item { display: flex; align-items: center; gap: 12px; background: var(--card); border: 0.5px solid var(--border2); border-radius: 10px; padding: 16px; transition: border-color 0.15s; }
     .topic-item:hover { border-color: var(--purple-border); }
-
-    .topic-icon {
-      font-size: 20px;
-      color: var(--purple-light);
-      flex-shrink: 0;
-    }
-
-    .topic-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-    }
-
-    .topic-desc {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    /* Values */
-    .values-list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      margin-top: 16px;
-    }
-
-    .value-item {
-      display: flex;
-      gap: 16px;
-      padding: 20px 0;
-      border-bottom: 0.5px solid var(--border);
-      align-items: flex-start;
-    }
-
+    .topic-icon { font-size: 20px; color: var(--purple-light); flex-shrink: 0; }
+    .topic-name { font-size: 14px; font-weight: 500; color: var(--text-secondary); }
+    .topic-desc { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .values-list { display: flex; flex-direction: column; gap: 0; margin-top: 16px; }
+    .value-item { display: flex; gap: 16px; padding: 20px 0; border-bottom: 0.5px solid var(--border); align-items: flex-start; }
     .value-item:last-child { border-bottom: none; }
-
-    .value-num {
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--border2);
-      min-width: 40px;
-      letter-spacing: -2px;
-    }
-
-    .value-title {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-    }
-
-    .value-desc {
-      font-size: 14px;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-
-    /* CTA */
-    .about-cta {
-      background: var(--card);
-      border: 0.5px solid var(--purple-border);
-      border-radius: 16px;
-      padding: 40px;
-      text-align: center;
-    }
-
-    .cta-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: -0.4px;
-      margin-bottom: 12px;
-    }
-
-    .cta-desc {
-      font-size: 15px;
-      color: var(--text-muted);
-      line-height: 1.7;
-      max-width: 480px;
-      margin: 0 auto 28px;
-    }
-
-    .cta-btns {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    /* ===== MOBILE ===== */
+    .value-num { font-size: 28px; font-weight: 700; color: var(--border2); min-width: 40px; letter-spacing: -2px; }
+    .value-title { font-size: 15px; font-weight: 600; color: var(--text-primary); margin-bottom: 6px; }
+    .value-desc { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+    .about-cta { background: var(--card); border: 0.5px solid var(--purple-border); border-radius: 16px; padding: 40px; text-align: center; }
+    .cta-title { font-size: 24px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.4px; margin-bottom: 12px; }
+    .cta-desc { font-size: 15px; color: var(--text-muted); line-height: 1.7; max-width: 480px; margin: 0 auto 28px; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
     @media (max-width: 768px) {
       .about-hero { padding: 36px 16px 32px; }
-
-      .about-hero-inner {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-
+      .about-hero-inner { grid-template-columns: 1fr; gap: 32px; }
       .ah-author-card { order: -1; }
-
       .ah-title { font-size: 28px; }
-
       .ah-stats { gap: 20px; flex-wrap: wrap; }
-
       .about-body { padding: 32px 16px; }
-
       .mission-grid { grid-template-columns: 1fr; }
-
       .topics-grid { grid-template-columns: 1fr; }
-
       .about-cta { padding: 28px 20px; }
-
       .cta-title { font-size: 20px; }
     }
   </style>
+  <!-- OG / Social Meta Tags -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="StudentHub">
+  <meta property="og:title"       content="About — StudentHub">
+  <meta property="og:description" content="Learn about StudentHub — a platform built by CS students, for CS students. Real experiences, no fluff.">
+  <meta property="og:url"         content="https://studenthub-plum.vercel.app/about.html">
+  <meta property="og:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <meta property="og:image:width"  content="512">
+  <meta property="og:image:height" content="512">
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="About — StudentHub">
+  <meta name="twitter:description" content="Learn about StudentHub — a platform built by CS students, for CS students. Real experiences, no fluff.">
+  <meta name="twitter:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <!-- Description for search engines -->
+  <meta name="description"         content="Learn about StudentHub — a platform built by CS students, for CS students. Real experiences, no fluff.">
 </head>
 <body>
 
@@ -498,12 +134,11 @@
           <i class="ti ti-info-circle"></i> About StudentHub
         </div>
         <h1 class="ah-title">
-          Students ke liye,<br>
-          <em>students ke haath</em><br>
-          se bana platform
+          Built for students,<br>
+          <em>by a student</em>
         </h1>
         <p class="ah-desc">
-          StudentHub ek honest, practical blog hai jo Pakistan ke CS students ke liye banaya gaya hai. Yahan real experiences share hoti hain — without sugar coating, without fake motivation.
+          StudentHub is an honest, practical blog built for CS students in Pakistan. Real experiences are shared here — without sugar coating, without fake motivation.
         </p>
         <div class="ah-stats">
           <div class="ahs">
@@ -552,29 +187,29 @@
       <!-- Mission -->
       <div class="about-section">
         <div class="about-section-label"><span>Mission</span></div>
-        <h2>Kyun banaya StudentHub?</h2>
+        <h2>Why StudentHub was created</h2>
         <p>
-          2nd year mein jab main university mein struggle kar raha tha, toh mujhe aise resources nahi mile jo actually kaam karte. Jo bhi tha woh ya toh English mein tha ya phir Pakistani universities se related nahi tha.
+          In my 2nd year, when I was struggling at university, I couldn't find resources that actually worked. Everything was either in English or not relevant to Pakistani universities.
         </p>
         <p>
-          StudentHub isliye banaya taake jo cheezein mujhe kisi ne nahi batai, woh main doosron ko bata sakoon. Real problems, real solutions — Urdu/Roman Urdu mein.
+          StudentHub was created so that the things nobody told me, I could tell others. Real problems, real solutions — in a language students here actually speak.
         </p>
 
         <div class="mission-grid">
           <div class="mission-card">
             <div class="mc-icon"><i class="ti ti-bulb"></i></div>
             <div class="mc-title">Practical advice</div>
-            <div class="mc-desc">Sirf woh tips jo real zindagi mein actually kaam karte hain. Koi motivational fluff nahi.</div>
+            <div class="mc-desc">Only tips that actually work in real life. No motivational fluff.</div>
           </div>
           <div class="mission-card">
             <div class="mc-icon"><i class="ti ti-heart"></i></div>
             <div class="mc-title">Honest experience</div>
-            <div class="mc-desc">Apni real struggles aur failures bhi share karta hoon — sirf success stories nahi.</div>
+            <div class="mc-desc">Real struggles and failures are shared too — not just success stories.</div>
           </div>
           <div class="mission-card">
             <div class="mc-icon"><i class="ti ti-users"></i></div>
             <div class="mc-title">Community</div>
-            <div class="mc-desc">Ek jagah jahan Pakistani CS students apni problems discuss kar sakein aur ek doosre ki help karein.</div>
+            <div class="mc-desc">A place where Pakistani CS students can discuss problems and help each other.</div>
           </div>
         </div>
       </div>
@@ -582,32 +217,32 @@
       <!-- Story -->
       <div class="about-section">
         <div class="about-section-label"><span>Story</span></div>
-        <h2>Yeh sab kaise shuru hua</h2>
+        <h2>How it all started</h2>
 
         <div class="story-timeline">
           <div class="st-item">
             <div class="st-dot"></div>
             <div class="st-date">1st Year — 2025</div>
-            <div class="st-title">University mein pehla din</div>
-            <div class="st-desc">Air University mein CS mein admission hua. Pehle semester mein bohot confused tha — koi roadmap nahi tha, koi guide nahi tha.</div>
+            <div class="st-title">First day at university</div>
+            <div class="st-desc">Got admitted to CS at Air University. Was very confused in the first semester — no roadmap, no guide.</div>
           </div>
           <div class="st-item">
             <div class="st-dot"></div>
             <div class="st-date">Mid 1st Year</div>
-            <div class="st-title">Struggles shuru hue</div>
-            <div class="st-desc">Programming, assignments, deadlines — sab ek saath overwhelming laga. Bohot cheezein trial and error se seekhi jo pehle se pata hoti toh time bachta.</div>
+            <div class="st-title">Struggles began</div>
+            <div class="st-desc">Programming, assignments, deadlines — everything felt overwhelming at once. Learned a lot through trial and error that would have saved so much time.</div>
           </div>
           <div class="st-item">
             <div class="st-dot"></div>
             <div class="st-date">2nd Year — 2026</div>
-            <div class="st-title">StudentHub launch</div>
-            <div class="st-desc">Decide kiya ke jo maine seekha woh doosron ke saath share karunga. StudentHub launch kiya — ek blog jahan real student experiences share hoti hain.</div>
+            <div class="st-title">StudentHub launched</div>
+            <div class="st-desc">Decided to share what I had learned with others. Launched StudentHub — a blog where real student experiences are shared.</div>
           </div>
           <div class="st-item">
             <div class="st-dot"></div>
-            <div class="st-date">Abhi</div>
+            <div class="st-date">Now</div>
             <div class="st-title">Growing community</div>
-            <div class="st-desc">2,400+ monthly readers aur growing. Har hafte naye articles aur tips. Maqsad hai Pakistan ka best student resource ban'na.</div>
+            <div class="st-desc">2,400+ monthly readers and growing. New articles and tips every week. The goal is to become Pakistan's best student resource.</div>
           </div>
         </div>
       </div>
@@ -615,8 +250,8 @@
       <!-- Topics -->
       <div class="about-section">
         <div class="about-section-label"><span>Content</span></div>
-        <h2>Yahan kya milega?</h2>
-        <p>StudentHub pe in topics par articles milenge:</p>
+        <h2>What you'll find here</h2>
+        <p>StudentHub covers articles on these topics:</p>
 
         <div class="topics-grid">
           <div class="topic-item">
@@ -630,7 +265,7 @@
             <i class="ti ti-code topic-icon"></i>
             <div>
               <div class="topic-name">Tech & Tools</div>
-              <div class="topic-desc">Free tools, software, resources CS students ke liye</div>
+              <div class="topic-desc">Free tools, software, resources for CS students</div>
             </div>
           </div>
           <div class="topic-item">
@@ -658,7 +293,7 @@
             <i class="ti ti-heart topic-icon"></i>
             <div>
               <div class="topic-name">Mental Health</div>
-              <div class="topic-desc">CGPA anxiety, burnout, pressure handle karna</div>
+              <div class="topic-desc">GPA anxiety, burnout, handling pressure</div>
             </div>
           </div>
         </div>
@@ -667,35 +302,35 @@
       <!-- Values -->
       <div class="about-section">
         <div class="about-section-label"><span>Values</span></div>
-        <h2>Jo cheezein important hain</h2>
+        <h2>What matters here</h2>
 
         <div class="values-list">
           <div class="value-item">
             <div class="value-num">01</div>
             <div>
-              <div class="value-title">Honesty pehle</div>
-              <div class="value-desc">Sirf woh likhunga jo actually sahi hai — koi fake positivity, koi exaggeration nahi. Agar kuch kaam nahi karta, woh bhi bataunga.</div>
+              <div class="value-title">Honesty first</div>
+              <div class="value-desc">Only what is actually true will be written here — no fake positivity, no exaggeration. If something doesn't work, that will be shared too.</div>
             </div>
           </div>
           <div class="value-item">
             <div class="value-num">02</div>
             <div>
-              <div class="value-title">Pakistan ke context mein</div>
-              <div class="value-desc">Yahan jo advice milegi woh Pakistani universities, culture aur resources ko dhyan mein rakh ke hogi — foreign blogs ki copy nahi.</div>
+              <div class="value-title">Pakistani context</div>
+              <div class="value-desc">The advice here is written with Pakistani universities, culture, and resources in mind — not copied from foreign blogs.</div>
             </div>
           </div>
           <div class="value-item">
             <div class="value-num">03</div>
             <div>
               <div class="value-title">Student-friendly language</div>
-              <div class="value-desc">Roman Urdu mein likha jaata hai taake sab easily samajh sakein. Koi fancy English, koi jargon nahi.</div>
+              <div class="value-desc">Written in simple, clear English so everyone can understand. No fancy jargon.</div>
             </div>
           </div>
           <div class="value-item">
             <div class="value-num">04</div>
             <div>
               <div class="value-title">Community first</div>
-              <div class="value-desc">Yeh sirf mera blog nahi — yeh tumhara bhi hai. Comments mein apne thoughts share karo, suggestions do, articles submit karo.</div>
+              <div class="value-desc">This isn't just my blog — it's yours too. Share your thoughts in the comments, give suggestions, submit articles.</div>
             </div>
           </div>
         </div>
@@ -703,16 +338,16 @@
 
       <!-- CTA -->
       <div class="about-cta">
-        <div class="cta-title">Saath mil ke seekhte hain 🚀</div>
+        <div class="cta-title">Let's learn together 🚀</div>
         <p class="cta-desc">
-          Agar tumhare paas koi tip, experience, ya idea hai jo doosre students ki help kar sake — toh likhna shuru karo. Submissions welcome hain!
+          If you have a tip, experience, or idea that could help other students — start writing. Submissions are welcome!
         </p>
         <div class="cta-btns">
           <button class="btn-lg" onclick="window.location.href='index.html'">
-            <i class="ti ti-home"></i> Articles padhna shuru karo
+            <i class="ti ti-home"></i> Start reading articles
           </button>
           <button class="btn-lg-ghost" onclick="window.location.href='admin.html'">
-            <i class="ti ti-edit"></i> Apna article likho
+            <i class="ti ti-edit"></i> Write your article
           </button>
         </div>
       </div>
@@ -728,9 +363,9 @@
       </div>
       <div class="f-links">
         <a href="about.html">About</a>
-       <a href="write-for-us.html">Write for us</a>
+        <a href="write-for-us.html">Write for us</a>
         <a href="privacy.html">Privacy</a>
-         <a href="contact.html">Contact</a>
+        <a href="contact.html">Contact</a>
       </div>
       <div class="f-copy">© 2026 StudentHub. Made with <i class="ti ti-heart"></i> by Salar.</div>
     </div>

@@ -74,7 +74,7 @@ function closeSearch(e) {
 }
 window.closeSearch = closeSearch;
 
-// ESC key se search band karo
+// Close search with ESC key
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     const overlay = document.getElementById("search-overlay");
@@ -90,7 +90,7 @@ function handleSearch(query) {
     results.innerHTML = `
       <div class="search-empty">
         <i class="ti ti-search"></i>
-        <span>Kuch likho — articles dhundhne ke liye</span>
+        <span>Type something — to search articles</span>
       </div>
     `;
     return;
@@ -107,14 +107,14 @@ function handleSearch(query) {
     results.innerHTML = `
       <div class="search-empty">
         <i class="ti ti-mood-sad"></i>
-        <span>"${query}" se koi article nahi mila</span>
+        <span>No article found for "${query}"</span>
       </div>
     `;
     return;
   }
 
   results.innerHTML = `
-    <div class="search-count">${filtered.length} article${filtered.length > 1 ? 's' : ''} mile</div>
+    <div class="search-count">${filtered.length} article${filtered.length > 1 ? 's' : ''} found</div>
     ${filtered.map(p => `
       <div class="search-result-item" onclick="window.location.href='post.html?slug=${p.slug}'">
         <div class="sri-cat">${p.category}</div>
@@ -161,10 +161,10 @@ async function loadPosts() {
 loadPosts();
 
 const trending = [
-  "CGPA kaise improve karein — honest aur practical guide",
-  "Programming seekhne ka sab se sahi tareeqa kya hai?",
-  "Student scholarships — poori aur accurate information",
-  "LinkedIn profile kaise banayein — CS students ke liye"
+  "How to improve your CGPA — an honest and practical guide",
+  "What is the best way to learn programming?",
+  "Student scholarships — complete and accurate information",
+  "How to build your LinkedIn profile — for CS students"
 ];
 
 // ===== STATE =====

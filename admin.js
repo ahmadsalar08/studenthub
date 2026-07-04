@@ -4,7 +4,7 @@ const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
 const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-// ===== AUTH CHECK — sirf logged in user access kar sake =====
+// ===== AUTH CHECK — only logged in admin can access =====
 async function checkAuth() {
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) {
@@ -118,7 +118,7 @@ function renderAllPosts(list = adminPosts) {
   if (!tbody) return
   tbody.innerHTML = list.length
     ? list.map(postRow).join('')
-    : `<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:32px">Koi post nahi mili</td></tr>`
+    : `<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:32px">No posts found</td></tr>`
 }
 
 function filterAdminPosts() {
@@ -137,23 +137,23 @@ window.filterAdminPosts = filterAdminPosts
 async function deletePost(id) {
   const post = adminPosts.find(p => p.id === id)
   if (!post) return
-  if (!confirm(`"${post.title}" — delete karna chahte ho?`)) return
+  if (!confirm(`Are you sure you want to delete "${post.title}"?`)) return
 
   const { error } = await supabase.from('posts').delete().eq('id', id)
-  if (error) { showToast('Delete nahi hua: ' + error.message); return }
+  if (error) { showToast('Delete failed: ' + error.message); return }
 
   adminPosts = adminPosts.filter(p => p.id !== id)
   renderDashboardPosts()
   renderAllPosts()
-  showToast('Post delete ho gayi!')
+  showToast('Post deleted!')
 }
 window.deletePost = deletePost
 
 // ===== COMMENTS =====
 const adminComments = [
-  { name:"Sara Rashid", post:"1st year CS guide", text:"Bohot helpful article hai!", time:"2 days ago" },
-  { name:"Usman Baig", post:"Free tools article", text:"CS50 Harvard course recommend karna sahi hai.", time:"3 days ago" },
-  { name:"Hina Malik", post:"1st year CS guide", text:"Dosto wala point bilkul sahi hai.", time:"5 days ago" },
+  { name:"Sara Rashid", post:"1st year CS guide", text:"Very helpful article!", time:"2 days ago" },
+  { name:"Usman Baig", post:"Free tools article", text:"Recommending the CS50 Harvard course is spot on.", time:"3 days ago" },
+  { name:"Hina Malik", post:"1st year CS guide", text:"The point about choosing the right friends is absolutely correct.", time:"5 days ago" },
 ]
 
 function renderComments() {
@@ -173,8 +173,8 @@ function renderComments() {
   `).join('')
 }
 
-function approveComment(i) { showToast('Comment approve ho gaya!'); document.getElementById('ca-' + i).style.opacity = '0.4' }
-function deleteComment(i) { document.getElementById('ca-' + i).remove(); showToast('Comment delete ho gaya!') }
+function approveComment(i) { showToast('Comment approved!'); document.getElementById('ca-' + i).style.opacity = '0.4' }
+function deleteComment(i) { document.getElementById('ca-' + i).remove(); showToast('Comment deleted!') }
 window.approveComment = approveComment
 window.deleteComment = deleteComment
 
@@ -182,11 +182,11 @@ window.deleteComment = deleteComment
 function format(cmd) { document.execCommand(cmd, false, null); document.getElementById('art-content').focus() }
 function insertHeading() { document.execCommand('formatBlock', false, 'h2'); document.getElementById('art-content').focus() }
 function insertList() { document.execCommand('insertUnorderedList', false, null); document.getElementById('art-content').focus() }
-function insertLink() { const url = prompt('Link URL daalo:'); if (url) document.execCommand('createLink', false, url) }
+function insertLink() { const url = prompt('Enter link URL:'); if (url) document.execCommand('createLink', false, url) }
 function insertCallout() {
   const div = document.createElement('div')
   div.style.cssText = 'background:#1e0e3e;border:0.5px solid #4a2a8e;border-radius:8px;padding:14px 16px;margin:16px 0;color:#c8c8d8;'
-  div.innerHTML = '💡 Apna tip yahan likho...'
+  div.innerHTML = '💡 Write your tip here...'
   document.getElementById('art-content').appendChild(div)
   updatePreview()
 }
@@ -209,7 +209,7 @@ function updatePreview() {
   const cat   = document.getElementById('art-category').value
   const box   = document.getElementById('preview-box')
   if (!title) {
-    box.innerHTML = `<div class="preview-empty"><i class="ti ti-eye-off"></i><span>Title likhna shuru karo...</span></div>`
+    box.innerHTML = `<div class="preview-empty"><i class="ti ti-eye-off"></i><span>Start writing a title...</span></div>`
   } else {
     box.innerHTML = `
       ${cat ? `<div class="preview-cat">${cat}</div><br>` : ''}
@@ -224,14 +224,14 @@ window.updatePreview = updatePreview
 function updateSEO(title, cat) {
   const content = document.getElementById('art-content').innerText || ''
   let score = 0; const tips = []
-  if (title.length >= 10) { score += 25; tips.push({ok:true,  text:'Title sahi length ka hai'}) }
-  else                     {              tips.push({ok:false, text:'Title 10+ characters ka hona chahiye'}) }
-  if (cat)                 { score += 25; tips.push({ok:true,  text:'Category select hai'}) }
-  else                     {              tips.push({ok:false, text:'Category select karo'}) }
-  if (content.length >= 200) { score += 25; tips.push({ok:true,  text:'Content kaafi hai'}) }
-  else                       {              tips.push({ok:false, text:'200+ characters ka content likho'}) }
-  if (document.getElementById('art-tags').value) { score += 25; tips.push({ok:true, text:'Tags add hain'}) }
-  else { tips.push({ok:false, text:'Tags add karo'}) }
+  if (title.length >= 10) { score += 25; tips.push({ok:true,  text:'Title length is good'}) }
+  else                     {              tips.push({ok:false, text:'Title should be 10+ characters'}) }
+  if (cat)                 { score += 25; tips.push({ok:true,  text:'Category is selected'}) }
+  else                     {              tips.push({ok:false, text:'Please select a category'}) }
+  if (content.length >= 200) { score += 25; tips.push({ok:true,  text:'Content length is sufficient'}) }
+  else                       {              tips.push({ok:false, text:'Write at least 200+ characters of content'}) }
+  if (document.getElementById('art-tags').value) { score += 25; tips.push({ok:true, text:'Tags have been added'}) }
+  else { tips.push({ok:false, text:'Please add some tags'}) }
   const fill = document.getElementById('seo-fill')
   const label = document.getElementById('seo-label')
   fill.style.width = score + '%'
@@ -249,9 +249,9 @@ async function publishPost() {
   const content = document.getElementById('art-content').innerHTML.trim()
   const excerpt = document.getElementById('art-content').innerText.trim().substring(0, 200)
 
-  if (!title)   { showToast('Title daalo pehle!'); return }
-  if (!cat)     { showToast('Category select karo!'); return }
-  if (!content) { showToast('Content likho pehle!'); return }
+  if (!title)   { showToast('Please enter a title first!'); return }
+  if (!cat)     { showToast('Please select a category!'); return }
+  if (!content) { showToast('Please write some content first!'); return }
 
   const btn = document.querySelector('.pub-btn')
   btn.innerHTML = '<i class="ti ti-loader"></i> Publishing...'
@@ -276,7 +276,7 @@ async function publishPost() {
     btn.innerHTML = '<i class="ti ti-send"></i> Publish article'
     btn.disabled = false
     if (error.message.includes('duplicate') || error.message.includes('unique')) {
-      showToast('Is title ka article pehle se exist karta hai!')
+      showToast('An article with this title already exists!')
     } else {
       showToast('Error: ' + error.message)
     }
@@ -292,7 +292,7 @@ async function publishPost() {
   updatePreview()
   await loadAdminPosts()
   showPanel('posts')
-  showToast('Article publish ho gaya! 🎉')
+  showToast('Article published! 🎉')
 }
 window.publishPost = publishPost
 
@@ -303,7 +303,7 @@ async function saveDraft() {
   const content = document.getElementById('art-content').innerHTML.trim()
   const excerpt = document.getElementById('art-content').innerText.trim().substring(0, 200)
 
-  if (!title) { showToast('Title daalo pehle!'); return }
+  if (!title) { showToast('Please enter a title first!'); return }
 
   const { data: { session } } = await supabase.auth.getSession()
   const authorName = session?.user?.user_metadata?.full_name || session?.user?.email?.split('@')[0] || 'Anonymous'
@@ -316,9 +316,9 @@ async function saveDraft() {
     published: false
   })
 
-  if (error) { showToast('Draft save nahi hua: ' + error.message); return }
+  if (error) { showToast('Draft could not be saved: ' + error.message); return }
   await loadAdminPosts()
-  showToast('Draft save ho gaya!')
+  showToast('Draft saved!')
 }
 window.saveDraft = saveDraft
 

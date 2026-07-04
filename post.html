@@ -15,6 +15,21 @@
   <link rel="stylesheet" href="post.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+  <!-- OG / Social Meta Tags -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="StudentHub">
+  <meta property="og:title"       content="Article — StudentHub">
+  <meta property="og:description" content="Read this article on StudentHub — real tips and honest experiences for CS students.">
+  <meta property="og:url"         content="https://studenthub-plum.vercel.app/post.html">
+  <meta property="og:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <meta property="og:image:width"  content="512">
+  <meta property="og:image:height" content="512">
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="Article — StudentHub">
+  <meta name="twitter:description" content="Read this article on StudentHub — real tips and honest experiences for CS students.">
+  <meta name="twitter:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <!-- Description for search engines -->
+  <meta name="description"         content="Read this article on StudentHub — real tips and honest experiences for CS students.">
 </head>
 <body>
 
@@ -275,5 +290,23 @@
   </footer>
 
   <script type="module" src="post.js"></script>
+  <script>
+    // Dynamic OG tags — updated when article loads
+    function updateOGTags(title, excerpt) {
+      document.querySelector('meta[property="og:title"]')?.setAttribute('content', title + ' — StudentHub');
+      document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', title + ' — StudentHub');
+      if (excerpt) {
+        document.querySelector('meta[property="og:description"]')?.setAttribute('content', excerpt);
+        document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', excerpt);
+        document.querySelector('meta[name="description"]')?.setAttribute('content', excerpt);
+      }
+      // Update canonical URL with slug
+      const slug = new URLSearchParams(window.location.search).get('slug');
+      if (slug) {
+        document.querySelector('meta[property="og:url"]')?.setAttribute('content', 'https://studenthub-plum.vercel.app/post.html?slug=' + slug);
+      }
+    }
+    window.updateOGTags = updateOGTags;
+  </script>
 </body>
 </html>

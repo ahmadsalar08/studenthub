@@ -4,14 +4,14 @@ const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
 const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-// ===== URL SE SLUG NIKALO =====
+// ===== GET SLUG FROM URL =====
 const params = new URLSearchParams(window.location.search);
 const slug = params.get('slug');
 let currentPostId = null
-// ===== POST LOAD KARO =====
+// ===== LOAD POST =====
 async function loadPost() {
   if (!slug) {
-    showError("Koi article nahi mila!");
+    showError("No article found!");
     return;
   }
 
@@ -23,23 +23,28 @@ async function loadPost() {
     .single();
 
   if (error || !data) {
-    showError("Yeh article nahi mila ya delete ho gaya!");
+    showError("This article was not found or has been deleted!");
     return;
   }
 currentPostId = data.id
-// Views increment
+// Increment views
   await supabase.from('posts').update({ views: (data.views || 0) + 1 }).eq('id', data.id)
   // Title
   document.title = `${data.title} — StudentHub`;
 
-  // Har element update karo
+  // Update social meta tags dynamically
+  if (window.updateOGTags) {
+    window.updateOGTags(data.title, data.excerpt || '');
+  }
+
+  // Update each element
   setEl("art-title", data.title);
   setEl("art-author", data.author_name || "Anonymous");
   setEl("art-author-2", data.author_name || "Anonymous");
   setEl("art-category", data.category || "General");
   setEl("art-date", new Date(data.created_at).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'}));
 
-  // Content — paragraph wise render karo
+  // Render content paragraph by paragraph
   const contentEl = document.getElementById("art-content");
   if (contentEl && data.content) {
     contentEl.innerHTML = DOMPurify.sanitize(data.content)
@@ -90,7 +95,7 @@ let liked = false
 
 async function toggleLike() {
   const { data: { session } } = await supabase.auth.getSession()
-  if (!session) { alert('Like karne ke liye login karo!'); return }
+  if (!session) { alert('Please log in to like this article!'); return }
   
   const userId = session.user.id
 

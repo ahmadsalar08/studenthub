@@ -14,6 +14,21 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="admin.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <!-- OG / Social Meta Tags -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="StudentHub">
+  <meta property="og:title"       content="Admin Panel — StudentHub">
+  <meta property="og:description" content="StudentHub Admin Dashboard.">
+  <meta property="og:url"         content="https://studenthub-plum.vercel.app/admin.html">
+  <meta property="og:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <meta property="og:image:width"  content="512">
+  <meta property="og:image:height" content="512">
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="Admin Panel — StudentHub">
+  <meta name="twitter:description" content="StudentHub Admin Dashboard.">
+  <meta name="twitter:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <!-- Description for search engines -->
+  <meta name="description"         content="StudentHub Admin Dashboard.">
 </head>
 <body class="admin-body">
 
@@ -45,7 +60,7 @@
       <div class="as-user">
         <div class="as-avatar">S</div>
         <div class="as-user-info">
-          <div class="as-user-name">Tumhara Naam</div>
+          <div class="as-user-name">Your Name</div>
           <div class="as-user-role">Admin · CS Student</div>
         </div>
       </div>
@@ -190,7 +205,7 @@
                 type="text"
                 class="title-input"
                 id="art-title"
-                placeholder="Article ka title likho..."
+                placeholder="Write article title..."
                 oninput="updatePreview()"
               >
             </div>
@@ -209,7 +224,7 @@
                 type="text"
                 class="meta-input"
                 id="art-tags"
-                placeholder="Tags (comma se separate karo)"
+                placeholder="Tags (separate with commas)"
               >
               <select class="meta-select" id="art-read">
                 <option value="3 min">3 min read</option>
@@ -251,7 +266,7 @@
               class="editor-area"
               id="art-content"
               contenteditable="true"
-              data-placeholder="Article ka content yahan likho..."
+              data-placeholder="Write your article content here..."
               oninput="updatePreview()"
             ></div>
 
@@ -276,7 +291,7 @@
               </div>
               <div class="pub-option">
                 <i class="ti ti-user"></i>
-                <span>Author: <strong>Tumhara Naam</strong></span>
+                <span>Author: <strong>Your Name</strong></span>
               </div>
               <div class="pub-option">
                 <i class="ti ti-eye"></i>
@@ -297,7 +312,7 @@
             <div class="preview-box" id="preview-box">
               <div class="preview-empty">
                 <i class="ti ti-eye-off"></i>
-                <span>Title likhna shuru karo...</span>
+                <span>Start writing a title...</span>
               </div>
             </div>
           </div>
@@ -309,7 +324,7 @@
               <div class="seo-bar">
                 <div class="seo-fill" id="seo-fill" style="width:0%"></div>
               </div>
-              <span class="seo-label" id="seo-label">Title daalo</span>
+              <span class="seo-label" id="seo-label">Enter a title</span>
             </div>
             <div class="seo-tips" id="seo-tips"></div>
           </div>
@@ -323,7 +338,7 @@
       <div class="posts-toolbar">
         <div class="posts-search">
           <i class="ti ti-search"></i>
-          <input type="text" placeholder="Posts dhundho..." id="posts-search" oninput="filterAdminPosts()">
+          <input type="text" placeholder="Search posts..." id="posts-search" oninput="filterAdminPosts()">
         </div>
         <select class="meta-select" id="posts-filter" onchange="filterAdminPosts()">
           <option value="all">All categories</option>

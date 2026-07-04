@@ -14,6 +14,21 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="login.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <!-- OG / Social Meta Tags -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="StudentHub">
+  <meta property="og:title"       content="Sign In — StudentHub">
+  <meta property="og:description" content="Sign in or create a free account on StudentHub and join thousands of CS students.">
+  <meta property="og:url"         content="https://studenthub-plum.vercel.app/login.html">
+  <meta property="og:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <meta property="og:image:width"  content="512">
+  <meta property="og:image:height" content="512">
+  <meta name="twitter:card"        content="summary">
+  <meta name="twitter:title"       content="Sign In — StudentHub">
+  <meta name="twitter:description" content="Sign in or create a free account on StudentHub and join thousands of CS students.">
+  <meta name="twitter:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <!-- Description for search engines -->
+  <meta name="description"         content="Sign in or create a free account on StudentHub and join thousands of CS students.">
 </head>
 <body class="login-body">
 
@@ -25,9 +40,9 @@
         StudentHub
       </a>
       <div class="nav-right">
-        <span class="login-nav-text">Account nahi hai?</span>
+        <span class="login-nav-text">Don't have an account?</span>
         <button class="btn-primary" onclick="showTab('signup')">
-          Sign up — free hai
+          Sign up — it's free
         </button>
       </div>
     </div>
@@ -44,12 +59,12 @@
           StudentHub
         </div>
         <h2 class="brand-heading">
-          Students ke liye<br>
-          <em>banaya gaya</em><br>
-          platform
+          A platform<br>
+          <em>built</em><br>
+          for students
         </h2>
         <p class="brand-sub">
-          Real experiences, honest tips aur practical advice — sab ek jagah. Join karo aur apni journey shuru karo.
+          Real experiences, honest tips and practical advice — all in one place. Join and start your journey.
         </p>
 
         <!-- Testimonials -->
@@ -57,14 +72,14 @@
           <div class="testi-item">
             <div class="testi-avatar">SR</div>
             <div class="testi-body">
-              <div class="testi-text">"Is blog ne mera 1st semester save kar diya. Shukriya StudentHub!"</div>
+              <div class="testi-text">"This blog saved my 1st semester. Thank you StudentHub!"</div>
               <div class="testi-name">Sara Rashid · CS Student, Lahore</div>
             </div>
           </div>
           <div class="testi-item">
             <div class="testi-avatar" style="background:#0e3a2e;border-color:#1a6a4e;color:#4ade80">UB</div>
             <div class="testi-body">
-              <div class="testi-text">"Internship guide follow kiya aur 2nd year mein hi offer mil gayi!"</div>
+              <div class="testi-text">"Followed the internship guide and got an offer in 2nd year!"</div>
               <div class="testi-name">Usman Baig · CS Student, Karachi</div>
             </div>
           </div>
@@ -98,8 +113,8 @@
         <!-- LOGIN FORM -->
         <div class="form-panel" id="panel-login">
           <div class="form-header">
-            <h1 class="form-title">Wapas aa gaye! 👋</h1>
-            <p class="form-subtitle">Apne account mein sign in karo</p>
+            <h1 class="form-title">Welcome back! 👋</h1>
+            <p class="form-subtitle">Sign in to your account</p>
           </div>
 
           <div class="form-group">
@@ -110,7 +125,7 @@
                 type="email"
                 class="form-input"
                 id="login-email"
-                placeholder="tumhara@email.com"
+                placeholder="your@email.com"
               >
             </div>
           </div>
@@ -118,7 +133,7 @@
           <div class="form-group">
             <div class="label-row">
               <label class="form-label">Password</label>
-              <a href="#" class="forgot-link" onclick="showTab('forgot'); return false;">Bhool gaye?</a>
+              <a href="#" class="forgot-link" onclick="showTab('forgot'); return false;">Forgot password?</a>
             </div>
             <div class="input-wrap">
               <i class="ti ti-lock input-icon"></i>
@@ -141,29 +156,29 @@
             <i class="ti ti-arrow-right"></i>
           </button>
 
-          <div class="divider"><span>ya phir</span></div>
+          <div class="divider"><span>or</span></div>
 
-            <button class="social-btn google-btn" onclick="handleGoogleLogin()"></button>
+          <button class="social-btn google-btn" onclick="handleGoogleLogin()">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
               <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
               <path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
               <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z" fill="#EA4335"/>
             </svg>
-            Google se sign in karo
+            Sign in with Google
           </button>
 
           <p class="switch-text">
-            Account nahi hai?
-            <button class="switch-link" onclick="showTab('signup')">Sign up karo — free hai</button>
+            Don't have an account?
+            <button class="switch-link" onclick="showTab('signup')">Sign up — it's free</button>
           </p>
         </div>
 
         <!-- SIGNUP FORM -->
         <div class="form-panel hidden" id="panel-signup">
           <div class="form-header">
-            <h1 class="form-title">Join karo! 🚀</h1>
-            <p class="form-subtitle">Free account banao aur likhna shuru karo</p>
+            <h1 class="form-title">Join us! 🚀</h1>
+            <p class="form-subtitle">Create a free account and start writing</p>
           </div>
 
           <div class="form-row">
@@ -187,7 +202,7 @@
             <label class="form-label">Email address</label>
             <div class="input-wrap">
               <i class="ti ti-mail input-icon"></i>
-              <input type="email" class="form-input" id="signup-email" placeholder="tumhara@email.com">
+              <input type="email" class="form-input" id="signup-email" placeholder="your@email.com">
             </div>
           </div>
 
@@ -208,7 +223,6 @@
                 <i class="ti ti-eye"></i>
               </button>
             </div>
-            <!-- Password strength -->
             <div class="strength-wrap" id="strength-wrap">
               <div class="strength-bar">
                 <div class="strength-fill" id="strength-fill"></div>
@@ -233,40 +247,39 @@
           <div class="terms-row">
             <input type="checkbox" id="terms-check" class="terms-cb">
             <label for="terms-check" class="terms-label">
-              Main <a href="#" class="terms-link">Terms of Service</a> aur
-              <a href="#" class="terms-link">Privacy Policy</a> se agree karta/karti hoon
+              I agree to the <a href="#" class="terms-link">Terms of Service</a> and
+              <a href="#" class="terms-link">Privacy Policy</a>
             </label>
           </div>
 
           <button class="submit-btn" onclick="handleSignup()">
-            <span>Account banao — free!</span>
+            <span>Create account — free!</span>
             <i class="ti ti-arrow-right"></i>
           </button>
 
-          <div class="divider"><span>ya phir</span></div>
+          <div class="divider"><span>or</span></div>
 
-          <button class="social-btn google-btn" onclick="handleGoogleLogin()"></button>
+          <button class="social-btn google-btn" onclick="handleGoogleLogin()">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/>
               <path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/>
               <path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/>
               <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z" fill="#EA4335"/>
             </svg>
-            Google se sign up karo
+            Sign up with Google
           </button>
 
           <p class="switch-text">
-            Pehle se account hai?
-            <button class="switch-link" onclick="showTab('login')">Sign in karo</button>
+            Already have an account?
+            <button class="switch-link" onclick="showTab('login')">Sign in</button>
           </p>
         </div>
-
 
         <!-- FORGOT PASSWORD PANEL -->
         <div class="form-panel hidden" id="panel-forgot">
           <div class="form-header">
-            <h1 class="form-title">Password reset karo 🔑</h1>
-            <p class="form-subtitle">Apni email daalo — reset link bhej denge</p>
+            <h1 class="form-title">Reset your password 🔑</h1>
+            <p class="form-subtitle">Enter your email — we'll send you a reset link</p>
           </div>
 
           <div class="form-group">
@@ -277,7 +290,7 @@
                 type="email"
                 class="form-input"
                 id="forgot-email"
-                placeholder="tumhara@email.com"
+                placeholder="your@email.com"
               >
             </div>
           </div>
@@ -285,13 +298,13 @@
           <div class="form-error" id="forgot-error"></div>
 
           <button class="submit-btn" onclick="handleForgotPassword()">
-            <span>Reset link bhejo</span>
+            <span>Send reset link</span>
             <i class="ti ti-arrow-right"></i>
           </button>
 
           <p class="switch-text" style="margin-top:16px">
-            Yaad aa gaya?
-            <button class="switch-link" onclick="showTab('login')">Wapas Sign in pe jao</button>
+            Remember your password?
+            <button class="switch-link" onclick="showTab('login')">Back to Sign in</button>
           </p>
         </div>
 
@@ -299,10 +312,10 @@
         <div class="form-panel hidden" id="panel-success">
           <div class="success-state">
             <div class="success-icon"><i class="ti ti-check"></i></div>
-            <h2 class="success-title">Marhaba! 🎉</h2>
-            <p class="success-sub">Tumhara account ban gaya. Ab tum StudentHub ka hissa ho!</p>
+            <h2 class="success-title">Welcome! 🎉</h2>
+            <p class="success-sub">Your account has been created. You are now part of StudentHub!</p>
             <a href="index.html" class="submit-btn" style="text-decoration:none; justify-content:center">
-              Home page par jao <i class="ti ti-arrow-right"></i>
+              Go to home page <i class="ti ti-arrow-right"></i>
             </a>
           </div>
         </div>

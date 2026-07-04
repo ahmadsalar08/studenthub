@@ -85,8 +85,8 @@ async function handleLogin() {
   const email    = document.getElementById("login-email").value.trim();
   const password = document.getElementById("login-password").value;
 
-  if (!email || !email.includes("@")) { shake("login-email"); showError("login-error", "Valid email daalo"); return; }
-  if (!password || password.length < 6) { shake("login-password"); showError("login-error", "Password kam se kam 6 characters ka hona chahiye"); return; }
+  if (!email || !email.includes("@")) { shake("login-email"); showError("login-error", "Please enter a valid email"); return; }
+  if (!password || password.length < 6) { shake("login-password"); showError("login-error", "Password must be at least 6 characters"); return; }
 
   const btn = document.querySelector("#panel-login .submit-btn");
   btn.innerHTML = '<i class="ti ti-loader ti-spin"></i> Signing in...';
@@ -98,11 +98,11 @@ async function handleLogin() {
     btn.innerHTML = '<span>Sign in</span> <i class="ti ti-arrow-right"></i>';
     btn.disabled = false;
     if (error.message.includes("Invalid login")) {
-      showError("login-error", "Email ya password galat hai");
+      showError("login-error", "Incorrect email or password");
     } else if (error.message.includes("Email not confirmed")) {
-      showError("login-error", "Pehle apna email verify karo — inbox check karo");
+      showError("login-error", "Please verify your email first — check your inbox");
     } else {
-      showError("login-error", "Kuch masla hua: " + error.message);
+      showError("login-error", "An error occurred: " + error.message);
     }
     return;
   }
@@ -119,12 +119,12 @@ async function handleForgotPassword() {
 
   if (!email || !email.includes("@")) {
     shake("forgot-email");
-    showError("forgot-error", "Valid email daalo");
+    showError("forgot-error", "Please enter a valid email");
     return;
   }
 
   const btn = document.querySelector("#panel-forgot .submit-btn");
-  btn.innerHTML = '<i class="ti ti-loader ti-spin"></i> Bhej raha hoon...';
+  btn.innerHTML = '<i class="ti ti-loader ti-spin"></i> Sending...';
   btn.disabled = true;
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -132,9 +132,9 @@ async function handleForgotPassword() {
   });
 
   if (error) {
-    btn.innerHTML = '<span>Reset link bhejo</span> <i class="ti ti-arrow-right"></i>';
+    btn.innerHTML = '<span>Send reset link</span> <i class="ti ti-arrow-right"></i>';
     btn.disabled = false;
-    showError("forgot-error", "Kuch masla hua: " + error.message);
+    showError("forgot-error", "An error occurred: " + error.message);
     return;
   }
 
@@ -142,10 +142,10 @@ async function handleForgotPassword() {
   document.getElementById("panel-forgot").innerHTML = `
     <div class="success-state">
       <div class="success-icon"><i class="ti ti-mail-check"></i></div>
-      <h2 class="success-title">Email bhej di! 📧</h2>
+      <h2 class="success-title">Email sent! 📧</h2>
       <p class="success-sub">${email} pe password reset link bheja gaya hai. Inbox check karo!</p>
       <button class="submit-btn" onclick="showTab('login')" style="margin-top:8px">
-        <span>Wapas Sign in pe jao</span> <i class="ti ti-arrow-right"></i>
+        <span>Back to Sign in</span> <i class="ti ti-arrow-right"></i>
       </button>
     </div>
   `;
@@ -163,14 +163,14 @@ async function handleSignup() {
   const confirm  = document.getElementById("signup-confirm").value;
   const terms    = document.getElementById("terms-check").checked;
 
-  if (!fname) { shake("signup-fname"); showError("signup-error", "Apna first name daalo"); return; }
-  if (!email || !email.includes("@")) { shake("signup-email"); showError("signup-error", "Valid email daalo"); return; }
-  if (!password || password.length < 6) { shake("signup-password"); showError("signup-error", "Password kam se kam 6 characters ka hona chahiye"); return; }
-  if (password !== confirm) { shake("signup-confirm"); showError("signup-error", "Dono passwords match nahi kar rahe"); return; }
-  if (!terms) { showError("signup-error", "Terms & Privacy Policy se agree karna zaroori hai"); return; }
+  if (!fname) { shake("signup-fname"); showError("signup-error", "Please enter your first name"); return; }
+  if (!email || !email.includes("@")) { shake("signup-email"); showError("signup-error", "Please enter a valid email"); return; }
+  if (!password || password.length < 6) { shake("signup-password"); showError("signup-error", "Password must be at least 6 characters"); return; }
+  if (password !== confirm) { shake("signup-confirm"); showError("signup-error", "Both passwords do not match"); return; }
+  if (!terms) { showError("signup-error", "You must agree to the Terms & Privacy Policy"); return; }
 
   const btn = document.querySelector("#panel-signup .submit-btn");
-  btn.innerHTML = '<i class="ti ti-loader ti-spin"></i> Account ban raha hai...';
+  btn.innerHTML = '<i class="ti ti-loader ti-spin"></i> Creating account...';
   btn.disabled = true;
 
   const { data, error } = await supabase.auth.signUp({
@@ -185,21 +185,21 @@ async function handleSignup() {
   });
 
   if (error) {
-    btn.innerHTML = '<span>Account banao — free!</span> <i class="ti ti-arrow-right"></i>';
+    btn.innerHTML = '<span>Create account — free!</span> <i class="ti ti-arrow-right"></i>';
     btn.disabled = false;
     if (error.message.includes("already registered")) {
-      showError("signup-error", "Yeh email pehle se registered hai — sign in karo");
+      showError("signup-error", "This email is already registered — please sign in");
     } else if (error.message.includes("Password should")) {
-      showError("signup-error", "Password aur strong hona chahiye");
+      showError("signup-error", "Password should be stronger");
     } else {
-      showError("signup-error", "Kuch masla hua: " + error.message);
+      showError("signup-error", "An error occurred: " + error.message);
     }
     return;
   }
 
   if (data.user && data.user.identities && data.user.identities.length === 0) {
-    showError("signup-error", "Yeh email pehle se registered hai — sign in karo");
-    btn.innerHTML = '<span>Account banao — free!</span> <i class="ti ti-arrow-right"></i>';
+    showError("signup-error", "This email is already registered — please sign in");
+    btn.innerHTML = '<span>Create account — free!</span> <i class="ti ti-arrow-right"></i>';
     btn.disabled = false;
     return;
   }
