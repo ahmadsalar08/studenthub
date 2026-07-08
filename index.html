@@ -341,9 +341,16 @@ async function subscribe() {
     return;
   }
 
-  const { error } = await supabaseClient
-    .from('newsletters')
-    .insert([{ email: email }]);
+  
+  const { createClient } = window.supabase;
+const sb = createClient(
+  'https://bafpnqleaivhlbtbvufg.supabase.co',
+  'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
+);
+
+const { error } = await sb
+  .from('newsletters')
+  .insert([{ email: email }]);
 
   if (error) {
     if (error.code === '23505') {
