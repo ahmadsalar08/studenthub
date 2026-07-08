@@ -13,177 +13,36 @@
   <title>StudentHub — Privacy Policy</title>
   <link rel="stylesheet" href="style.css" />
   <style>
-    /* Privacy-specific styles only */
-    .page-wrap {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 60px 32px 80px;
-    }
-
-    /* Hero */
-    .priv-hero {
-      text-align: center;
-      margin-bottom: 52px;
-    }
-    .priv-hero .hero-eyebrow {
-      margin-bottom: 18px;
-    }
-    .priv-hero h1 {
-      font-size: 36px;
-      font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: -0.8px;
-      margin-bottom: 12px;
-    }
-    .priv-hero p {
-      color: var(--text-muted);
-      font-size: 14px;
-      max-width: 460px;
-      margin: 0 auto 6px;
-      line-height: 1.75;
-    }
-    .priv-updated {
-      font-size: 12px;
-      color: var(--text-muted);
-      opacity: 0.7;
-    }
-
-    /* Layout */
-    .priv-layout {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 40px;
-      align-items: start;
-    }
-
-    /* TOC Sidebar */
-    .priv-toc {
-      position: sticky;
-      top: 80px;
-      background: var(--card);
-      border: 0.5px solid var(--border2);
-      border-radius: 12px;
-      padding: 18px;
-    }
-    .priv-toc .sw-title {
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-      padding-bottom: 12px;
-      border-bottom: 0.5px solid var(--border);
-    }
+    .page-wrap { max-width: 1200px; margin: 0 auto; padding: 60px 32px 80px; }
+    .priv-hero { text-align: center; margin-bottom: 52px; }
+    .priv-hero .hero-eyebrow { margin-bottom: 18px; }
+    .priv-hero h1 { font-size: 36px; font-weight: 700; color: var(--text-primary); letter-spacing: -0.8px; margin-bottom: 12px; }
+    .priv-hero p { color: var(--text-muted); font-size: 14px; max-width: 460px; margin: 0 auto 6px; line-height: 1.75; }
+    .priv-updated { font-size: 12px; color: var(--text-muted); opacity: 0.7; }
+    .priv-layout { display: grid; grid-template-columns: 200px 1fr; gap: 40px; align-items: start; }
+    .priv-toc { position: sticky; top: 80px; background: var(--card); border: 0.5px solid var(--border2); border-radius: 12px; padding: 18px; }
+    .priv-toc .sw-title { font-size: 11px; color: var(--text-muted); letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 0.5px solid var(--border); }
     .priv-toc ul { list-style: none; }
     .priv-toc ul li { margin-bottom: 2px; }
-    .priv-toc ul li a {
-      display: block;
-      padding: 6px 10px;
-      color: var(--text-muted);
-      font-size: 13px;
-      border-radius: 6px;
-      transition: all 0.15s;
-    }
-    .priv-toc ul li a:hover {
-      background: var(--purple-dim);
-      color: var(--purple-light);
-    }
-    .priv-toc ul li a.active {
-      background: var(--purple-dim);
-      color: var(--purple-light);
-      border: 0.5px solid var(--purple-border);
-    }
-
-    /* Cards */
+    .priv-toc ul li a { display: block; padding: 6px 10px; color: var(--text-muted); font-size: 13px; border-radius: 6px; transition: all 0.15s; }
+    .priv-toc ul li a:hover { background: var(--purple-dim); color: var(--purple-light); }
+    .priv-toc ul li a.active { background: var(--purple-dim); color: var(--purple-light); border: 0.5px solid var(--purple-border); }
     .priv-cards { display: flex; flex-direction: column; gap: 16px; }
-
-    .priv-card {
-      background: var(--card);
-      border: 0.5px solid var(--border2);
-      border-radius: 14px;
-      padding: 26px 28px;
-      transition: border-color 0.15s;
-    }
+    .priv-card { background: var(--card); border: 0.5px solid var(--border2); border-radius: 14px; padding: 26px 28px; transition: border-color 0.15s; }
     .priv-card:hover { border-color: var(--purple-border); }
-
-    .priv-card-head {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .priv-icon {
-      width: 38px; height: 38px;
-      background: var(--purple-dim);
-      border: 0.5px solid var(--purple-border);
-      border-radius: 9px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-    .priv-card-head h2 {
-      font-size: 15px;
-      font-weight: 600;
-      color: var(--text-primary);
-      letter-spacing: -0.2px;
-    }
-
-    .priv-card p {
-      color: var(--text-muted);
-      font-size: 14px;
-      line-height: 1.8;
-      margin-bottom: 10px;
-    }
+    .priv-card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .priv-icon { width: 38px; height: 38px; background: var(--purple-dim); border: 0.5px solid var(--purple-border); border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+    .priv-card-head h2 { font-size: 15px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.2px; }
+    .priv-card p { color: var(--text-muted); font-size: 14px; line-height: 1.8; margin-bottom: 10px; }
     .priv-card p:last-child { margin-bottom: 0; }
-
-    .priv-card ul {
-      color: var(--text-muted);
-      font-size: 13.5px;
-      line-height: 1.8;
-      padding-left: 18px;
-      margin-top: 8px;
-    }
+    .priv-card ul { color: var(--text-muted); font-size: 13.5px; line-height: 1.8; padding-left: 18px; margin-top: 8px; }
     .priv-card ul li { margin-bottom: 5px; }
-    .priv-card ul li span {
-      color: var(--text-secondary);
-      font-weight: 500;
-    }
-
-    /* Highlight box */
-    .info-box {
-      background: var(--purple-dim);
-      border: 0.5px solid var(--purple-border);
-      border-radius: 8px;
-      padding: 12px 15px;
-      margin-top: 14px;
-    }
-    .info-box p {
-      color: var(--purple-light) !important;
-      font-size: 13px !important;
-      margin: 0 !important;
-    }
-
-    /* Contact card */
-    .contact-cta {
-      background: var(--card);
-      border: 0.5px solid var(--purple-border);
-      border-radius: 14px;
-      padding: 32px;
-      text-align: center;
-    }
-    .contact-cta h2 {
-      font-size: 17px;
-      font-weight: 600;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-    }
-    .contact-cta p {
-      color: var(--text-muted);
-      font-size: 13.5px;
-      margin-bottom: 18px;
-    }
-
-    /* Responsive */
+    .priv-card ul li span { color: var(--text-secondary); font-weight: 500; }
+    .info-box { background: var(--purple-dim); border: 0.5px solid var(--purple-border); border-radius: 8px; padding: 12px 15px; margin-top: 14px; }
+    .info-box p { color: var(--purple-light) !important; font-size: 13px !important; margin: 0 !important; }
+    .contact-cta { background: var(--card); border: 0.5px solid var(--purple-border); border-radius: 14px; padding: 32px; text-align: center; }
+    .contact-cta h2 { font-size: 17px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px; }
+    .contact-cta p { color: var(--text-muted); font-size: 13.5px; margin-bottom: 18px; }
     @media (max-width: 768px) {
       .priv-layout { grid-template-columns: 1fr; }
       .priv-toc { position: static; }
@@ -191,7 +50,6 @@
       .priv-hero h1 { font-size: 26px; }
     }
   </style>
-  <!-- OG / Social Meta Tags -->
   <meta property="og:type"        content="website">
   <meta property="og:site_name"   content="StudentHub">
   <meta property="og:title"       content="Privacy Policy — StudentHub">
@@ -204,12 +62,10 @@
   <meta name="twitter:title"       content="Privacy Policy — StudentHub">
   <meta name="twitter:description" content="Read how StudentHub collects, uses and protects your data.">
   <meta name="twitter:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
-  <!-- Description for search engines -->
   <meta name="description"         content="Read how StudentHub collects, uses and protects your data.">
 </head>
 <body>
 
-  <!-- NAVBAR — exact same as your site -->
   <nav class="navbar">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
@@ -229,10 +85,8 @@
     </div>
   </nav>
 
-  <!-- PAGE CONTENT -->
   <div class="page-wrap">
 
-    <!-- Hero -->
     <div class="priv-hero">
       <div class="hero-eyebrow">🔒 Legal</div>
       <h1>Privacy Policy</h1>
@@ -240,10 +94,8 @@
       <p class="priv-updated">Last updated: May 27, 2026</p>
     </div>
 
-    <!-- Layout: TOC + Cards -->
     <div class="priv-layout">
 
-      <!-- Sidebar TOC -->
       <aside class="priv-toc">
         <div class="sw-title">Contents</div>
         <ul>
@@ -257,7 +109,6 @@
         </ul>
       </aside>
 
-      <!-- Cards -->
       <div class="priv-cards">
 
         <div class="priv-card" id="collected">
@@ -343,7 +194,7 @@
           </div>
           <ul>
             <li>All data is transferred with <span>HTTPS (SSL)</span> encryption</li>
-            <li>Database <span>Supabase Row Level Security</span> se protected</li>
+            <li>Database protected with <span>Supabase Row Level Security</span></li>
             <li>Passwords are <span>hashed</span> — never stored as plain text</li>
             <li>Regular <span>security checks</span> are performed</li>
           </ul>
@@ -360,12 +211,9 @@
     </div>
   </div>
 
-  <!-- FOOTER — exact same as your site -->
   <footer class="footer">
     <div class="footer-inner">
-      <div class="f-logo">
-        <span class="logo-dot"></span>StudentHub
-      </div>
+      <div class="f-logo"><span class="logo-dot"></span>StudentHub</div>
       <div class="f-links">
         <a href="about.html">About</a>
         <a href="write-for-us.html">Write for us</a>

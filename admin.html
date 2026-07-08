@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="admin.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-  <!-- OG / Social Meta Tags -->
   <meta property="og:type"        content="website">
   <meta property="og:site_name"   content="StudentHub">
   <meta property="og:title"       content="Admin Panel — StudentHub">
@@ -27,7 +26,6 @@
   <meta name="twitter:title"       content="Admin Panel — StudentHub">
   <meta name="twitter:description" content="StudentHub Admin Dashboard.">
   <meta name="twitter:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
-  <!-- Description for search engines -->
   <meta name="description"         content="StudentHub Admin Dashboard.">
 </head>
 <body class="admin-body">
@@ -148,11 +146,11 @@
       </div>
 
       <!-- Recent posts table -->
-      <div class="admin-card">=
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;">
-  <span style="font-size:14px;font-weight:600;color:var(--text-primary);white-space:nowrap;">Recent articles</span>
-  <button class="btn-ghost btn-sm" onclick="showPanel('posts')" style="white-space:nowrap;flex-shrink:0;">View all →</button>
-</div>
+      <div class="admin-card">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;">
+          <span style="font-size:14px;font-weight:600;color:var(--text-primary);white-space:nowrap;">Recent articles</span>
+          <button class="btn-ghost btn-sm" onclick="showPanel('posts')" style="white-space:nowrap;flex-shrink:0;">View all →</button>
+        </div>
         <table class="admin-table">
           <thead>
             <tr>
@@ -212,7 +210,7 @@
 
             <div class="editor-meta">
               <select class="meta-select" id="art-category" onchange="updatePreview()">
-                <option value="">Category select karo</option>
+                <option value="">Select a category</option>
                 <option value="Study Tips">Study Tips</option>
                 <option value="Tech & Tools">Tech & Tools</option>
                 <option value="Career">Career</option>
