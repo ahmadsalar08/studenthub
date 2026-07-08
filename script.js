@@ -255,33 +255,37 @@ function animateCounters() {
 }
 
 // ===== NEWSLETTER =====
-function subscribe() {
-  const email = document.getElementById("nl-email").value;
+async function subscribe() {
+  const emailInput = document.getElementById("nl-email");
+  const email = emailInput.value.trim();
+
   if (!email || !email.includes("@")) {
-    document.getElementById("nl-email").style.borderColor = "#ef4444";
+    emailInput.style.borderColor = "#ef4444";
     return;
   }
+
+  emailInput.style.borderColor = "";
+
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+  const sb = createClient(
+    'https://bafpnqleaivhlbtbvufg.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
+  );
+
+  const { error } = await sb.from('newsletters').insert({ email });
+
+  if (error) {
+    if (error.message.includes('duplicate') || error.code === '23505') {
+      document.getElementById("nl-success").style.display = "flex";
+      document.getElementById("nl-success").innerHTML = '<i class="ti ti-info-circle"></i> Pehle se subscribed ho!';
+    } else {
+      emailInput.style.borderColor = "#ef4444";
+    }
+    return;
+  }
+
   document.getElementById("nl-success").style.display = "flex";
   document.getElementById("nl-email").style.display = "none";
   document.querySelector(".nl-btn").style.display = "none";
 }
 window.subscribe = subscribe;
-
-// ===== INIT =====
-renderPosts();
-renderTrending();
-animateCounters();
-
-// ===== POST CLICK =====
-document.getElementById("post-list").addEventListener("click", (e) => {
-  const item = e.target.closest(".post-item");
-  if (item && item.dataset.slug) {
-    window.location.href = `post.html?slug=${item.dataset.slug}`;
-  }
-});
-
-document.querySelector(".featured-card").addEventListener("click", () => {
-  if (posts.length > 0) {
-    window.location.href = `post.html?slug=${posts[0].slug}`;
-  }
-});
