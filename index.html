@@ -333,6 +333,30 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
     if (btn) btn.style.display = 'inline-flex'
   }
 })()
+async function subscribe() {
+  const email = document.getElementById('nl-email').value.trim();
+  
+  if (!email || !email.includes('@')) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from('newsletters')
+    .insert([{ email: email }]);
+
+  if (error) {
+    if (error.code === '23505') {
+      alert('This email is already subscribed!');
+    } else {
+      alert('Something went wrong. Please try again.');
+    }
+    return;
+  }
+
+  document.getElementById('nl-email').value = '';
+  document.getElementById('nl-success').style.display = 'flex';
+}
 </script>
 </body>
 </html>
