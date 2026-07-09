@@ -69,7 +69,6 @@
     }
     @media (max-width: 480px) { .ch-title { font-size: 22px; } }
   </style>
-  <!-- OG / Social Meta Tags -->
   <meta property="og:type"        content="website">
   <meta property="og:site_name"   content="StudentHub">
   <meta property="og:title"       content="Contact — StudentHub">
@@ -86,7 +85,6 @@
 </head>
 <body>
 
-  <!-- NAVBAR -->
   <nav class="navbar">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
@@ -109,24 +107,17 @@
     </div>
   </nav>
 
-  <!-- HERO -->
   <section class="contact-hero">
     <div class="contact-hero-inner">
-      <div class="ch-eyebrow">
-        <i class="ti ti-mail"></i> Contact
-      </div>
+      <div class="ch-eyebrow"><i class="ti ti-mail"></i> Contact</div>
       <h1 class="ch-title">Get in touch with <em>Salar</em></h1>
-      <p class="ch-desc">
-        Have a question, suggestion, or feedback? Send a message — I personally reply to every message.
-      </p>
+      <p class="ch-desc">Have a question, suggestion, or feedback? Send a message — I personally reply to every message.</p>
     </div>
   </section>
 
-  <!-- BODY -->
   <div class="contact-body">
     <div class="contact-body-inner">
 
-      <!-- FORM -->
       <div class="contact-form-card">
         <div class="form-card-title">
           <i class="ti ti-send" style="color:var(--purple-light)"></i>
@@ -141,7 +132,6 @@
               <input type="text" class="cf-input" id="cf-name" placeholder="Ali Khan">
             </div>
           </div>
-
           <div class="cf-group">
             <label class="cf-label">Email address</label>
             <div class="cf-input-wrap">
@@ -149,7 +139,6 @@
               <input type="email" class="cf-input" id="cf-email" placeholder="your@email.com">
             </div>
           </div>
-
           <div class="cf-group">
             <label class="cf-label">Subject</label>
             <div class="cf-input-wrap">
@@ -157,45 +146,27 @@
               <input type="text" class="cf-input" id="cf-subject" placeholder="What would you like to talk about?">
             </div>
           </div>
-
           <div class="cf-group">
             <label class="cf-label">Message</label>
-            <textarea
-              class="cf-textarea"
-              id="cf-message"
-              rows="6"
-              placeholder="Write your message here..."
-              oninput="updateCharCount()"
-            ></textarea>
+            <textarea class="cf-textarea" id="cf-message" rows="6" placeholder="Write your message here..." oninput="updateCharCount()"></textarea>
             <div class="cf-char-count"><span id="char-count">0</span> / 500</div>
           </div>
-
           <div class="cf-error" id="cf-error"></div>
-
           <button class="cf-submit" onclick="submitForm()">
             <i class="ti ti-send"></i>
             <span>Send message</span>
           </button>
         </div>
 
-        <!-- Success state -->
         <div class="cf-success" id="cf-success">
           <div class="cf-success-icon"><i class="ti ti-check"></i></div>
           <div class="cf-success-title">Message received! 🎉</div>
-          <p class="cf-success-desc">
-            Thanks for reaching out. I'll reply as soon as possible — usually within 24 hours.
-          </p>
-          <button class="cf-reset" onclick="resetForm()">
-            <i class="ti ti-refresh"></i> Send another message
-          </button>
+          <p class="cf-success-desc">Thanks for reaching out. I'll reply as soon as possible — usually within 24 hours.</p>
+          <button class="cf-reset" onclick="resetForm()"><i class="ti ti-refresh"></i> Send another message</button>
         </div>
-
       </div>
 
-      <!-- SIDEBAR -->
       <div class="contact-sidebar">
-
-        <!-- Author -->
         <div class="cs-card">
           <div class="cs-card-title">Who you're contacting</div>
           <div class="cs-author">
@@ -206,8 +177,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Email -->
         <div class="cs-card">
           <div class="cs-card-title">Direct email</div>
           <div class="cs-email-row" onclick="copyEmail()">
@@ -218,34 +187,20 @@
             </div>
           </div>
         </div>
-
-        <!-- Response info -->
         <div class="cs-card">
           <div class="cs-card-title">Response time</div>
-          <div class="cs-response">
-            <i class="ti ti-clock"></i>
-            <span>Usually replies within 24 hours</span>
-          </div>
-          <div class="cs-response">
-            <i class="ti ti-message-circle"></i>
-            <span>I personally read every message</span>
-          </div>
-          <div class="cs-response">
-            <i class="ti ti-language"></i>
-            <span>English or Urdu — both are fine</span>
-          </div>
+          <div class="cs-response"><i class="ti ti-clock"></i><span>Usually replies within 24 hours</span></div>
+          <div class="cs-response"><i class="ti ti-message-circle"></i><span>I personally read every message</span></div>
+          <div class="cs-response"><i class="ti ti-language"></i><span>English or Urdu — both are fine</span></div>
         </div>
-
       </div>
+
     </div>
   </div>
 
-  <!-- FOOTER -->
   <footer class="footer">
     <div class="footer-inner">
-      <div class="f-logo">
-        <div class="logo-dot"></div> StudentHub
-      </div>
+      <div class="f-logo"><div class="logo-dot"></div> StudentHub</div>
       <div class="f-links">
         <a href="about.html">About</a>
         <a href="write-for-us.html">Write for us</a>
@@ -256,12 +211,11 @@
     </div>
   </footer>
 
-  <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
     const sb = supabase.createClient(
       'https://bafpnqleaivhlbtbvufg.supabase.co',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
+      'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
     );
 
     function updateCharCount() {
@@ -272,8 +226,7 @@
     }
 
     function showError(msg) {
-      const el = document.getElementById("cf-error");
-      el.innerHTML = `<i class="ti ti-alert-circle"></i> ${msg}`;
+      document.getElementById("cf-error").innerHTML = `<i class="ti ti-alert-circle"></i> ${msg}`;
     }
 
     function clearError() {
@@ -287,23 +240,23 @@
       const subject = document.getElementById("cf-subject").value.trim();
       const message = document.getElementById("cf-message").value.trim();
 
-      if (!name)    { showError("Apna naam daalo"); return; }
-      if (!email || !email.includes("@")) { showError("Valid email daalo"); return; }
-      if (!subject) { showError("Subject likho"); return; }
-      if (!message || message.length < 10) { showError("Message thoda lamba likho (10+ characters)"); return; }
-      if (message.length > 500) { showError("Message 500 characters se zyada nahi ho sakta"); return; }
+      if (!name)                          { showError("Please enter your name"); return; }
+      if (!email || !email.includes("@")) { showError("Please enter a valid email"); return; }
+      if (!subject)                       { showError("Please enter a subject"); return; }
+      if (!message || message.length < 10){ showError("Please write a longer message (10+ characters)"); return; }
+      if (message.length > 500)           { showError("Message cannot exceed 500 characters"); return; }
 
       const btn = document.querySelector(".cf-submit");
-      btn.innerHTML = '<i class="ti ti-loader"></i> Bhej raha hoon...';
+      btn.innerHTML = '<i class="ti ti-loader"></i> Sending...';
       btn.disabled = true;
 
       const { error } = await sb.from('contacts').insert({ name, email, subject, message });
 
-      btn.innerHTML = '<i class="ti ti-send"></i> Send message';
+      btn.innerHTML = '<i class="ti ti-send"></i> <span>Send message</span>';
       btn.disabled = false;
 
       if (error) {
-        showError("Message nahi gaya, dobara try karo");
+        showError("Something went wrong. Please try again.");
         return;
       }
 
@@ -323,24 +276,16 @@
 
     function copyEmail() {
       navigator.clipboard.writeText("ahmadsalar0707@gmail.com");
-      const row = document.querySelector(".cs-email-row");
-      const label = row.querySelector(".cs-email-label");
+      const label = document.querySelector(".cs-email-label");
       const original = label.textContent;
       label.textContent = "✓ Copied!";
       label.style.color = "#4ade80";
-      setTimeout(() => {
-        label.textContent = original;
-        label.style.color = "";
-      }, 2000);
+      setTimeout(() => { label.textContent = original; label.style.color = ""; }, 2000);
     }
 
     async function guardedWrite() {
       const { data: { session } } = await sb.auth.getSession();
-      if (session) {
-        window.location.href = 'admin.html';
-      } else {
-        window.location.href = 'login.html';
-      }
+      window.location.href = session ? 'admin.html' : 'login.html';
     }
 
     window.submitForm = submitForm;
