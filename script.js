@@ -289,3 +289,13 @@ async function subscribe() {
   document.querySelector(".nl-btn").style.display = "none";
 }
 window.subscribe = subscribe;
+// ===== WRITE BUTTON GUARD =====
+async function guardedWrite() {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (session) {
+    window.location.href = 'admin.html';
+  } else {
+    window.location.href = 'login.html';
+  }
+}
+window.guardedWrite = guardedWrite;
