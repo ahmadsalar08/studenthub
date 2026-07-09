@@ -291,13 +291,42 @@
       btn.innerHTML = '<i class="ti ti-loader"></i> Sending...';
       btn.disabled = true;
 
-      setTimeout(() => {
-        document.getElementById("contact-form").style.display = "none";
-        const success = document.getElementById("cf-success");
-        success.style.display = "flex";
-        btn.innerHTML = '<i class="ti ti-send"></i> Send message';
-        btn.disabled = false;
-      }, 1400);
+      async function submitForm() {
+  clearError();
+  const name    = document.getElementById("cf-name").value.trim();
+  const email   = document.getElementById("cf-email").value.trim();
+  const subject = document.getElementById("cf-subject").value.trim();
+  const message = document.getElementById("cf-message").value.trim();
+
+  if (!name) { showError("Apna naam daalo"); return; }
+  if (!email || !email.includes("@")) { showError("Valid email daalo"); return; }
+  if (!subject) { showError("Subject likho"); return; }
+  if (!message || message.length < 10) { showError("Message thoda lamba likho (10+ characters)"); return; }
+  if (message.length > 500) { showError("Message 500 characters se zyada nahi ho sakta"); return; }
+
+  const btn = document.querySelector(".cf-submit");
+  btn.innerHTML = '<i class="ti ti-loader"></i> Bhej raha hoon...';
+  btn.disabled = true;
+
+  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
+  const sb = createClient(
+    'https://bafpnqleaivhlbtbvufg.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
+  );
+
+  const { error } = await sb.from('contacts').insert({ name, email, subject, message });
+
+  btn.innerHTML = '<i class="ti ti-send"></i> Message bhejo';
+  btn.disabled = false;
+
+  if (error) {
+    showError("Message nahi gaya, dobara try karo");
+    return;
+  }
+
+  document.getElementById("contact-form").style.display = "none";
+  document.getElementById("cf-success").style.display = "flex";
+}
     }
 
     function resetForm() {
