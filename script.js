@@ -113,7 +113,7 @@ function handleSearch(query) {
     return;
   }
 
-  results.innerHTML = `
+  results.innerHTML = DOMPurify.sanitize(`
     <div class="search-count">${filtered.length} article${filtered.length > 1 ? 's' : ''} found</div>
     ${filtered.map(p => `
       <div class="search-result-item" onclick="window.location.href='post.html?slug=${p.slug}'">
@@ -122,7 +122,7 @@ function handleSearch(query) {
         <div class="sri-meta">${p.author} · ${p.date}</div>
       </div>
     `).join('')}
-  `;
+  `);
 }
 window.handleSearch = handleSearch;
 
