@@ -14,6 +14,7 @@ async function updateNavbar() {
     const user = session.user;
     const name = user.user_metadata?.full_name || user.email.split("@")[0];
     const initial = name.charAt(0).toUpperCase();
+    const isAdmin = user.email === 'ahmadsalar4321@gmail.com';
 
     navRight.innerHTML = `
       <button class="btn-ghost" id="search-btn" onclick="toggleSearch()"><i class="ti ti-search"></i></button>
@@ -23,10 +24,12 @@ async function updateNavbar() {
         <i class="ti ti-chevron-down" style="font-size:13px;color:var(--text-muted)"></i>
       </div>
       <div class="nav-dropdown hidden" id="nav-dropdown">
-        <a href="admin.html" class="nav-dd-item">
-          <i class="ti ti-edit"></i> Write article
-        </a>
-        <div class="nav-dd-divider"></div>
+        ${isAdmin ? `
+          <a href="admin.html" class="nav-dd-item">
+            <i class="ti ti-edit"></i> Write article
+          </a>
+          <div class="nav-dd-divider"></div>
+        ` : ''}
         <button class="nav-dd-item nav-dd-logout" id="logout-btn">
           <i class="ti ti-logout"></i> Sign out
         </button>
@@ -50,7 +53,7 @@ async function updateNavbar() {
     navRight.innerHTML = `
       <button class="btn-ghost" id="search-btn" onclick="toggleSearch()"><i class="ti ti-search"></i></button>
       <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
-      <button class="btn-primary" onclick="window.location.href='admin.html'">
+      <button class="btn-primary" onclick="guardedWrite()">
         <i class="ti ti-edit"></i> Write
       </button>
     `;
@@ -74,7 +77,6 @@ function closeSearch(e) {
 }
 window.closeSearch = closeSearch;
 
-// Close search with ESC key
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     const overlay = document.getElementById("search-overlay");
@@ -181,6 +183,16 @@ function renderPosts() {
 
   list.innerHTML = "";
 
+  if (filtered.length === 0) {
+    list.innerHTML = `
+      <div style="text-align:center;padding:48px 20px;color:var(--text-muted)">
+        <i class="ti ti-article-off" style="font-size:32px;margin-bottom:12px;display:block"></i>
+        No articles yet. Check back soon!
+      </div>
+    `;
+    return;
+  }
+
   visible.forEach((post, i) => {
     const item = document.createElement("div");
     item.className = "post-item";
@@ -266,18 +278,12 @@ async function subscribe() {
 
   emailInput.style.borderColor = "";
 
-  const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
-  const sb = createClient(
-    'https://bafpnqleaivhlbtbvufg.supabase.co',
-    'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
-  );
-
-  const { error } = await sb.from('newsletters').insert({ email });
+  const { error } = await supabase.from('newsletters').insert({ email });
 
   if (error) {
     if (error.message.includes('duplicate') || error.code === '23505') {
       document.getElementById("nl-success").style.display = "flex";
-      document.getElementById("nl-success").innerHTML = '<i class="ti ti-info-circle"></i> Pehle se subscribed ho!';
+      document.getElementById("nl-success").innerHTML = '<i class="ti ti-info-circle"></i> You\'re already subscribed!';
     } else {
       emailInput.style.borderColor = "#ef4444";
     }
@@ -289,6 +295,7 @@ async function subscribe() {
   document.querySelector(".nl-btn").style.display = "none";
 }
 window.subscribe = subscribe;
+
 // ===== WRITE BUTTON GUARD =====
 async function guardedWrite() {
   const { data: { session } } = await supabase.auth.getSession();
@@ -299,3 +306,22 @@ async function guardedWrite() {
   }
 }
 window.guardedWrite = guardedWrite;
+
+// ===== INIT =====
+renderPosts();
+renderTrending();
+animateCounters();
+
+// ===== POST CLICK =====
+document.getElementById("post-list").addEventListener("click", (e) => {
+  const item = e.target.closest(".post-item");
+  if (item && item.dataset.slug) {
+    window.location.href = `post.html?slug=${item.dataset.slug}`;
+  }
+});
+
+document.querySelector(".featured-card").addEventListener("click", () => {
+  if (posts.length > 0) {
+    window.location.href = `post.html?slug=${posts[0].slug}`;
+  }
+});
