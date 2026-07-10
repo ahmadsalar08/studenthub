@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin.html
+Disallow: /reset-password.html
+
+Sitemap: https://studenthub-plum.vercel.app/sitemap.xml
