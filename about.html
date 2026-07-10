@@ -13,6 +13,7 @@
   <title>StudentHub — About</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     .about-hero { background: var(--bg2); border-bottom: 0.5px solid var(--border); padding: 72px 32px 60px; }
     .about-hero-inner { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: 1fr 260px; gap: 60px; align-items: center; }
@@ -83,7 +84,6 @@
       .cta-title { font-size: 20px; }
     }
   </style>
-  <!-- OG / Social Meta Tags -->
   <meta property="og:type"        content="website">
   <meta property="og:site_name"   content="StudentHub">
   <meta property="og:title"       content="About — StudentHub">
@@ -96,7 +96,6 @@
   <meta name="twitter:title"       content="About — StudentHub">
   <meta name="twitter:description" content="Learn about StudentHub — a platform built by CS students, for CS students. Real experiences, no fluff.">
   <meta name="twitter:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
-  <!-- Description for search engines -->
   <meta name="description"         content="Learn about StudentHub — a platform built by CS students, for CS students. Real experiences, no fluff.">
 </head>
 <body>
@@ -116,8 +115,8 @@
         <a href="about.html" class="active">About</a>
       </div>
       <div class="nav-right">
-        <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
-        <button class="btn-primary" onclick="window.location.href='admin.html'">
+        <button class="btn-ghost" id="signInBtn" onclick="window.location.href='login.html'">Sign in</button>
+        <button id="writeBtn" class="btn-primary" style="display:none;" onclick="window.location.href='admin.html'">
           <i class="ti ti-edit"></i> Write
         </button>
       </div>
@@ -128,7 +127,6 @@
   <section class="about-hero">
     <div class="about-hero-inner">
 
-      <!-- Left: Text -->
       <div>
         <div class="ah-eyebrow">
           <i class="ti ti-info-circle"></i> About StudentHub
@@ -156,7 +154,6 @@
         </div>
       </div>
 
-      <!-- Right: Author card -->
       <div class="ah-author-card">
         <div class="ah-avatar">S</div>
         <div class="ah-name">Salar</div>
@@ -184,17 +181,11 @@
   <div class="about-body">
     <div class="about-body-inner">
 
-      <!-- Mission -->
       <div class="about-section">
         <div class="about-section-label"><span>Mission</span></div>
         <h2>Why StudentHub was created</h2>
-        <p>
-          In my 2nd year, when I was struggling at university, I couldn't find resources that actually worked. Everything was either in English or not relevant to Pakistani universities.
-        </p>
-        <p>
-          StudentHub was created so that the things nobody told me, I could tell others. Real problems, real solutions — in a language students here actually speak.
-        </p>
-
+        <p>In my 2nd year, when I was struggling at university, I couldn't find resources that actually worked. Everything was either in English or not relevant to Pakistani universities.</p>
+        <p>StudentHub was created so that the things nobody told me, I could tell others. Real problems, real solutions — in a language students here actually speak.</p>
         <div class="mission-grid">
           <div class="mission-card">
             <div class="mc-icon"><i class="ti ti-bulb"></i></div>
@@ -214,11 +205,9 @@
         </div>
       </div>
 
-      <!-- Story -->
       <div class="about-section">
         <div class="about-section-label"><span>Story</span></div>
         <h2>How it all started</h2>
-
         <div class="story-timeline">
           <div class="st-item">
             <div class="st-dot"></div>
@@ -247,12 +236,10 @@
         </div>
       </div>
 
-      <!-- Topics -->
       <div class="about-section">
         <div class="about-section-label"><span>Content</span></div>
         <h2>What you'll find here</h2>
         <p>StudentHub covers articles on these topics:</p>
-
         <div class="topics-grid">
           <div class="topic-item">
             <i class="ti ti-books topic-icon"></i>
@@ -299,11 +286,9 @@
         </div>
       </div>
 
-      <!-- Values -->
       <div class="about-section">
         <div class="about-section-label"><span>Values</span></div>
         <h2>What matters here</h2>
-
         <div class="values-list">
           <div class="value-item">
             <div class="value-num">01</div>
@@ -336,17 +321,14 @@
         </div>
       </div>
 
-      <!-- CTA -->
       <div class="about-cta">
         <div class="cta-title">Let's learn together 🚀</div>
-        <p class="cta-desc">
-          If you have a tip, experience, or idea that could help other students — start writing. Submissions are welcome!
-        </p>
+        <p class="cta-desc">If you have a tip, experience, or idea that could help other students — start writing. Submissions are welcome!</p>
         <div class="cta-btns">
           <button class="btn-lg" onclick="window.location.href='index.html'">
             <i class="ti ti-home"></i> Start reading articles
           </button>
-          <button class="btn-lg-ghost" onclick="window.location.href='admin.html'">
+          <button class="btn-lg-ghost" id="ctaWriteBtn" style="display:none;" onclick="window.location.href='admin.html'">
             <i class="ti ti-edit"></i> Write your article
           </button>
         </div>
@@ -370,6 +352,22 @@
       <div class="f-copy">© 2026 StudentHub. Made with <i class="ti ti-heart"></i> by Salar.</div>
     </div>
   </footer>
+
+  <script>
+    const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDU3NjI5MDIsImV4cCI6MjA2MTMzODkwMn0.xtMHjCKhABQjWdCvWBJJqEPtHZHFEbpHIhptYLRtLxs'
+    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+    ;(async function() {
+      const { data: { session } } = await supabaseClient.auth.getSession()
+      if (session && session.user.email === 'ahmadsalar4321@gmail.com') {
+        document.getElementById('writeBtn').style.display = 'inline-flex'
+        document.getElementById('signInBtn').style.display = 'none'
+        const ctaBtn = document.getElementById('ctaWriteBtn')
+        if (ctaBtn) ctaBtn.style.display = 'inline-flex'
+      }
+    })()
+  </script>
 
 </body>
 </html>
