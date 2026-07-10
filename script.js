@@ -269,7 +269,7 @@ async function subscribe() {
   const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm');
   const sb = createClient(
     'https://bafpnqleaivhlbtbvufg.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
+    'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
   );
 
   const { error } = await sb.from('newsletters').insert({ email });
