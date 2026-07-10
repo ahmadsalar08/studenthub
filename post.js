@@ -214,3 +214,4 @@ async function loadComments() {
   })
 }
 window.loadComments = loadComments
+window.toggleLike = toggleLike;
