@@ -116,7 +116,7 @@
       </div>
       <div class="nav-right">
         <button class="btn-ghost" id="signInBtn" onclick="window.location.href='login.html'">Sign in</button>
-        <button id="writeBtn" class="btn-primary" style="display:none;" onclick="window.location.href='admin.html'">
+        <button id="writeBtn" class="btn-primary" style="display:none;" onclick="guardedWrite()">
           <i class="ti ti-edit"></i> Write
         </button>
       </div>
@@ -328,7 +328,7 @@
           <button class="btn-lg" onclick="window.location.href='index.html'">
             <i class="ti ti-home"></i> Start reading articles
           </button>
-          <button class="btn-lg-ghost" id="ctaWriteBtn" style="display:none;" onclick="window.location.href='admin.html'">
+          <button class="btn-lg-ghost" id="ctaWriteBtn" style="display:none;" onclick="guardedWrite()">
             <i class="ti ti-edit"></i> Write your article
           </button>
         </div>
