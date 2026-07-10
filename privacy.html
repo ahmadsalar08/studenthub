@@ -2,16 +2,17 @@
 <html lang="en">
 <head>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#0D0D0D">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0D0D0D">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>StudentHub — Privacy Policy</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   <style>
     .page-wrap { max-width: 1200px; margin: 0 auto; padding: 60px 32px 80px; }
     .priv-hero { text-align: center; margin-bottom: 52px; }
@@ -50,19 +51,19 @@
       .priv-hero h1 { font-size: 26px; }
     }
   </style>
-  <meta property="og:type"        content="website">
-  <meta property="og:site_name"   content="StudentHub">
-  <meta property="og:title"       content="Privacy Policy — StudentHub">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="StudentHub">
+  <meta property="og:title" content="Privacy Policy — StudentHub">
   <meta property="og:description" content="Read how StudentHub collects, uses and protects your data.">
-  <meta property="og:url"         content="https://studenthub-plum.vercel.app/privacy.html">
-  <meta property="og:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
-  <meta property="og:image:width"  content="512">
+  <meta property="og:url" content="https://studenthub-plum.vercel.app/privacy.html">
+  <meta property="og:image" content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <meta property="og:image:width" content="512">
   <meta property="og:image:height" content="512">
-  <meta name="twitter:card"        content="summary">
-  <meta name="twitter:title"       content="Privacy Policy — StudentHub">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Privacy Policy — StudentHub">
   <meta name="twitter:description" content="Read how StudentHub collects, uses and protects your data.">
-  <meta name="twitter:image"       content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
-  <meta name="description"         content="Read how StudentHub collects, uses and protects your data.">
+  <meta name="twitter:image" content="https://studenthub-plum.vercel.app/android-chrome-512x512.png">
+  <meta name="description" content="Read how StudentHub collects, uses and protects your data.">
 </head>
 <body>
 
@@ -79,8 +80,10 @@
         <a href="about.html">About</a>
       </div>
       <div class="nav-right">
-        <a href="login.html" class="btn-ghost">Sign in</a>
-        <a href="admin.html" class="btn-primary">✏️ Write</a>
+        <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
+        <button class="btn-primary" onclick="guardedWrite()">
+          <i class="ti ti-edit"></i> Write
+        </button>
       </div>
     </div>
   </nav>
@@ -224,7 +227,23 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
+    const sb = supabase.createClient(
+      'https://bafpnqleaivhlbtbvufg.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
+    );
+
+    async function guardedWrite() {
+      const { data: { session } } = await sb.auth.getSession();
+      if (session) {
+        window.location.href = 'admin.html';
+      } else {
+        window.location.href = 'login.html';
+      }
+    }
+    window.guardedWrite = guardedWrite;
+
     const sections = document.querySelectorAll('[id]');
     const links = document.querySelectorAll('.priv-toc a');
     window.addEventListener('scroll', () => {
