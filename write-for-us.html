@@ -39,6 +39,7 @@
     .wf-submit { width: 100%; padding: 12px; background: var(--purple); border: none; border-radius: 8px; color: #fff; font-size: 14px; font-weight: 600; font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: opacity 0.15s; margin-top: 4px; }
     .wf-submit:hover { opacity: 0.9; }
     .wf-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .wf-cooldown { display: none; background: rgba(251,191,36,0.08); border: 0.5px solid rgba(251,191,36,0.3); border-radius: 10px; padding: 12px 16px; text-align: center; color: #fbbf24; font-size: 13px; margin-top: 12px; }
     .wf-success { display: none; background: rgba(34,197,94,0.08); border: 0.5px solid rgba(34,197,94,0.3); border-radius: 10px; padding: 16px 20px; text-align: center; color: #4ade80; font-size: 14px; margin-top: 16px; }
     .wfu-sidebar { display: flex; flex-direction: column; gap: 16px; }
     .ws-card { background: var(--card); border: 0.5px solid var(--border2); border-radius: 14px; padding: 22px; }
@@ -156,9 +157,13 @@
           <div class="wf-char"><span id="wf-char-count">0</span>/10000</div>
         </div>
 
-        <button class="wf-submit" onclick="submitArticle()">
+        <button class="wf-submit" id="wf-submit-btn" onclick="submitArticle()">
           <i class="ti ti-send"></i> Submit article
         </button>
+
+        <div class="wf-cooldown" id="wf-cooldown">
+          <i class="ti ti-clock"></i> Please wait <span id="wf-countdown">30</span>s before submitting again.
+        </div>
 
         <div class="wf-success" id="wf-success">
           <i class="ti ti-circle-check"></i> Submission received! 🎉 We'll review and reply within 24 hours.
@@ -233,6 +238,30 @@
       }
     })()
 
+    // ── 30-second cooldown ──
+    let cooldownTimer = null
+
+    function startCooldown(btnId, cooldownId, countdownId) {
+      const btn       = document.getElementById(btnId)
+      const cooldown  = document.getElementById(cooldownId)
+      const countdown = document.getElementById(countdownId)
+
+      btn.disabled = true
+      cooldown.style.display = 'block'
+      let remaining = 30
+      countdown.textContent = remaining
+
+      cooldownTimer = setInterval(() => {
+        remaining--
+        countdown.textContent = remaining
+        if (remaining <= 0) {
+          clearInterval(cooldownTimer)
+          btn.disabled = false
+          cooldown.style.display = 'none'
+        }
+      }, 1000)
+    }
+
     async function submitArticle() {
       const name       = document.getElementById('wf-name').value.trim()
       const email      = document.getElementById('wf-email').value.trim()
@@ -252,7 +281,7 @@
         return
       }
 
-      const btn = document.querySelector('.wf-submit')
+      const btn = document.getElementById('wf-submit-btn')
       btn.disabled = true
       btn.innerHTML = '<i class="ti ti-loader"></i> Submitting...'
 
@@ -260,10 +289,10 @@
         name, email, title, category, university, content
       }])
 
-      btn.disabled = false
       btn.innerHTML = '<i class="ti ti-send"></i> Submit article'
 
       if (error) {
+        btn.disabled = false
         alert('Something went wrong. Please try again.')
         return
       }
@@ -276,11 +305,13 @@
       document.getElementById('wf-content').value = ''
       document.getElementById('wf-char-count').textContent = '0'
       document.getElementById('wf-success').style.display = 'block'
+
+      // Start 30s cooldown after successful submit
+      startCooldown('wf-submit-btn', 'wf-cooldown', 'wf-countdown')
     }
 
     function updateWfCount() {
-      const len = document.getElementById('wf-content').value.length
-      document.getElementById('wf-char-count').textContent = len
+      document.getElementById('wf-char-count').textContent = document.getElementById('wf-content').value.length
     }
 
     window.submitArticle = submitArticle
