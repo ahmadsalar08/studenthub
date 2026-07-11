@@ -15,6 +15,34 @@ const CONFIG = {
   MAX_EMAIL_LENGTH: 254
 };
 
+// Maps filter button data-cat → DB category names (case-insensitive)
+const CATEGORY_FILTERS = {
+  study: 'Study Tips',
+  tech: 'Tech & Tools',
+  career: 'Career',
+  exams: 'Exams',
+  lifestyle: 'Lifestyle',
+  mental: 'Mental Health'
+};
+
+function normalizeCategory(value) {
+  return (value || '').trim().replace(/\s+/g, ' ');
+}
+
+function getCategorySlug(category) {
+  const normalized = normalizeCategory(category);
+  if (!normalized) return 'general';
+  for (const [slug, label] of Object.entries(CATEGORY_FILTERS)) {
+    if (normalized.toLowerCase() === label.toLowerCase()) return slug;
+  }
+  return 'general';
+}
+
+function postMatchesCategory(post, filterSlug) {
+  if (filterSlug === 'all') return true;
+  return getCategorySlug(post.category) === filterSlug;
+}
+
 // ===== NAVBAR AUTH STATE =====
 async function updateNavbar() {
   const { data: { session } } = await supabase.auth.getSession();
@@ -224,7 +252,7 @@ async function loadPosts() {
     posts = data.map(p => ({
       id: p.id,
       slug: p.slug,
-      cat: p.category ? p.category.toLowerCase().replace(/ /g, '-') : 'general',
+      cat: getCategorySlug(p.category),
       category: p.category || 'General',
       title: p.title,
       excerpt: p.excerpt || '',
@@ -265,7 +293,7 @@ function renderPosts() {
   const list = document.getElementById("post-list");
   const filtered = activeCat === "all"
     ? posts
-    : posts.filter(p => p.cat === activeCat);
+    : posts.filter(p => postMatchesCategory(p, activeCat));
   const visible = filtered.slice(0, visibleCount);
 
   list.innerHTML = "";
