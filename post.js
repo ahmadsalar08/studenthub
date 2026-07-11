@@ -24,10 +24,11 @@ async function loadPost() {
   currentPostId = data.id
 
   // Atomic view increment — race condition safe
-  await supabase.rpc('increment_views', { post_id: data.id }).catch(() => {
-    supabase.from('posts').update({ views: (data.views || 0) + 1 }).eq('id', data.id)
-  })
-
+  try {
+  await supabase.rpc('increment_views', { post_id: data.id })
+} catch {
+  await supabase.from('posts').update({ views: (data.views || 0) + 1 }).eq('id', data.id)
+}
   document.title = `${data.title} — StudentHub`
   if (window.updateOGTags) window.updateOGTags(data.title, data.excerpt || '')
 
