@@ -8,14 +8,13 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 const CONFIG = {
   ADMIN_EMAIL: 'ahmadsalar4321@gmail.com',
   ANIMATION_DURATION_MS: 1800,
-  ANIMATION_FRAME_MS: 16,  // 60fps
+  ANIMATION_FRAME_MS: 16,
   LOAD_MORE_COUNT: 3,
   INITIAL_POST_COUNT: 5,
   EMAIL_REGEX: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
   MAX_EMAIL_LENGTH: 254
 };
 
-// Maps filter button data-cat → DB category names (case-insensitive)
 const CATEGORY_FILTERS = {
   study: 'Study Tips',
   tech: 'Tech & Tools',
@@ -123,14 +122,13 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// ===== UTILITY: Escape Regex Special Characters =====
+// ===== UTILITY =====
 function escapeRegex(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
 function highlightText(text, query) {
   if (!query || !text) return text;
-  
   try {
     const escapedQuery = escapeRegex(query);
     const regex = new RegExp(`(${escapedQuery})`, 'gi');
@@ -184,7 +182,6 @@ function handleSearch(query) {
       `).join('')}
     `);
 
-    // Add event listeners safely
     document.querySelectorAll('.search-result-item').forEach(item => {
       item.addEventListener('click', () => {
         const slug = item.dataset.slug;
@@ -205,7 +202,6 @@ function handleSearch(query) {
 }
 window.handleSearch = handleSearch;
 
-// ===== UTILITY: Escape HTML =====
 function escapeHtml(text) {
   if (!text) return '';
   const div = document.createElement('div');
@@ -218,8 +214,7 @@ let posts = [];
 
 async function loadPosts() {
   const postList = document.getElementById("post-list");
-  
-  // Show loading state
+
   if (postList) {
     postList.innerHTML = `
       <div style="text-align:center;padding:48px 20px;color:var(--text-muted)">
@@ -274,8 +269,6 @@ async function loadPosts() {
     }
   }
 }
-
-loadPosts();
 
 const trending = [
   "How to improve your CGPA — an honest and practical guide",
@@ -378,9 +371,9 @@ function animateCounters() {
     let current = 0;
     const timer = setInterval(() => {
       current += step;
-      if (current >= target) { 
-        current = target; 
-        clearInterval(timer); 
+      if (current >= target) {
+        current = target;
+        clearInterval(timer);
       }
       el.textContent = target >= 1000
         ? (current / 1000).toFixed(1) + "k"
@@ -391,7 +384,7 @@ function animateCounters() {
 
 // ===== EMAIL VALIDATION =====
 function isValidEmail(email) {
-  return CONFIG.EMAIL_REGEX.test(email) && 
+  return CONFIG.EMAIL_REGEX.test(email) &&
          email.length <= CONFIG.MAX_EMAIL_LENGTH &&
          email.length >= 3;
 }
@@ -402,11 +395,9 @@ async function subscribe() {
   const email = emailInput.value.trim();
   const successEl = document.getElementById("nl-success");
 
-  // Reset styling
   emailInput.style.borderColor = "";
   successEl.style.display = "none";
 
-  // Validation
   if (!isValidEmail(email)) {
     emailInput.style.borderColor = "#ef4444";
     successEl.style.display = "flex";
@@ -430,7 +421,6 @@ async function subscribe() {
       return;
     }
 
-    // Success
     successEl.style.display = "flex";
     successEl.innerHTML = '<i class="ti ti-check-circle" style="color:#22c55e"></i> Thanks for subscribing!';
     emailInput.style.display = "none";
@@ -455,10 +445,26 @@ async function guardedWrite() {
 }
 window.guardedWrite = guardedWrite;
 
+// ===== HANDLE URL CATEGORY FILTER =====
+function handleUrlFilter() {
+  const params = new URLSearchParams(window.location.search)
+  const cat = params.get('cat')
+  if (cat) {
+    const btn = document.querySelector(`.cat[data-cat="${cat}"]`)
+    if (btn) {
+      document.querySelectorAll('.cat').forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+      activeCat = cat
+      renderPosts()
+      document.querySelector('.cats-bar')?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+}
+
 // ===== INIT =====
-renderPosts();
 renderTrending();
 animateCounters();
+loadPosts().then(() => handleUrlFilter());
 
 // ===== FEATURED CARD CLICK =====
 const featuredCard = document.querySelector(".featured-card");
@@ -471,7 +477,7 @@ if (featuredCard) {
   });
 }
 
-// ===== CSS ANIMATION (spin) =====
+// ===== CSS ANIMATION =====
 const style = document.createElement('style');
 style.textContent = `
   @keyframes spin {
