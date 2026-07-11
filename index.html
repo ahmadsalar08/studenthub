@@ -33,12 +33,12 @@
 
   <nav class="navbar">
     <div class="nav-inner">
-      <div class="nav-logo">
+      <a href="index.html" class="nav-logo" style="text-decoration:none;display:flex;align-items:center;gap:8px">
         <div class="logo-dot"></div>
         StudentHub
-      </div>
+      </a>
       <div class="nav-links">
-        <a href="#" class="active">Home</a>
+        <a href="index.html" class="active">Home</a>
         <a href="#">Articles</a>
         <a href="#">Tips</a>
         <a href="#">Career</a>
@@ -76,8 +76,12 @@
         <h1>Learn smarter.<br><em>Live better.</em><br>Succeed faster.</h1>
         <p class="hero-sub">Real tips, honest experiences and practical advice — for every CS student who wants to actually make it.</p>
         <div class="hero-actions">
-          <button class="btn-lg"><i class="ti ti-rocket"></i> Start reading</button>
-          <button class="btn-lg-ghost"><i class="ti ti-edit"></i> Write an article</button>
+          <button class="btn-lg" onclick="document.getElementById('post-list').scrollIntoView({behavior:'smooth'})">
+            <i class="ti ti-rocket"></i> Start reading
+          </button>
+          <button class="btn-lg-ghost" onclick="window.location.href='write-for-us.html'">
+            <i class="ti ti-edit"></i> Write an article
+          </button>
         </div>
         <div class="hero-stats">
           <div class="hero-stat">
@@ -226,7 +230,6 @@
           </div>
         </div>
 
-        <!-- NEWSLETTER -->
         <div class="newsletter-box">
           <div class="nl-icon"><i class="ti ti-mail"></i></div>
           <div class="nl-title">Weekly digest</div>
@@ -262,10 +265,9 @@
   <script type="module" src="script.js"></script>
   <script>
     const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
+    const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
     const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
 
-    // Write button guard
     ;(async function() {
       const { data: { session } } = await supabaseClient.auth.getSession()
       if (session && session.user.email === 'ahmadsalar4321@gmail.com') {
@@ -274,20 +276,17 @@
       }
     })()
 
-    // ── 30-second cooldown ──
     let nlCooldownTimer = null
 
     function startNlCooldown() {
       const btn       = document.getElementById('nl-btn')
       const cooldown  = document.getElementById('nl-cooldown')
       const countdown = document.getElementById('nl-countdown')
-
       btn.disabled = true
       btn.style.opacity = '0.6'
       cooldown.style.display = 'block'
       let remaining = 30
       countdown.textContent = remaining
-
       nlCooldownTimer = setInterval(() => {
         remaining--
         countdown.textContent = remaining
@@ -302,22 +301,15 @@
 
     async function subscribe() {
       const email = document.getElementById('nl-email').value.trim()
-
       if (!email || !email.includes('@')) {
         alert('Please enter a valid email address.')
         return
       }
-
       const btn = document.getElementById('nl-btn')
       btn.disabled = true
       btn.innerHTML = '<i class="ti ti-loader"></i> Subscribing...'
-
-      const { error } = await supabaseClient
-        .from('newsletters')
-        .insert([{ email }])
-
+      const { error } = await supabaseClient.from('newsletters').insert([{ email }])
       btn.innerHTML = 'Subscribe <i class="ti ti-arrow-right"></i>'
-
       if (error) {
         btn.disabled = false
         if (error.code === '23505') {
@@ -327,11 +319,8 @@
         }
         return
       }
-
       document.getElementById('nl-email').value = ''
       document.getElementById('nl-success').style.display = 'flex'
-
-      // Start 30s cooldown
       startNlCooldown()
     }
   </script>
