@@ -1,15 +1,14 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
+const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-const params = new URLSearchParams(window.location.search);
-const slug = params.get('slug');
+const params = new URLSearchParams(window.location.search)
+const slug = params.get('slug')
 let currentPostId = null
 let liked = false
 
-// ===== LOAD POST =====
 async function loadPost() {
   if (!slug) { showError("No article found!"); return; }
 
@@ -18,92 +17,40 @@ async function loadPost() {
     .select('*')
     .eq('slug', slug)
     .eq('published', true)
-    .single();
+    .single()
 
-  if (error || !data) {
-    showError("This article was not found or has been deleted!");
-    return;
-  }
+  if (error || !data) { showError("This article was not found or has been deleted!"); return; }
 
   currentPostId = data.id
 
-  // Increment views
-  await supabase.from('posts').update({ views: (data.views || 0) + 1 }).eq('id', data.id)
+  // Atomic view increment — race condition safe
+  await supabase.rpc('increment_views', { post_id: data.id }).catch(() => {
+    supabase.from('posts').update({ views: (data.views || 0) + 1 }).eq('id', data.id)
+  })
 
-  document.title = `${data.title} — StudentHub`;
+  document.title = `${data.title} — StudentHub`
+  if (window.updateOGTags) window.updateOGTags(data.title, data.excerpt || '')
 
-  if (window.updateOGTags) {
-    window.updateOGTags(data.title, data.excerpt || '');
-  }
+  setEl("art-title", data.title)
+  setEl("art-author", data.author_name || "Anonymous")
+  setEl("art-author-2", data.author_name || "Anonymous")
+  setEl("art-category", data.category || "General")
+  setEl("art-date", new Date(data.created_at).toLocaleDateString('en-US', {day:'numeric', month:'long', year:'numeric'}))
 
-  setEl("art-title", data.title);
-  setEl("art-author", data.author_name || "Anonymous");
-  setEl("art-author-2", data.author_name || "Anonymous");
-  setEl("art-category", data.category || "General");
-  setEl("art-date", new Date(data.created_at).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'}));
-
-  const contentEl = document.getElementById("art-content");
+  const contentEl = document.getElementById("art-content")
   if (contentEl && data.content) {
     contentEl.innerHTML = DOMPurify.sanitize(data.content)
-      .split('\n\n')
-      .filter(p => p.trim())
-      .map(p => `<p>${p.trim()}</p>`)
-      .join('');
   }
 
-  const avatarEls = document.querySelectorAll(".art-avatar");
-  avatarEls.forEach(el => {
-    el.textContent = (data.author_name || "A").charAt(0).toUpperCase();
-  });
+  const avatarEls = document.querySelectorAll(".art-avatar")
+  avatarEls.forEach(el => { el.textContent = (data.author_name || "A").charAt(0).toUpperCase() })
 
-  // Load real like count + check if user already liked
-  await loadLikeState();
-}
-
-// ===== LOAD LIKE STATE =====
-async function loadLikeState() {
-  if (!currentPostId) return;
-
-  // Get real like count from DB
-  const { count } = await supabase
-    .from('likes')
-    .select('*', { count: 'exact', head: true })
-    .eq('post_id', currentPostId)
-
-  const likeCount = count || 0
-
-  // Update both like counters with real DB count
-  const likeCountEl = document.getElementById("like-count")
-  const likeCountEl2 = document.getElementById("like-count-2")
-  if (likeCountEl) likeCountEl.textContent = likeCount
-  if (likeCountEl2) likeCountEl2.textContent = likeCount
-
-  // Check if current user already liked this post
-  const { data: { session } } = await supabase.auth.getSession()
-  if (session) {
-    const { data: existingLike } = await supabase
-      .from('likes')
-      .select('id')
-      .eq('post_id', currentPostId)
-      .eq('user_id', session.user.id)
-      .single()
-
-    liked = !!existingLike
-
-    // Update button UI to match actual state
-    const likeBtn = document.getElementById("like-btn")
-    const likeBigBtn = document.getElementById("like-big-btn")
-    if (likeBtn) likeBtn.classList.toggle("liked", liked)
-    if (likeBigBtn) {
-      likeBigBtn.style.background = liked ? "var(--purple)" : "var(--purple-dim)"
-      likeBigBtn.style.color = liked ? "#fff" : "var(--purple-light)"
-    }
-  }
+  await loadLikeState()
 }
 
 function setEl(id, text) {
-  const el = document.getElementById(id);
-  if (el) el.textContent = text;
+  const el = document.getElementById(id)
+  if (el) el.textContent = text
 }
 
 function showError(msg) {
@@ -113,24 +60,57 @@ function showError(msg) {
       <div style="color:#fff;font-size:20px;font-weight:600">${msg}</div>
       <a href="index.html" style="color:#a78bfa">Go back home</a>
     </div>
-  `;
+  `
 }
 
-loadPost().then(() => loadComments());
+loadPost().then(() => loadComments())
 
-// ===== READING PROGRESS =====
 window.addEventListener("scroll", () => {
-  const article = document.querySelector(".art-content");
-  const bar = document.getElementById("progress-bar");
-  if (!article || !bar) return;
-  const rect = article.getBoundingClientRect();
-  const total = article.offsetHeight - window.innerHeight;
-  const scrolled = -rect.top;
-  const pct = Math.min(Math.max((scrolled / total) * 100, 0), 100);
-  bar.style.width = pct + "%";
-});
+  const article = document.querySelector(".art-content")
+  const bar = document.getElementById("progress-bar")
+  if (!article || !bar) return
+  const rect = article.getBoundingClientRect()
+  const total = article.offsetHeight - window.innerHeight
+  const scrolled = -rect.top
+  const pct = Math.min(Math.max((scrolled / total) * 100, 0), 100)
+  bar.style.width = pct + "%"
+})
 
-// ===== LIKE TOGGLE =====
+async function loadLikeState() {
+  if (!currentPostId) return
+
+  const { count } = await supabase
+    .from('likes')
+    .select('*', { count: 'exact', head: true })
+    .eq('post_id', currentPostId)
+
+  const likeCount = count || 0
+  const likeCountEl = document.getElementById("like-count")
+  const likeCountEl2 = document.getElementById("like-count-2")
+  if (likeCountEl) likeCountEl.textContent = likeCount
+  if (likeCountEl2) likeCountEl2.textContent = likeCount
+
+  const { data: { session } } = await supabase.auth.getSession()
+  if (!session) return
+
+  const { data: existingLike } = await supabase
+    .from('likes')
+    .select('id')
+    .eq('post_id', currentPostId)
+    .eq('user_id', session.user.id)
+    .single()
+
+  liked = !!existingLike
+
+  const likeBtn = document.getElementById("like-btn")
+  const likeBigBtn = document.getElementById("like-big-btn")
+  if (likeBtn) likeBtn.classList.toggle("liked", liked)
+  if (likeBigBtn) {
+    likeBigBtn.style.background = liked ? "var(--purple)" : "var(--purple-dim)"
+    likeBigBtn.style.color = liked ? "#fff" : "var(--purple-light)"
+  }
+}
+
 async function toggleLike() {
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) { alert('Please log in to like this article!'); return }
@@ -138,24 +118,13 @@ async function toggleLike() {
   const userId = session.user.id
 
   if (!liked) {
-    // Check if already liked in DB (prevent duplicate)
-    const { data: existing } = await supabase
-      .from('likes')
-      .select('id')
-      .eq('post_id', currentPostId)
-      .eq('user_id', userId)
-      .single()
-
-    if (!existing) {
-      await supabase.from('likes').insert({ post_id: currentPostId, user_id: userId })
-    }
+    await supabase.from('likes').insert({ post_id: currentPostId, user_id: userId })
     liked = true
   } else {
     await supabase.from('likes').delete().eq('post_id', currentPostId).eq('user_id', userId)
     liked = false
   }
 
-  // Always get fresh count from DB
   const { count } = await supabase
     .from('likes')
     .select('*', { count: 'exact', head: true })
@@ -175,49 +144,46 @@ async function toggleLike() {
     likeBigBtn.style.color = liked ? "#fff" : "var(--purple-light)"
   }
 }
+window.toggleLike = toggleLike
 
-// ===== COPY LINK =====
 function copyLink() {
-  navigator.clipboard.writeText(window.location.href);
-  const btn = document.querySelector('[onclick="copyLink()"]');
-  const original = btn.innerHTML;
-  btn.innerHTML = '<i class="ti ti-check"></i>';
-  btn.style.color = "#4ade80";
-  setTimeout(() => { btn.innerHTML = original; btn.style.color = ""; }, 2000);
+  navigator.clipboard.writeText(window.location.href)
+  const btn = document.querySelector('[onclick="copyLink()"]')
+  const original = btn.innerHTML
+  btn.innerHTML = '<i class="ti ti-check"></i>'
+  btn.style.color = "#4ade80"
+  setTimeout(() => { btn.innerHTML = original; btn.style.color = "" }, 2000)
 }
-window.copyLink = copyLink;
+window.copyLink = copyLink
 
-// ===== ADD COMMENT =====
-let commentCount = 0;
+let commentCount = 0
 
 async function addComment() {
-  const input = document.getElementById("comment-input");
-  const text = input.value.trim();
-  if (!text) return;
+  const input = document.getElementById("comment-input")
+  const text = input.value.trim()
+  if (!text) return
 
-  const { data: { session } } = await supabase.auth.getSession();
-  if (!session) { alert('Please log in to comment!'); return; }
-
+  const { data: { session } } = await supabase.auth.getSession()
   const authorName = session?.user?.user_metadata?.full_name
     || session?.user?.email?.split('@')[0]
-    || 'Anonymous';
+    || 'Anonymous'
 
   const { error } = await supabase.from('comments').insert({
     post_id: currentPostId,
     author_name: authorName,
     content: text
-  });
+  })
 
-  if (error) { console.error(error); return; }
+  if (error) { console.error(error); return }
 
-  commentCount++;
+  commentCount++
   const countEl = document.querySelector(".comments-count")
-  if (countEl) countEl.textContent = commentCount;
+  if (countEl) countEl.textContent = commentCount
 
-  const list = document.getElementById("comments-list");
-  const item = document.createElement("div");
-  item.className = "comment-item";
-  const initial = authorName.charAt(0).toUpperCase();
+  const list = document.getElementById("comments-list")
+  const item = document.createElement("div")
+  item.className = "comment-item"
+  const initial = authorName.charAt(0).toUpperCase()
   item.innerHTML = `
     <div class="comment-avatar">${initial}</div>
     <div class="comment-body">
@@ -226,14 +192,17 @@ async function addComment() {
         <span class="comment-time">Just now</span>
       </div>
       <div class="comment-text">${DOMPurify.sanitize(text)}</div>
+      <div class="comment-footer">
+        <button class="comment-like"><i class="ti ti-thumb-up"></i> 0</button>
+        <button class="comment-reply-btn">Reply</button>
+      </div>
     </div>
-  `;
-  list.insertBefore(item, list.firstChild);
-  input.value = "";
+  `
+  list.insertBefore(item, list.firstChild)
+  input.value = ""
 }
-window.addComment = addComment;
+window.addComment = addComment
 
-// ===== LOAD COMMENTS =====
 async function loadComments() {
   if (!currentPostId) return
 
@@ -253,6 +222,16 @@ async function loadComments() {
   const countEl = document.querySelector('.comments-count')
   if (countEl) countEl.textContent = commentCount
 
+  if (data.length === 0) {
+    list.innerHTML = `
+      <div style="text-align:center;padding:32px;color:var(--text-muted)">
+        <i class="ti ti-message-off" style="font-size:28px;display:block;margin-bottom:8px"></i>
+        No comments yet — be the first!
+      </div>
+    `
+    return
+  }
+
   data.forEach(comment => {
     const item = document.createElement('div')
     item.className = 'comment-item'
@@ -265,10 +244,13 @@ async function loadComments() {
           <span class="comment-time">${new Date(comment.created_at).toLocaleDateString()}</span>
         </div>
         <div class="comment-text">${DOMPurify.sanitize(comment.content)}</div>
+        <div class="comment-footer">
+          <button class="comment-like"><i class="ti ti-thumb-up"></i> 0</button>
+          <button class="comment-reply-btn">Reply</button>
+        </div>
       </div>
     `
     list.appendChild(item)
   })
 }
 window.loadComments = loadComments
-window.toggleLike = toggleLike
