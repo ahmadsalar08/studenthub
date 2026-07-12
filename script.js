@@ -1,7 +1,7 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
-const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
 const CONFIG = {
@@ -234,23 +234,39 @@ async function loadRealStats() {
       ? viewsData.reduce((sum, p) => sum + (p.views || 0), 0)
       : 0
 
+    // Newsletter subscribers count
+    const { count: subscriberCount } = await supabase
+      .from('newsletters')
+      .select('*', { count: 'exact', head: true })
+
     // Update hero stats
     const statNums = document.querySelectorAll('.stat-num')
+
+    // Stat 1 — Total views
     if (statNums[0]) {
       statNums[0].dataset.target = totalViews
-      statNums[0].closest('.hero-stat')?.querySelector('.stat-label') &&
-        (statNums[0].closest('.hero-stat').querySelector('.stat-label').textContent = 'Total views')
+      const label0 = statNums[0].closest('.hero-stat')?.querySelector('.stat-label')
+      if (label0) label0.textContent = 'Monthly readers'
     }
+
+    // Stat 2 — Articles published
     if (statNums[1]) {
       statNums[1].dataset.target = postCount || 0
-      statNums[1].closest('.hero-stat')?.querySelector('.stat-label') &&
-        (statNums[1].closest('.hero-stat').querySelector('.stat-label').textContent = 'Articles published')
+      const label1 = statNums[1].closest('.hero-stat')?.querySelector('.stat-label')
+      if (label1) label1.textContent = 'Articles published'
+    }
+
+    // Stat 3 — Newsletter subscribers (real)
+    if (statNums[2]) {
+      statNums[2].dataset.target = subscriberCount || 0
+      const label2 = statNums[2].closest('.hero-stat')?.querySelector('.stat-label')
+      if (label2) label2.textContent = 'Newsletter subscribers'
     }
 
     // Re-run counter animation with real data
     animateCounters()
 
-    // Update dashboard card
+    // Update dashboard card articles count
     const dbMetrics = document.querySelectorAll('.db-metric-val')
     if (dbMetrics[1]) dbMetrics[1].textContent = postCount || 0
 
@@ -553,4 +569,4 @@ style.textContent = `
     to { transform: rotate(360deg); }
   }
 `;
-document.head.appendChild(style);
+document.head.appendChild(style);``
