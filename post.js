@@ -10,31 +10,23 @@ let currentPostId = null
 let liked = false
 
 async function incrementView(postId, currentViews) {
-  const { data: { session } } = await supabase.auth.getSession()
+  // LocalStorage se check karo — tab band hone pe bhi yaad rahe
+  const viewKey = `viewed_post_${postId}`
+  const alreadyViewed = localStorage.getItem(viewKey)
+  if (alreadyViewed) return
 
-  if (session) {
-    // Logged in user — check if already viewed
-    const viewKey = `viewed_${postId}`
-    const alreadyViewed = sessionStorage.getItem(viewKey)
-    if (alreadyViewed) return // Same session mein already dekha
-
-    sessionStorage.setItem(viewKey, '1')
-  } else {
-    // Guest — session storage se check karo
-    const viewKey = `viewed_${postId}`
-    const alreadyViewed = sessionStorage.getItem(viewKey)
-    if (alreadyViewed) return
-
-    sessionStorage.setItem(viewKey, '1')
-  }
-
-  // Increment view in DB
   const { error } = await supabase
     .from('posts')
     .update({ views: (currentViews || 0) + 1 })
     .eq('id', postId)
 
-  if (error) console.error('View increment error:', error)
+  if (error) {
+    console.error('View increment error:', error)
+    return
+  }
+
+  // Sirf success pe mark karo viewed
+  localStorage.setItem(viewKey, '1')
 }
 
 async function loadPost() {
@@ -51,7 +43,7 @@ async function loadPost() {
 
   currentPostId = data.id
 
-  // Increment view — same account same article dobara nahi badhega
+  // View increment
   await incrementView(data.id, data.views)
 
   document.title = `${data.title} — StudentHub`
