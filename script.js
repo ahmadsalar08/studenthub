@@ -1,10 +1,9 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 
 const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
+const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-// ===== CONFIGURATION CONSTANTS =====
 const CONFIG = {
   ADMIN_EMAIL: 'ahmadsalar4321@gmail.com',
   ANIMATION_DURATION_MS: 1800,
@@ -40,6 +39,15 @@ function getCategorySlug(category) {
 function postMatchesCategory(post, filterSlug) {
   if (filterSlug === 'all') return true;
   return getCategorySlug(post.category) === filterSlug;
+}
+
+// ===== READ TIME ESTIMATE =====
+function estimateReadTime(content) {
+  if (!content) return '1 min';
+  const text = content.replace(/<[^>]*>/g, '');
+  const words = text.trim().split(/\s+/).length;
+  const minutes = Math.max(1, Math.ceil(words / 200));
+  return `${minutes} min`;
 }
 
 // ===== NAVBAR AUTH STATE =====
@@ -122,7 +130,6 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// ===== UTILITY =====
 function escapeRegex(str) {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -134,7 +141,6 @@ function highlightText(text, query) {
     const regex = new RegExp(`(${escapedQuery})`, 'gi');
     return text.replace(regex, '<mark>$1</mark>');
   } catch (err) {
-    console.warn('Highlight error:', err);
     return text;
   }
 }
@@ -185,13 +191,10 @@ function handleSearch(query) {
     document.querySelectorAll('.search-result-item').forEach(item => {
       item.addEventListener('click', () => {
         const slug = item.dataset.slug;
-        if (slug) {
-          window.location.href = `post.html?slug=${encodeURIComponent(slug)}`;
-        }
+        if (slug) window.location.href = `post.html?slug=${encodeURIComponent(slug)}`;
       });
     });
   } catch (err) {
-    console.error('Search error:', err);
     results.innerHTML = `
       <div class="search-empty">
         <i class="ti ti-alert-circle"></i>
@@ -211,6 +214,101 @@ function escapeHtml(text) {
 
 // ===== DATA =====
 let posts = [];
+
+// ===== LOAD REAL STATS FROM DB =====
+async function loadRealStats() {
+  try {
+    // Real post count
+    const { count: postCount } = await supabase
+      .from('posts')
+      .select('*', { count: 'exact', head: true })
+      .eq('published', true)
+
+    // Total views
+    const { data: viewsData } = await supabase
+      .from('posts')
+      .select('views')
+      .eq('published', true)
+
+    const totalViews = viewsData
+      ? viewsData.reduce((sum, p) => sum + (p.views || 0), 0)
+      : 0
+
+    // Update hero stats
+    const statNums = document.querySelectorAll('.stat-num')
+    if (statNums[0]) {
+      statNums[0].dataset.target = totalViews
+      statNums[0].closest('.hero-stat')?.querySelector('.stat-label') &&
+        (statNums[0].closest('.hero-stat').querySelector('.stat-label').textContent = 'Total views')
+    }
+    if (statNums[1]) {
+      statNums[1].dataset.target = postCount || 0
+      statNums[1].closest('.hero-stat')?.querySelector('.stat-label') &&
+        (statNums[1].closest('.hero-stat').querySelector('.stat-label').textContent = 'Articles published')
+    }
+
+    // Re-run counter animation with real data
+    animateCounters()
+
+    // Update dashboard card
+    const dbMetrics = document.querySelectorAll('.db-metric-val')
+    if (dbMetrics[1]) dbMetrics[1].textContent = postCount || 0
+
+  } catch (err) {
+    console.error('Stats load error:', err)
+  }
+}
+
+// ===== LOAD FEATURED POST FROM DB =====
+async function loadFeaturedPost() {
+  try {
+    const { data, error } = await supabase
+      .from('posts')
+      .select('*')
+      .eq('published', true)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single()
+
+    if (error || !data) return
+
+    const readTime = estimateReadTime(data.content)
+    const date = new Date(data.created_at).toLocaleDateString('en-US', {
+      day: 'numeric', month: 'long', year: 'numeric'
+    })
+    const excerpt = data.excerpt ||
+      (data.content ? data.content.replace(/<[^>]*>/g, '').substring(0, 200) + '...' : '')
+
+    const fc = document.querySelector('.featured-card')
+    if (!fc) return
+
+    fc.querySelector('.fc-meta')?.parentElement &&
+      (() => {
+        const metas = fc.querySelectorAll('.fc-meta')
+        if (metas[0]) metas[0].textContent = date
+        if (metas[1]) metas[1].innerHTML = `<i class="ti ti-clock"></i> ${readTime} read`
+      })()
+
+    const titleEl = fc.querySelector('.fc-title')
+    if (titleEl) titleEl.textContent = data.title
+
+    const excerptEl = fc.querySelector('.fc-excerpt')
+    if (excerptEl) excerptEl.textContent = excerpt
+
+    const authorEl = fc.querySelector('.fc-author')
+    if (authorEl) authorEl.innerHTML = `${escapeHtml(data.author_name || 'Anonymous')} <span class="dot">·</span> ${escapeHtml(data.category || 'General')}`
+
+    const avatarEl = fc.querySelector('.fc-avatar')
+    if (avatarEl) avatarEl.textContent = (data.author_name || 'A').charAt(0).toUpperCase()
+
+    fc.dataset.slug = data.slug
+    fc.style.cursor = 'pointer'
+    fc.onclick = () => window.location.href = `post.html?slug=${encodeURIComponent(data.slug)}`
+
+  } catch (err) {
+    console.error('Featured post error:', err)
+  }
+}
 
 async function loadPosts() {
   const postList = document.getElementById("post-list");
@@ -232,7 +330,6 @@ async function loadPosts() {
       .order('created_at', { ascending: false });
 
     if (error) {
-      console.error('Error loading posts:', error);
       if (postList) {
         postList.innerHTML = `
           <div style="text-align:center;padding:48px 20px;color:#ef4444">
@@ -253,12 +350,11 @@ async function loadPosts() {
       excerpt: p.excerpt || '',
       author: p.author_name || 'Anonymous',
       date: new Date(p.created_at).toLocaleDateString('en-US', {day: 'numeric', month: 'long', year: 'numeric'}),
-      read: '5 min'
+      read: estimateReadTime(p.content)
     }));
 
     renderPosts();
   } catch (err) {
-    console.error('Unexpected error loading posts:', err);
     if (postList) {
       postList.innerHTML = `
         <div style="text-align:center;padding:48px 20px;color:#ef4444">
@@ -277,11 +373,9 @@ const trending = [
   "How to build your LinkedIn profile — for CS students"
 ];
 
-// ===== STATE =====
 let activeCat = "all";
 let visibleCount = CONFIG.INITIAL_POST_COUNT;
 
-// ===== RENDER POSTS =====
 function renderPosts() {
   const list = document.getElementById("post-list");
   const filtered = activeCat === "all"
@@ -330,14 +424,12 @@ function renderPosts() {
   });
 
   const btn = document.getElementById("load-more");
-  if (btn) {
-    btn.style.display = filtered.length > visibleCount ? "flex" : "none";
-  }
+  if (btn) btn.style.display = filtered.length > visibleCount ? "flex" : "none";
 }
 
-// ===== RENDER TRENDING =====
 function renderTrending() {
   const list = document.getElementById("trending-list");
+  if (!list) return;
   list.innerHTML = trending.map((t, i) => `
     <div class="t-item">
       <div class="t-num">${String(i + 1).padStart(2, "0")}</div>
@@ -346,7 +438,6 @@ function renderTrending() {
   `).join("");
 }
 
-// ===== CATEGORY FILTER =====
 document.querySelectorAll(".cat").forEach(btn => {
   btn.addEventListener("click", () => {
     document.querySelectorAll(".cat").forEach(b => b.classList.remove("active"));
@@ -357,24 +448,20 @@ document.querySelectorAll(".cat").forEach(btn => {
   });
 });
 
-// ===== LOAD MORE =====
 document.getElementById("load-more")?.addEventListener("click", () => {
   visibleCount += CONFIG.LOAD_MORE_COUNT;
   renderPosts();
 });
 
-// ===== COUNTER ANIMATION =====
 function animateCounters() {
   document.querySelectorAll(".stat-num").forEach(el => {
-    const target = parseInt(el.dataset.target);
+    const target = parseInt(el.dataset.target) || 0;
+    if (!target) return;
     const step = target / (CONFIG.ANIMATION_DURATION_MS / CONFIG.ANIMATION_FRAME_MS);
     let current = 0;
     const timer = setInterval(() => {
       current += step;
-      if (current >= target) {
-        current = target;
-        clearInterval(timer);
-      }
+      if (current >= target) { current = target; clearInterval(timer); }
       el.textContent = target >= 1000
         ? (current / 1000).toFixed(1) + "k"
         : Math.floor(current);
@@ -382,14 +469,12 @@ function animateCounters() {
   });
 }
 
-// ===== EMAIL VALIDATION =====
 function isValidEmail(email) {
   return CONFIG.EMAIL_REGEX.test(email) &&
          email.length <= CONFIG.MAX_EMAIL_LENGTH &&
          email.length >= 3;
 }
 
-// ===== NEWSLETTER =====
 async function subscribe() {
   const emailInput = document.getElementById("nl-email");
   const email = emailInput.value.trim();
@@ -416,7 +501,6 @@ async function subscribe() {
         emailInput.style.borderColor = "#ef4444";
         successEl.style.display = "flex";
         successEl.innerHTML = '<i class="ti ti-alert-circle"></i> Subscription failed. Please try again.';
-        console.error('Newsletter error:', error);
       }
       return;
     }
@@ -426,7 +510,6 @@ async function subscribe() {
     emailInput.style.display = "none";
     document.querySelector(".nl-btn").style.display = "none";
   } catch (err) {
-    console.error('Unexpected newsletter error:', err);
     emailInput.style.borderColor = "#ef4444";
     successEl.style.display = "flex";
     successEl.innerHTML = '<i class="ti ti-alert-circle"></i> An unexpected error occurred.';
@@ -434,18 +517,12 @@ async function subscribe() {
 }
 window.subscribe = subscribe;
 
-// ===== WRITE BUTTON GUARD =====
 async function guardedWrite() {
   const { data: { session } } = await supabase.auth.getSession();
-  if (session) {
-    window.location.href = 'admin.html';
-  } else {
-    window.location.href = 'login.html';
-  }
+  window.location.href = session ? 'admin.html' : 'login.html';
 }
 window.guardedWrite = guardedWrite;
 
-// ===== HANDLE URL CATEGORY FILTER =====
 function handleUrlFilter() {
   const params = new URLSearchParams(window.location.search)
   const cat = params.get('cat')
@@ -465,17 +542,8 @@ function handleUrlFilter() {
 renderTrending();
 animateCounters();
 loadPosts().then(() => handleUrlFilter());
-
-// ===== FEATURED CARD CLICK =====
-const featuredCard = document.querySelector(".featured-card");
-if (featuredCard) {
-  featuredCard.style.cursor = 'pointer';
-  featuredCard.addEventListener("click", () => {
-    if (posts.length > 0) {
-      window.location.href = `post.html?slug=${encodeURIComponent(posts[0].slug)}`;
-    }
-  });
-}
+loadRealStats();
+loadFeaturedPost();
 
 // ===== CSS ANIMATION =====
 const style = document.createElement('style');
