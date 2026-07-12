@@ -9,6 +9,34 @@ const slug = params.get('slug')
 let currentPostId = null
 let liked = false
 
+async function incrementView(postId, currentViews) {
+  const { data: { session } } = await supabase.auth.getSession()
+
+  if (session) {
+    // Logged in user — check if already viewed
+    const viewKey = `viewed_${postId}`
+    const alreadyViewed = sessionStorage.getItem(viewKey)
+    if (alreadyViewed) return // Same session mein already dekha
+
+    sessionStorage.setItem(viewKey, '1')
+  } else {
+    // Guest — session storage se check karo
+    const viewKey = `viewed_${postId}`
+    const alreadyViewed = sessionStorage.getItem(viewKey)
+    if (alreadyViewed) return
+
+    sessionStorage.setItem(viewKey, '1')
+  }
+
+  // Increment view in DB
+  const { error } = await supabase
+    .from('posts')
+    .update({ views: (currentViews || 0) + 1 })
+    .eq('id', postId)
+
+  if (error) console.error('View increment error:', error)
+}
+
 async function loadPost() {
   if (!slug) { showError("No article found!"); return; }
 
@@ -23,12 +51,9 @@ async function loadPost() {
 
   currentPostId = data.id
 
-  // Atomic view increment — race condition safe
-  try {
-  await supabase.rpc('increment_views', { post_id: data.id })
-} catch {
-  await supabase.from('posts').update({ views: (data.views || 0) + 1 }).eq('id', data.id)
-}
+  // Increment view — same account same article dobara nahi badhega
+  await incrementView(data.id, data.views)
+
   document.title = `${data.title} — StudentHub`
   if (window.updateOGTags) window.updateOGTags(data.title, data.excerpt || '')
 
