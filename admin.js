@@ -4,6 +4,14 @@ const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
+// ===== ESCAPE HTML — XSS prevention =====
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
 // ===== AUTH CHECK =====
 async function checkAuth() {
   const { data: { session } } = await supabase.auth.getSession()
@@ -39,13 +47,11 @@ function generateSlug(title) {
 
 // ===== LOAD REAL DASHBOARD STATS =====
 async function loadDashboardStats() {
-  // Total published posts
   const { count: totalPosts } = await supabase
     .from('posts')
     .select('*', { count: 'exact', head: true })
     .eq('published', true)
 
-  // Total views (sum of all posts views)
   const { data: viewsData } = await supabase
     .from('posts')
     .select('views')
@@ -53,17 +59,14 @@ async function loadDashboardStats() {
     ? viewsData.reduce((sum, p) => sum + (p.views || 0), 0)
     : 0
 
-  // Total comments
   const { count: totalComments } = await supabase
     .from('comments')
     .select('*', { count: 'exact', head: true })
 
-  // Total likes
   const { count: totalLikes } = await supabase
     .from('likes')
     .select('*', { count: 'exact', head: true })
 
-  // Update stat numbers in DOM
   const nums = document.querySelectorAll('.stat-card-num')
   if (nums[0]) nums[0].textContent = totalPosts || 0
   if (nums[1]) nums[1].textContent = totalViews >= 1000
@@ -72,14 +75,12 @@ async function loadDashboardStats() {
   if (nums[2]) nums[2].textContent = totalLikes || 0
   if (nums[3]) nums[3].textContent = totalComments || 0
 
-  // Update labels to match
   const labels = document.querySelectorAll('.stat-card-label')
   if (labels[0]) labels[0].textContent = 'Total articles'
   if (labels[1]) labels[1].textContent = 'Total views'
   if (labels[2]) labels[2].textContent = 'Total likes'
   if (labels[3]) labels[3].textContent = 'Total comments'
 
-  // Update trends
   const trends = document.querySelectorAll('.stat-card-trend')
   if (trends[0]) trends[0].innerHTML = `<i class="ti ti-files"></i> ${totalPosts || 0} published`
   if (trends[1]) trends[1].innerHTML = `<i class="ti ti-eye"></i> ${totalViews} total`
@@ -129,20 +130,21 @@ function showPanel(name) {
 }
 window.showPanel = showPanel
 
-// ===== RENDER TABLE ROW =====
+// ===== RENDER TABLE ROW — XSS FIXED =====
 function postRow(post) {
+  // FIX: escapeHtml() on all user data before inserting into innerHTML
   return `
     <tr>
-      <td><div class="td-title">${post.title}</div></td>
-      <td><span class="td-cat">${post.cat}</span></td>
-      <td>${post.date}</td>
+      <td><div class="td-title">${escapeHtml(post.title)}</div></td>
+      <td><span class="td-cat">${escapeHtml(post.cat)}</span></td>
+      <td>${escapeHtml(post.date)}</td>
       <td>${post.views.toLocaleString()}</td>
       <td><span class="${post.status === 'published' ? 'status-pub' : 'status-draft'}">
         ${post.status === 'published' ? 'Published' : 'Draft'}
       </span></td>
       <td>
         <div class="td-actions">
-          <button class="td-btn" onclick="deletePost('${post.id}')">
+          <button class="td-btn" onclick="deletePost('${escapeHtml(post.id)}')">
             <i class="ti ti-trash"></i>
           </button>
         </div>
@@ -194,7 +196,7 @@ async function deletePost(id) {
 }
 window.deletePost = deletePost
 
-// ===== COMMENTS — Real from Supabase =====
+// ===== COMMENTS — Real from Supabase — XSS FIXED =====
 async function loadRealComments() {
   const { data, error } = await supabase
     .from('comments')
@@ -211,20 +213,21 @@ async function loadRealComments() {
     return
   }
 
+  // FIX: escapeHtml() on all comment data — prevents stored XSS
   container.innerHTML = data.map((c, i) => `
     <div class="ca-item" id="ca-${i}">
-      <div class="ca-avatar">${(c.author_name || 'A').charAt(0).toUpperCase()}</div>
+      <div class="ca-avatar">${escapeHtml((c.author_name || 'A').charAt(0).toUpperCase())}</div>
       <div>
-        <div class="ca-name">${c.author_name || 'Anonymous'}
+        <div class="ca-name">${escapeHtml(c.author_name || 'Anonymous')}
           <span style="font-weight:400;color:var(--text-muted)">·
-            ${new Date(c.created_at).toLocaleDateString('en-US', {day:'numeric', month:'short'})}
+            ${escapeHtml(new Date(c.created_at).toLocaleDateString('en-US', {day:'numeric', month:'short'}))}
           </span>
         </div>
-        <div class="ca-post">On: ${c.posts?.title || 'Unknown post'}</div>
-        <div class="ca-text">${c.content || ''}</div>
+        <div class="ca-post">On: ${escapeHtml(c.posts?.title || 'Unknown post')}</div>
+        <div class="ca-text">${escapeHtml(c.content || '')}</div>
       </div>
       <div class="ca-actions">
-        <button class="ca-delete" onclick="deleteCommentDB('${c.id}', ${i})">
+        <button class="ca-delete" onclick="deleteCommentDB('${escapeHtml(c.id)}', ${i})">
           <i class="ti ti-trash"></i>
         </button>
       </div>
@@ -245,7 +248,28 @@ window.deleteCommentDB = deleteCommentDB
 function format(cmd) { document.execCommand(cmd, false, null); document.getElementById('art-content').focus() }
 function insertHeading() { document.execCommand('formatBlock', false, 'h2'); document.getElementById('art-content').focus() }
 function insertList() { document.execCommand('insertUnorderedList', false, null); document.getElementById('art-content').focus() }
-function insertLink() { const url = prompt('Enter link URL:'); if (url) document.execCommand('createLink', false, url) }
+
+// FIX: insertLink — javascript: URLs blocked, only https:// and http:// allowed
+function insertLink() {
+  const url = prompt('Enter link URL (must start with https://):')
+  if (!url) return
+
+  // Security: block javascript: and data: URLs
+  const trimmed = url.trim().toLowerCase()
+  if (trimmed.startsWith('javascript:') || trimmed.startsWith('data:') || trimmed.startsWith('vbscript:')) {
+    showToast('Invalid URL! Only https:// links are allowed.')
+    return
+  }
+
+  // Add https:// if missing
+  const finalUrl = trimmed.startsWith('http://') || trimmed.startsWith('https://')
+    ? url.trim()
+    : 'https://' + url.trim()
+
+  document.execCommand('createLink', false, finalUrl)
+  document.getElementById('art-content').focus()
+}
+
 function insertCallout() {
   const div = document.createElement('div')
   div.style.cssText = 'background:#1e0e3e;border:0.5px solid #4a2a8e;border-radius:8px;padding:14px 16px;margin:16px 0;color:#c8c8d8;'
@@ -275,8 +299,8 @@ function updatePreview() {
     box.innerHTML = `<div class="preview-empty"><i class="ti ti-eye-off"></i><span>Start writing a title...</span></div>`
   } else {
     box.innerHTML = `
-      ${cat ? `<div class="preview-cat">${cat}</div><br>` : ''}
-      <div class="preview-title">${title}</div>
+      ${cat ? `<div class="preview-cat">${escapeHtml(cat)}</div><br>` : ''}
+      <div class="preview-title">${escapeHtml(title)}</div>
       <div style="font-size:12px;color:var(--text-muted);margin-top:8px">Today</div>
     `
   }
@@ -301,7 +325,7 @@ function updateSEO(title, cat) {
   fill.style.background = score < 50 ? '#ef4444' : score < 75 ? '#eab308' : '#22c55e'
   label.textContent = score < 50 ? 'Improve needed' : score < 75 ? 'Getting better' : 'Good to publish!'
   document.getElementById('seo-tips').innerHTML = tips.map(t => `
-    <div class="seo-tip ${t.ok ? 'ok' : 'bad'}"><i class="ti ti-${t.ok ? 'check' : 'x'}"></i> ${t.text}</div>
+    <div class="seo-tip ${t.ok ? 'ok' : 'bad'}"><i class="ti ti-${t.ok ? 'check' : 'x'}"></i> ${escapeHtml(t.text)}</div>
   `).join('')
 }
 
@@ -385,7 +409,7 @@ window.saveDraft = saveDraft
 // ===== TOAST =====
 function showToast(msg) {
   const t = document.getElementById('toast')
-  t.innerHTML = `<i class="ti ti-check-circle" style="color:#4ade80"></i> ${msg}`
+  t.innerHTML = `<i class="ti ti-check-circle" style="color:#4ade80"></i> ${escapeHtml(msg)}`
   t.classList.add('show')
   setTimeout(() => t.classList.remove('show'), 3000)
 }
