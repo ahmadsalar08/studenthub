@@ -4,7 +4,6 @@ const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY)
 
-// ===== ESCAPE HTML — XSS prevention =====
 function escapeHtml(text) {
   if (!text) return '';
   const div = document.createElement('div');
@@ -12,7 +11,6 @@ function escapeHtml(text) {
   return div.innerHTML;
 }
 
-// ===== AUTH CHECK =====
 async function checkAuth() {
   const { data: { session } } = await supabase.auth.getSession()
   if (!session) { window.location.href = 'login.html'; return }
@@ -28,14 +26,12 @@ async function checkAuth() {
 }
 checkAuth()
 
-// ===== LOGOUT =====
 document.querySelector('.as-logout')?.addEventListener('click', async (e) => {
   e.preventDefault()
   await supabase.auth.signOut()
   window.location.href = 'login.html'
 })
 
-// ===== SLUG GENERATOR =====
 function generateSlug(title) {
   return title
     .toLowerCase()
@@ -45,7 +41,6 @@ function generateSlug(title) {
     .replace(/-+/g, '-')
 }
 
-// ===== LOAD REAL DASHBOARD STATS =====
 async function loadDashboardStats() {
   const { count: totalPosts } = await supabase
     .from('posts')
@@ -88,7 +83,6 @@ async function loadDashboardStats() {
   if (trends[3]) trends[3].innerHTML = `<i class="ti ti-message-circle"></i> ${totalComments || 0} total`
 }
 
-// ===== LOAD POSTS FROM SUPABASE =====
 let adminPosts = []
 
 async function loadAdminPosts() {
@@ -115,7 +109,6 @@ async function loadAdminPosts() {
   renderAllPosts()
 }
 
-// ===== PANEL SWITCH =====
 function showPanel(name) {
   document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'))
   document.querySelectorAll('.as-link').forEach(l => l.classList.remove('active'))
@@ -130,9 +123,7 @@ function showPanel(name) {
 }
 window.showPanel = showPanel
 
-// ===== RENDER TABLE ROW — XSS FIXED =====
 function postRow(post) {
-  // FIX: escapeHtml() on all user data before inserting into innerHTML
   return `
     <tr>
       <td><div class="td-title">${escapeHtml(post.title)}</div></td>
@@ -179,7 +170,6 @@ function filterAdminPosts() {
 }
 window.filterAdminPosts = filterAdminPosts
 
-// ===== DELETE POST =====
 async function deletePost(id) {
   const post = adminPosts.find(p => p.id === id)
   if (!post) return
@@ -196,7 +186,6 @@ async function deletePost(id) {
 }
 window.deletePost = deletePost
 
-// ===== COMMENTS — Real from Supabase — XSS FIXED =====
 async function loadRealComments() {
   const { data, error } = await supabase
     .from('comments')
@@ -213,7 +202,6 @@ async function loadRealComments() {
     return
   }
 
-  // FIX: escapeHtml() on all comment data — prevents stored XSS
   container.innerHTML = data.map((c, i) => `
     <div class="ca-item" id="ca-${i}">
       <div class="ca-avatar">${escapeHtml((c.author_name || 'A').charAt(0).toUpperCase())}</div>
@@ -244,28 +232,21 @@ async function deleteCommentDB(id, i) {
 }
 window.deleteCommentDB = deleteCommentDB
 
-// ===== EDITOR =====
 function format(cmd) { document.execCommand(cmd, false, null); document.getElementById('art-content').focus() }
 function insertHeading() { document.execCommand('formatBlock', false, 'h2'); document.getElementById('art-content').focus() }
 function insertList() { document.execCommand('insertUnorderedList', false, null); document.getElementById('art-content').focus() }
 
-// FIX: insertLink — javascript: URLs blocked, only https:// and http:// allowed
 function insertLink() {
   const url = prompt('Enter link URL (must start with https://):')
   if (!url) return
-
-  // Security: block javascript: and data: URLs
   const trimmed = url.trim().toLowerCase()
   if (trimmed.startsWith('javascript:') || trimmed.startsWith('data:') || trimmed.startsWith('vbscript:')) {
     showToast('Invalid URL! Only https:// links are allowed.')
     return
   }
-
-  // Add https:// if missing
   const finalUrl = trimmed.startsWith('http://') || trimmed.startsWith('https://')
     ? url.trim()
     : 'https://' + url.trim()
-
   document.execCommand('createLink', false, finalUrl)
   document.getElementById('art-content').focus()
 }
@@ -329,12 +310,13 @@ function updateSEO(title, cat) {
   `).join('')
 }
 
-// ===== PUBLISH =====
+// ===== PUBLISH — TAGS FIXED =====
 async function publishPost() {
   const title   = document.getElementById('art-title').value.trim()
   const cat     = document.getElementById('art-category').value
   const content = document.getElementById('art-content').innerHTML.trim()
   const excerpt = document.getElementById('art-content').innerText.trim().substring(0, 200)
+  const tags    = document.getElementById('art-tags').value.trim()
 
   if (!title)   { showToast('Please enter a title first!'); return }
   if (!cat)     { showToast('Please select a category!'); return }
@@ -352,6 +334,7 @@ async function publishPost() {
     title, slug, content, excerpt,
     category: cat,
     author_name: authorName,
+    tags: tags || '',
     published: true
   })
 
@@ -379,12 +362,13 @@ async function publishPost() {
 }
 window.publishPost = publishPost
 
-// ===== SAVE DRAFT =====
+// ===== SAVE DRAFT — TAGS FIXED =====
 async function saveDraft() {
   const title   = document.getElementById('art-title').value.trim()
   const cat     = document.getElementById('art-category').value
   const content = document.getElementById('art-content').innerHTML.trim()
   const excerpt = document.getElementById('art-content').innerText.trim().substring(0, 200)
+  const tags    = document.getElementById('art-tags').value.trim()
 
   if (!title) { showToast('Please enter a title first!'); return }
 
@@ -396,6 +380,7 @@ async function saveDraft() {
     title, slug, content, excerpt,
     category: cat || 'General',
     author_name: authorName,
+    tags: tags || '',
     published: false
   })
 
@@ -406,7 +391,6 @@ async function saveDraft() {
 }
 window.saveDraft = saveDraft
 
-// ===== TOAST =====
 function showToast(msg) {
   const t = document.getElementById('toast')
   t.innerHTML = `<i class="ti ti-check-circle" style="color:#4ade80"></i> ${escapeHtml(msg)}`
@@ -414,7 +398,6 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 3000)
 }
 
-// ===== MOBILE MENU =====
 function toggleMobileMenu() {
   document.querySelector('.admin-sidebar').classList.toggle('mobile-open')
 }
