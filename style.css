@@ -6,19 +6,20 @@
 }
 
 :root {
-  --bg: #0a0a0f;
-  --bg2: #0d0d14;
-  --bg3: #111120;
-  --card: #111120;
-  --border: #1e1e2e;
-  --border2: #2a2a3e;
-  --purple: #7c3aed;
-  --purple-light: #9f7aea;
-  --purple-dim: #1e0e3e;
-  --purple-border: #4a2a8e;
-  --text-primary: #f0f0ff;
-  --text-secondary: #9090b8;
-  --text-muted: #50507a;
+  /* Storm Teal Palette */
+  --bg:            #0a1628;
+  --bg2:           #0d2137;
+  --bg3:           #0f2a42;
+  --card:          #0d2137;
+  --border:        #1a3a4a;
+  --border2:       #1e4a5a;
+  --purple:        #2a7a7a;
+  --purple-light:  #80cbc4;
+  --purple-dim:    #0f2a3a;
+  --purple-border: #2a6a6a;
+  --text-primary:  #cfe8e5;
+  --text-secondary:#9ecfcc;
+  --text-muted:    #4a8a8a;
   --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
