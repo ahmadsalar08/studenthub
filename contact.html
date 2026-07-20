@@ -91,11 +91,8 @@
         <a href="index.html?cat=career">Career</a>
         <a href="about.html">About</a>
       </div>
-      <div class="nav-right">
-        <button class="btn-ghost" id="signInBtn" onclick="window.location.href='login.html'">Sign in</button>
-        <button id="writeBtn" class="btn-primary" style="display:none;" onclick="window.location.href='admin.html'">
-          <i class="ti ti-edit"></i> Write
-        </button>
+      <div class="nav-right" id="nav-right">
+        <button class="btn-ghost" onclick="window.location.href='login.html'">Sign in</button>
       </div>
     </div>
   </nav>
@@ -113,7 +110,6 @@
 
       <div class="contact-form-card">
         <div class="cf-title"><i class="ti ti-send"></i> Send a message</div>
-
         <div class="cf-row">
           <div class="cf-group">
             <label class="cf-label">Your name *</label>
@@ -124,26 +120,21 @@
             <input type="email" class="cf-input" id="cf-email" placeholder="your@email.com">
           </div>
         </div>
-
         <div class="cf-group">
           <label class="cf-label">Subject *</label>
           <input type="text" class="cf-input" id="cf-subject" placeholder="e.g. Article suggestion" maxlength="100">
         </div>
-
         <div class="cf-group">
           <label class="cf-label">Message *</label>
           <textarea class="cf-input" id="cf-message" placeholder="Write your message here..." maxlength="1000" oninput="updateCharCount()"></textarea>
           <div class="cf-char"><span id="char-count">0</span>/1000</div>
         </div>
-
         <button class="cf-submit" id="cf-submit-btn" onclick="submitForm()">
           <i class="ti ti-send"></i> Send message
         </button>
-
         <div class="cf-cooldown" id="cf-cooldown">
           <i class="ti ti-clock"></i> Please wait <span id="cf-countdown">30</span>s before sending another message.
         </div>
-
         <div class="cf-success" id="cf-success">
           <i class="ti ti-circle-check"></i> Message sent! I'll reply within 24 hours.
         </div>
@@ -157,7 +148,7 @@
             <div>
               <div class="cs-label">Email</div>
               <div class="cs-email-copy">
-                <span class="cs-val" id="email-val">ahmadsalar4321@gmail.com</span>
+                <span class="cs-val">ahmadsalar4321@gmail.com</span>
                 <button class="cs-copy-btn" onclick="copyEmail()">Copy</button>
               </div>
             </div>
@@ -213,32 +204,65 @@
 
   <script>
     const SUPABASE_URL = 'https://bafpnqleaivhlbtbvufg.supabase.co'
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJhZnBucWxlYWl2aGxidGJ2dWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk5NjYzMjYsImV4cCI6MjA5NTU0MjMyNn0.U7dlH_j_CoSL4kqHQjqcaCziWU-tAOO2WJnjPbbAM8I'
+    const SUPABASE_KEY = 'sb_publishable_dyg3P9bHZkwRn7_bErLySw_lGPgdGfc'
     const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+    const ADMIN_EMAIL = 'ahmadsalar4321@gmail.com'
 
-    // Write button guard
-    ;(async function() {
+    async function updateNavbar() {
       const { data: { session } } = await sb.auth.getSession()
-      if (session && session.user.email === 'ahmadsalar4321@gmail.com') {
-        document.getElementById('writeBtn').style.display = 'inline-flex'
-        document.getElementById('signInBtn').style.display = 'none'
-      }
-    })()
+      const navRight = document.getElementById('nav-right')
+      if (!navRight) return
 
-    // ── 30-second cooldown ──
-    const COOLDOWN_MS = 30000
+      if (session && session.user) {
+        const user = session.user
+        const name = user.user_metadata?.full_name || user.email.split('@')[0]
+        const initial = name.charAt(0).toUpperCase()
+        const isAdmin = user.email === ADMIN_EMAIL
+
+        navRight.innerHTML = `
+          <div class="nav-user" id="nav-user-btn">
+            <div class="nav-avatar">${initial}</div>
+            <span class="nav-username">${name}</span>
+            <i class="ti ti-chevron-down" style="font-size:13px;color:var(--text-muted)"></i>
+          </div>
+          <div class="nav-dropdown hidden" id="nav-dropdown">
+            ${isAdmin ? `
+              <a href="admin.html" class="nav-dd-item"><i class="ti ti-edit"></i> Write article</a>
+              <div class="nav-dd-divider"></div>
+            ` : ''}
+            <button class="nav-dd-item nav-dd-logout" id="logout-btn">
+              <i class="ti ti-logout"></i> Sign out
+            </button>
+          </div>
+        `
+
+        document.getElementById('nav-user-btn').addEventListener('click', (e) => {
+          e.stopPropagation()
+          document.getElementById('nav-dropdown').classList.toggle('show')
+        })
+        document.addEventListener('click', () => {
+          const dd = document.getElementById('nav-dropdown')
+          if (dd) dd.classList.add('hidden')
+        })
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+          await sb.auth.signOut()
+          window.location.reload()
+        })
+      }
+    }
+
+    updateNavbar()
+
     let cooldownTimer = null
 
     function startCooldown() {
-      const btn       = document.getElementById('cf-submit-btn')
-      const cooldown  = document.getElementById('cf-cooldown')
+      const btn = document.getElementById('cf-submit-btn')
+      const cooldown = document.getElementById('cf-cooldown')
       const countdown = document.getElementById('cf-countdown')
-
       btn.disabled = true
       cooldown.style.display = 'block'
       let remaining = 30
       countdown.textContent = remaining
-
       cooldownTimer = setInterval(() => {
         remaining--
         countdown.textContent = remaining
@@ -281,8 +305,6 @@
       document.getElementById('cf-message').value = ''
       document.getElementById('char-count').textContent = '0'
       document.getElementById('cf-success').style.display = 'block'
-
-      // Start 30s cooldown after successful submit
       startCooldown()
     }
 
@@ -292,10 +314,10 @@
 
     function copyEmail() {
       navigator.clipboard.writeText('ahmadsalar4321@gmail.com')
-      const label = document.querySelector('.cs-copy-btn')
-      label.textContent = 'Copied!'
-      label.style.color = '#4ade80'
-      setTimeout(() => { label.textContent = 'Copy'; label.style.color = '' }, 2000)
+      const btn = document.querySelector('.cs-copy-btn')
+      btn.textContent = 'Copied!'
+      btn.style.color = '#4ade80'
+      setTimeout(() => { btn.textContent = 'Copy'; btn.style.color = '' }, 2000)
     }
 
     window.submitForm = submitForm
