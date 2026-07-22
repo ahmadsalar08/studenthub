@@ -326,5 +326,51 @@
     }
   </script>
     <script src="cursor-trail.js"></script>
+    <style>
+.ripple {
+  position: fixed;
+  border-radius: 50%;
+  border: 2px solid #FFEFB3;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  animation: rippleAnim 0.8s ease-out forwards;
+  z-index: 9999;
+}
+
+@keyframes rippleAnim {
+  0% {
+    width: 0px;
+    height: 0px;
+    opacity: 0.8;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    width: 120px;
+    height: 120px;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+</style>
+
+<script>
+document.addEventListener('click', function(e) {
+  // 3 ripples ek saath
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => {
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple';
+      ripple.style.left = e.clientX + 'px';
+      ripple.style.top = e.clientY + 'px';
+      ripple.style.animationDelay = (i * 0.15) + 's';
+      ripple.style.borderColor = i === 0 ? '#FFEFB3' : i === 1 ? 'rgba(255,239,179,0.6)' : 'rgba(255,239,179,0.3)';
+      document.body.appendChild(ripple);
+
+      // Remove after animation
+      setTimeout(() => ripple.remove(), 1000);
+    }, i * 150);
+  }
+});
+</script>
 </body>
 </html>
