@@ -372,61 +372,6 @@ document.addEventListener('click', function(e) {
   }
 });
 </script>
-<style>
-.cursor-dot {
-  position: fixed;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #FFEFB3;
-  pointer-events: none;
-  z-index: 9998;
-  opacity: 0;
-  transform: translate(-50%, -50%);
-  transition: opacity 0.1s;
-}
-</style>
 
-<script>
-const dots = [];
-const NUM_DOTS = 15;
-
-for (let i = 0; i < NUM_DOTS; i++) {
-  const dot = document.createElement('div');
-  dot.className = 'cursor-dot';
-  document.body.appendChild(dot);
-  dots.push({ el: dot, x: 0, y: 0 });
-}
-
-let mouseX = 0, mouseY = 0;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-});
-
-function animateTrail() {
-  let x = mouseX, y = mouseY;
-
-  dots.forEach((dot, i) => {
-    dot.el.style.left = x + 'px';
-    dot.el.style.top = y + 'px';
-    dot.el.style.opacity = (1 - i / NUM_DOTS) * 0.8;
-    dot.el.style.width = (6 - i * 0.3) + 'px';
-    dot.el.style.height = (6 - i * 0.3) + 'px';
-
-    const prevX = dot.x;
-    const prevY = dot.y;
-    dot.x = x;
-    dot.y = y;
-    x += (prevX - x) * 0.6;
-    y += (prevY - y) * 0.6;
-  });
-
-  requestAnimationFrame(animateTrail);
-}
-
-animateTrail();
-</script>
 </body>
 </html>
